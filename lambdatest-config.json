@@ -1,7 +1,7 @@
 {
    "lambdatest_auth": {
-      "username": "<Your LambdaTest username>",
-      "access_key": "<Your LambdaTest access key>"
+      "username": "ramonstarlightmusic",
+      "access_key": "f0RQN04IYfCSbhawr6cM2KNeHrtuQUOXoxdMhqHLssXpA3tZiG"
    },
    "browsers": [
       {
@@ -10,27 +10,19 @@
          "versions": [
             "latest-1"
          ]
-      },
-      {
-         "browser": "Firefox",
-         "platform": "Windows 10",
-         "versions": [
-            "latest-1"
-         ]
       }
    ],
    "run_settings": {
       "cypress_config_file": "cypress.json",
-      "build_name": "build-name",
-      "parallels": 2,
-      "specs": "./cypress/integration/examples/*.spec.js",
+      "reporter_config_file": "base_reporter_config.json",
+      "build_name": "starlight-prod-image-tests",
+      "parallels": 1,
+      "specs": "./cypress/integration/starlight/websiteImages.spec.js",
       "ignore_files": "",
-      "feature_file_suppport": false,
       "network": false,
       "headless": false,
-      "reporter_config_file": "",
       "npm_dependencies": {
-         "cypress": "9.0.0"
+         "cypress": "9.6"
       }
    },
    "tunnel_settings": {
