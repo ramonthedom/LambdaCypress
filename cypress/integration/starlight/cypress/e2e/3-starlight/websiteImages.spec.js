@@ -1,12 +1,12 @@
 describe('Checking for broken images on Starlight Music pages', () => {
-    const pagesToCheck = [
-      '/',
-      '/band/onyx-nyc-wedding-band',
-      '/band/rock-and-soul-nyc-premiere-wedding-band',
-      '/band/starlight-orchestra-corporate-events-and-nyc-weddings',
-      '/band/string-performers-eve-nyc-wedding-corporate-musicians',
-      '/cities/aspen-wedding-bands',
-      '/our-talent',
+  const pagesToCheck = [
+    '/',
+    '/band/onyx-nyc-wedding-band',
+    '/band/rock-and-soul-nyc-premiere-wedding-band',
+    '/band/starlight-orchestra-corporate-events-and-nyc-weddings',
+    '/band/string-performers-eve-nyc-wedding-corporate-musicians',
+    '/cities/aspen-wedding-bands',
+    '/our-talent',
     //   '/about-us',
     //   '/band/acoustic-guitar-ensembles',
     //   '/band/dj-kristaval-nyc-celebrity-disc-jockey',
@@ -44,18 +44,18 @@ describe('Checking for broken images on Starlight Music pages', () => {
     //   '/meet-the-team',
     //   '/privacy-polices',
     //   '/terms-and-conditions'
-    ];
-  
-    pagesToCheck.forEach((page) => {
-      context(`On page ${page}`, () => {
-        it('should not have any broken images', () => {
-          cy.visit(`https://www.starlightmusic.com${page}`);
-          cy.get('img').each((img) => {
-            cy.request(img.prop('src'))
+  ]
+
+  pagesToCheck.forEach((page) => {
+    context(`On page ${page}`, () => {
+      it('should not have any broken images', () => {
+        cy.visit(`https://www.starlightmusic.com${page}`)
+        cy.get('img').each((img) => {
+          cy.request(img.prop('src'))
               .its('status')
-              .should('eq', 200);
-          });
-        });
-      });
-    });
-  });
+              .should('eq', 200)
+        })
+      })
+    })
+  })
+})

@@ -20,7 +20,7 @@ import './commands'
 // require('./commands')
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-    console.log(err);
-    return false;
-});
-  
+  // console.log(err)
+
+  return false
+})

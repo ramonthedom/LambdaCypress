@@ -1,5 +1,4 @@
 describe('Checking for broken images on Bandazon pages', () => {
-
   const mainPagesToCheck = [
     '/',
     '/about-us',
@@ -8,8 +7,8 @@ describe('Checking for broken images on Bandazon pages', () => {
     '/credits',
     '/meet-the-team',
     '/privacy-polices',
-    '/terms-and-conditions'
-  ];
+    '/terms-and-conditions',
+  ]
 
   // const bandPagesToCheck = [
   //   '/band/acoustic-guitar-ensembles',
@@ -48,24 +47,23 @@ describe('Checking for broken images on Bandazon pages', () => {
   // ];
 
   // Define a function to check for broken images.
-  function checkForBrokenImages(page) {
-    cy.visit(`https://www.bandazon.com${page}`);
+  function checkForBrokenImages (page) {
+    cy.visit(`https://www.bandazon.com${page}`)
     cy.get('img').each((img) => {
       cy.request(img.prop('src'))
         .its('status')
-        .should('eq', 200);
-    });
+        .should('eq', 200)
+    })
   }
 
   // Check for broken images on the main pages.
   it('should be check all images on main pages', () => {
-    mainPagesToCheck.forEach(checkForBrokenImages);
-  }); 
+    mainPagesToCheck.forEach(checkForBrokenImages)
+  })
 
   // Check for broken images on the band pages.
   // bandPagesToCheck.forEach(checkForBrokenImages);
 
   // Check for broken images on the city pages.
   // cityPagesToCheck.forEach(checkForBrokenImages);
-
-});
+})

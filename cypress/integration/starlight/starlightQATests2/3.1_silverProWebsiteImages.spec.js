@@ -1,5 +1,4 @@
 describe('Checking for broken images on Silver Pro pages', () => {
-
   const mainPagesToCheck = [
     '/',
     '/contact-us',
@@ -10,10 +9,8 @@ describe('Checking for broken images on Silver Pro pages', () => {
     '/faq',
     '/privacy-polices',
     '/our-talent',
-    '/about-us'
-  ];
-
-
+    '/about-us',
+  ]
 
   // const bandPagesToCheck = [
   //   '/band/acoustic-guitar-ensembles',
@@ -52,24 +49,23 @@ describe('Checking for broken images on Silver Pro pages', () => {
   // ];
 
   // Define a function to check for broken images.
-  function checkForBrokenImages(page) {
-    cy.visit(`https://new.silverproentertainment.com${page}`);
+  function checkForBrokenImages (page) {
+    cy.visit(`https://new.silverproentertainment.com${page}`)
     cy.get('img').each((img) => {
       cy.request(img.prop('src'))
         .its('status')
-        .should('eq', 200);
-    });
+        .should('eq', 200)
+    })
   }
 
   // Check for broken images on the main pages.
   it('should be check all images on main pages', () => {
-    mainPagesToCheck.forEach(checkForBrokenImages);
-  }); 
+    mainPagesToCheck.forEach(checkForBrokenImages)
+  })
 
   // Check for broken images on the band pages.
   // bandPagesToCheck.forEach(checkForBrokenImages);
 
   // Check for broken images on the city pages.
   // cityPagesToCheck.forEach(checkForBrokenImages);
-
-});
+})
