@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 
-context('Assertions', () => {
-  beforeEach(() => {
+context('Assertions', function () {
+  beforeEach(function () {
     cy.visit('http://example.cypress.io/commands/assertions')
   })
 
-  describe('Implicit Assertions', () => {
-    it('.should() - make an assertion about the current subject', () => {
+  describe('Implicit Assertions', function () {
+    it('.should() - make an assertion about the current subject', function () {
       // https://on.cypress.io/should
       cy.get('.assertion-table')
         .find('tbody tr:last')
@@ -38,7 +38,7 @@ context('Assertions', () => {
       // see https://on.cypress.io/using-cypress-faq#How-do-I-get-an-element’s-text-contents
     })
 
-    it('.and() - chain multiple assertions together', () => {
+    it('.and() - chain multiple assertions together', function () {
       // https://on.cypress.io/and
       cy.get('.assertions-link')
         .should('have.class', 'active')
@@ -47,9 +47,9 @@ context('Assertions', () => {
     })
   })
 
-  describe('Explicit Assertions', () => {
+  describe('Explicit Assertions', function () {
     // https://on.cypress.io/assertions
-    it('expect - make an assertion about a specified subject', () => {
+    it('expect - make an assertion about a specified subject', function () {
       // We can use Chai's BDD style assertions
       expect(true).to.be.true
       const o = { foo: 'bar' }
@@ -60,7 +60,7 @@ context('Assertions', () => {
       expect('FooBar').to.match(/bar$/i)
     })
 
-    it('pass your own callback function to should()', () => {
+    it('pass your own callback function to should()', function () {
       // Pass a function to should that can have any number
       // of explicit assertions within it.
       // The ".should(cb)" function will be retried
@@ -90,7 +90,7 @@ context('Assertions', () => {
         })
     })
 
-    it('finds element by class name regex', () => {
+    it('finds element by class name regex', function () {
       cy.get('.docs-header')
         .find('div')
         // .should(cb) callback function will be retried
@@ -108,7 +108,7 @@ context('Assertions', () => {
         })
     })
 
-    it('can throw any error', () => {
+    it('can throw any error', function () {
       cy.get('.docs-header')
         .find('div')
         .should(($div) => {
@@ -125,7 +125,7 @@ context('Assertions', () => {
         })
     })
 
-    it('matches unknown text between two elements', () => {
+    it('matches unknown text between two elements', function () {
       /**
        * Text from the first element.
        * @type {string}
@@ -156,7 +156,7 @@ context('Assertions', () => {
         })
     })
 
-    it('assert - assert shape of an object', () => {
+    it('assert - assert shape of an object', function () {
       const person = {
         name: 'Joe',
         age: 20,
@@ -165,7 +165,7 @@ context('Assertions', () => {
       assert.isObject(person, 'value is object')
     })
 
-    it('retries the should callback until assertions pass', () => {
+    it('retries the should callback until assertions pass', function () {
       cy.get('#random-number')
         .should(($div) => {
           const n = parseFloat($div.text())

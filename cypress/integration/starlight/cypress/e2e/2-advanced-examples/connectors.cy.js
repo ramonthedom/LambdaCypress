@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
-context('Connectors', () => {
-  beforeEach(() => {
+context('Connectors', function () {
+  beforeEach(function () {
     cy.visit('https://example.cypress.io/commands/connectors')
   })
 
-  it('.each() - iterate over an array of elements', () => {
+  it('.each() - iterate over an array of elements', function () {
     // https://on.cypress.io/each
     cy.get('.connectors-each-ul>li')
       .each(($el, index, $list) => {
@@ -13,7 +13,7 @@ context('Connectors', () => {
       })
   })
 
-  it('.its() - get properties on the current subject', () => {
+  it('.its() - get properties on the current subject', function () {
     // https://on.cypress.io/its
     cy.get('.connectors-its-ul>li')
       // calls the 'length' property yielding that value
@@ -21,7 +21,7 @@ context('Connectors', () => {
       .should('be.gt', 2)
   })
 
-  it('.invoke() - invoke a function on the current subject', () => {
+  it('.invoke() - invoke a function on the current subject', function () {
     // our div is hidden in our script.js
     // $('.connectors-div').hide()
     cy.get('.connectors-div').should('be.hidden')
@@ -33,7 +33,7 @@ context('Connectors', () => {
     cy.get('.connectors-div').should('be.visible')
   })
 
-  it('.spread() - spread an array as individual args to callback function', () => {
+  it('.spread() - spread an array as individual args to callback function', function () {
     // https://on.cypress.io/spread
     const arr = ['foo', 'bar', 'baz']
 
@@ -44,8 +44,8 @@ context('Connectors', () => {
     })
   })
 
-  describe('.then()', () => {
-    it('invokes a callback function with the current subject', () => {
+  describe('.then()', function () {
+    it('invokes a callback function with the current subject', function () {
       // https://on.cypress.io/then
       cy.get('.connectors-list > li')
         .then(($lis) => {
@@ -56,7 +56,7 @@ context('Connectors', () => {
         })
     })
 
-    it('yields the returned value to the next command', () => {
+    it('yields the returned value to the next command', function () {
       cy.wrap(1)
         .then((num) => {
           expect(num).to.equal(1)
@@ -68,7 +68,7 @@ context('Connectors', () => {
         })
     })
 
-    it('yields the original subject without return', () => {
+    it('yields the original subject without return', function () {
       cy.wrap(1)
         .then((num) => {
           expect(num).to.equal(1)
@@ -80,7 +80,7 @@ context('Connectors', () => {
         })
     })
 
-    it('yields the value yielded by the last Cypress command inside', () => {
+    it('yields the value yielded by the last Cypress command inside', function () {
       cy.wrap(1)
         .then((num) => {
           expect(num).to.equal(1)

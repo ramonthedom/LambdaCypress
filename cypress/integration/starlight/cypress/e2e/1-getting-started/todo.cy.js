@@ -11,8 +11,8 @@
 // please read our getting started guide:
 // https://on.cypress.io/introduction-to-cypress
 
-describe('example to-do app', () => {
-  beforeEach(() => {
+describe('example to-do app', function () {
+  beforeEach(function () {
     // Cypress starts out with a blank slate for each test
     // so we must tell it to visit our website with the `cy.visit()` command.
     // Since we want to visit the same URL at the start of all our tests,
@@ -20,7 +20,7 @@ describe('example to-do app', () => {
     cy.visit('https://example.cypress.io/todo')
   })
 
-  it('displays two todo items by default', () => {
+  it('displays two todo items by default', function () {
     // We use the `cy.get()` command to get all elements that match the selector.
     // Then, we use `should` to assert that there are two matched items,
     // which are the two default items.
@@ -34,7 +34,7 @@ describe('example to-do app', () => {
     cy.get('.todo-list li').last().should('have.text', 'Walk the dog')
   })
 
-  it('can add new todo items', () => {
+  it('can add new todo items', function () {
     // We'll store our item text in a variable so we can reuse it
     const newItem = 'Feed the cat'
 
@@ -57,7 +57,7 @@ describe('example to-do app', () => {
       .should('have.text', newItem)
   })
 
-  it('can check off an item as completed', () => {
+  it('can check off an item as completed', function () {
     // In addition to using the `get` command to get an element by selector,
     // we can also use the `contains` command to get an element by its contents.
     // However, this will yield the <label>, which is lowest-level element that contains the text.
@@ -79,8 +79,8 @@ describe('example to-do app', () => {
       .should('have.class', 'completed')
   })
 
-  context('with a checked task', () => {
-    beforeEach(() => {
+  context('with a checked task', function () {
+    beforeEach(function () {
       // We'll take the command we used above to check off an element
       // Since we want to perform multiple tests that start with checking
       // one element, we put it in the beforeEach hook
@@ -91,7 +91,7 @@ describe('example to-do app', () => {
         .check()
     })
 
-    it('can filter for uncompleted tasks', () => {
+    it('can filter for uncompleted tasks', function () {
       // We'll click on the "active" button in order to
       // display only incomplete items
       cy.contains('Active').click()
@@ -108,7 +108,7 @@ describe('example to-do app', () => {
       cy.contains('Pay electric bill').should('not.exist')
     })
 
-    it('can filter for completed tasks', () => {
+    it('can filter for completed tasks', function () {
       // We can perform similar steps as the test above to ensure
       // that only completed tasks are shown
       cy.contains('Completed').click()
@@ -121,7 +121,7 @@ describe('example to-do app', () => {
       cy.contains('Walk the dog').should('not.exist')
     })
 
-    it('can delete all completed tasks', () => {
+    it('can delete all completed tasks', function () {
       // First, let's click the "Clear completed" button
       // `contains` is actually serving two purposes here.
       // First, it's ensuring that the button exists within the dom.

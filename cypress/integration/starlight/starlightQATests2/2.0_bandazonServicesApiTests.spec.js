@@ -1,4 +1,4 @@
-describe('Testing the API for the Starlight Band Service', () => {
+describe('Testing the API for the Starlight Band Service', function () {
   // Define the base url for the API.
   const baseUrl = 'https://star-api.starlightmusic.com/'
 
@@ -7,7 +7,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   const bzonteam = 'bzonteam'
 
   // check bandazon content service
-  it('bzon content service should be running', () => {
+  it('bzon content service should be running', function () {
     const url = baseUrl + bzoncontent
 
     cy.request('GET', url)
@@ -17,7 +17,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check bandazon performance service
-  it('starbridge user service 4001 should be running', () => {
+  it('starbridge user service 4001 should be running', function () {
     const url = baseUrl + bzonperformance
 
     cy.request('GET', url)
@@ -27,7 +27,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check bandazon team service
-  it('starbridge client service 4002 should be running', () => {
+  it('starbridge client service 4002 should be running', function () {
     const url = baseUrl + bzonteam
 
     cy.request('GET', url)

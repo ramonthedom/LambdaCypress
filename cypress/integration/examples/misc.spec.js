@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
-context('Misc', () => {
-  beforeEach(() => {
+context('Misc', function () {
+  beforeEach(function () {
     cy.visit('http://example.cypress.io/commands/misc')
   })
 
-  it('.end() - end the command chain', () => {
+  it('.end() - end the command chain', function () {
     // https://on.cypress.io/end
 
     // cy.end is useful when you want to end a chain of commands
@@ -19,7 +19,7 @@ context('Misc', () => {
     })
   })
 
-  it('cy.exec() - execute a system command', () => {
+  it('cy.exec() - execute a system command', function () {
     // execute a system command.
     // so you can take actions necessary for
     // your test outside the scope of Cypress.
@@ -66,7 +66,7 @@ context('Misc', () => {
     }
   })
 
-  it('cy.focused() - get the DOM element that has focus', () => {
+  it('cy.focused() - get the DOM element that has focus', function () {
     // https://on.cypress.io/focused
     cy.get('.misc-form').find('#name').click()
     cy.focused().should('have.id', 'name')
@@ -76,7 +76,7 @@ context('Misc', () => {
   })
 
   context('Cypress.Screenshot', function () {
-    it('cy.screenshot() - take a screenshot', () => {
+    it('cy.screenshot() - take a screenshot', function () {
       // https://on.cypress.io/screenshot
       cy.screenshot('my-image')
     })
@@ -95,7 +95,7 @@ context('Misc', () => {
     })
   })
 
-  it('cy.wrap() - wrap an object', () => {
+  it('cy.wrap() - wrap an object', function () {
     // https://on.cypress.io/wrap
     cy.wrap({ foo: 'bar' })
       .should('have.property', 'foo')

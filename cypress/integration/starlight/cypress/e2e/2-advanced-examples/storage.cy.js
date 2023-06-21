@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 
-context('Local Storage / Session Storage', () => {
-  beforeEach(() => {
+context('Local Storage / Session Storage', function () {
+  beforeEach(function () {
     cy.visit('https://example.cypress.io/commands/storage')
   })
   // Although localStorage is automatically cleared
   // in between tests to maintain a clean state
   // sometimes we need to clear localStorage manually
 
-  it('cy.clearLocalStorage() - clear all data in localStorage for the current origin', () => {
+  it('cy.clearLocalStorage() - clear all data in localStorage for the current origin', function () {
     // https://on.cypress.io/clearlocalstorage
     cy.get('.ls-btn').click().should(() => {
       expect(localStorage.getItem('prop1')).to.eq('red')
@@ -50,7 +50,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.getAllLocalStorage() - get all data in localStorage for all origins', () => {
+  it('cy.getAllLocalStorage() - get all data in localStorage for all origins', function () {
     // https://on.cypress.io/getalllocalstorage
     cy.get('.ls-btn').click()
 
@@ -67,7 +67,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.clearAllLocalStorage() - clear all data in localStorage for all origins', () => {
+  it('cy.clearAllLocalStorage() - clear all data in localStorage for all origins', function () {
     // https://on.cypress.io/clearalllocalstorage
     cy.get('.ls-btn').click()
 
@@ -79,7 +79,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.getAllSessionStorage() - get all data in sessionStorage for all origins', () => {
+  it('cy.getAllSessionStorage() - get all data in sessionStorage for all origins', function () {
     // https://on.cypress.io/getallsessionstorage
     cy.get('.ls-btn').click()
 
@@ -96,7 +96,7 @@ context('Local Storage / Session Storage', () => {
     })
   })
 
-  it('cy.clearAllSessionStorage() - clear all data in sessionStorage for all origins', () => {
+  it('cy.clearAllSessionStorage() - clear all data in sessionStorage for all origins', function () {
     // https://on.cypress.io/clearallsessionstorage
     cy.get('.ls-btn').click()
 

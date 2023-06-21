@@ -4,18 +4,18 @@
 // the built-in JavaScript bundler
 const requiredExample = require('../../fixtures/example')
 
-context('Files', () => {
-  beforeEach(() => {
+context('Files', function () {
+  beforeEach(function () {
     cy.visit('https://example.cypress.io/commands/files')
   })
 
-  beforeEach(() => {
+  beforeEach(function () {
     // load example.json fixture file and store
     // in the test context object
     cy.fixture('example.json').as('example')
   })
 
-  it('cy.fixture() - load a fixture', () => {
+  it('cy.fixture() - load a fixture', function () {
     // https://on.cypress.io/fixture
 
     // Instead of writing a response inline you can
@@ -46,7 +46,7 @@ context('Files', () => {
       .should('deep.equal', requiredExample)
   })
 
-  it('cy.readFile() - read file contents', () => {
+  it('cy.readFile() - read file contents', function () {
     // https://on.cypress.io/readfile
 
     // You can read a file and yield its contents
@@ -56,7 +56,7 @@ context('Files', () => {
     })
   })
 
-  it('cy.writeFile() - write to a file', () => {
+  it('cy.writeFile() - write to a file', function () {
     // https://on.cypress.io/writefile
 
     // You can write to a file

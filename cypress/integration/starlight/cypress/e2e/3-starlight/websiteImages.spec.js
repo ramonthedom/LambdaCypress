@@ -1,4 +1,4 @@
-describe('Checking for broken images on Starlight Music pages', () => {
+describe('Checking for broken images on Starlight Music pages', function () {
   const pagesToCheck = [
     '/',
     '/band/onyx-nyc-wedding-band',
@@ -47,8 +47,8 @@ describe('Checking for broken images on Starlight Music pages', () => {
   ]
 
   pagesToCheck.forEach((page) => {
-    context(`On page ${page}`, () => {
-      it('should not have any broken images', () => {
+    context(`On page ${page}`, function () {
+      it('should not have any broken images', function () {
         cy.visit(`https://www.starlightmusic.com${page}`)
         cy.get('img').each((img) => {
           cy.request(img.prop('src'))

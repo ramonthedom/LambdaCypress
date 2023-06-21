@@ -1,16 +1,16 @@
 /// <reference types="cypress" />
 
-context('Location', () => {
-  beforeEach(() => {
+context('Location', function () {
+  beforeEach(function () {
     cy.visit('https://example.cypress.io/commands/location')
   })
 
-  it('cy.hash() - get the current URL hash', () => {
+  it('cy.hash() - get the current URL hash', function () {
     // https://on.cypress.io/hash
     cy.hash().should('be.empty')
   })
 
-  it('cy.location() - get window.location', () => {
+  it('cy.location() - get window.location', function () {
     // https://on.cypress.io/location
     cy.location().should((location) => {
       expect(location.hash).to.be.empty
@@ -25,7 +25,7 @@ context('Location', () => {
     })
   })
 
-  it('cy.url() - get the current URL', () => {
+  it('cy.url() - get the current URL', function () {
     // https://on.cypress.io/url
     cy.url().should('eq', 'https://example.cypress.io/commands/location')
   })

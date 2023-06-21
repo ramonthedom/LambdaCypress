@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
-context('Viewport', () => {
-  beforeEach(() => {
+context('Viewport', function () {
+  beforeEach(function () {
     cy.visit('https://example.cypress.io/commands/viewport')
   })
 
-  it('cy.viewport() - set the viewport size and dimension', () => {
+  it('cy.viewport() - set the viewport size and dimension', function () {
     // https://on.cypress.io/viewport
 
     cy.get('#navbar').should('be.visible')

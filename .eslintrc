@@ -14,6 +14,10 @@
   },
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": "off" }],
-    "mocha/no-exclusive-tests": "error"
+    "mocha/no-exclusive-tests": "error",
+    "mocha/max-top-level-suites": "off",
+    "mocha/no-identical-title": "off",
+    "mocha/no-setup-in-describe": "off",
+    "mocha/no-sibling-hooks": "off"
   }
 }

@@ -1,6 +1,6 @@
-describe('Testing the API for the Starlight Band Service', () => {
+describe('Testing the API for the Starlight Band Service', function () {
   // const baseUrl = 'https://star-api.starlightmusic.com/';
-  it('starbridge login service should be running', () => {
+  it('starbridge login service should be running', function () {
     cy.visit(`https://star-api.starlightmusic.com/bridgelogin`) // Replace with the actual path to your HTML file
 
     cy.contains('hello this is the star bridge login service')
@@ -8,22 +8,22 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 })
 
-describe('Testing the API for the Starlight Band Service', () => {
+describe('Testing the API for the Starlight Band Service', function () {
   // Define the base url for the API.
   const baseUrl = 'https://star-api.starlightmusic.com/'
 
   // check starbridge login service
-  it('starbridge login service should be running', () => {
+  it('starbridge login service should be running', function () {
     cy.visit(`${baseUrl}/bridgelogin`) // Replace with the actual path to your HTML file
 
     cy.contains('pre', `{"msg":"hello this is the star bridge login service"}`)
       .should('be.visible')
   })
 
-  describe('Testing the API for the Starlight Band Service', () => {
+  describe('Testing the API for the Starlight Band Service', function () {
     const baseUrl = 'https://star-api.starlightmusic.com/'
 
-    it('starbridge login service should be running', () => {
+    it('starbridge login service should be running', function () {
       cy.visit(`${baseUrl}/bridgelogin`) // Replace with the actual path to your HTML file
 
       cy.contains('pre', `{"msg":"hello this is the star bridge login service"}`)
@@ -35,7 +35,7 @@ describe('Testing the API for the Starlight Band Service', () => {
       .should('be.visible')
 
   // check starbridge login service
-  it('starbridge login service should be running', () => {
+  it('starbridge login service should be running', function () {
     cy.request({
       url: `${baseUrl}/bridgelogin`,
       method: 'GET',
@@ -45,7 +45,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge user service;
-  it('starbridge user service should be running', () => {
+  it('starbridge user service should be running', function () {
     cy.request({
       url: `${baseUrl}/bridgeuser`,
       method: 'GET',
@@ -55,7 +55,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge client service
-  it('starbridge client service should be running', () => {
+  it('starbridge client service should be running', function () {
     cy.request({
       url: `${baseUrl}/bridgeclient`,
       method: 'GET',
@@ -65,7 +65,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge mail service
-  it('starbridge mail service should be running', () => {
+  it('starbridge mail service should be running', function () {
     cy.request({
       url: `${baseUrl}/bridgemail`,
       method: 'GET',
@@ -75,7 +75,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge maintenance service
-  it('starbridge maintenance service should be running', () => {
+  it('starbridge maintenance service should be running', function () {
     cy.request({
       url: `${baseUrl}/maintenance`,
       method: 'GET',
@@ -85,7 +85,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge sms service
-  it('starbridge sms service should be running', () => {
+  it('starbridge sms service should be running', function () {
     cy.request({
       url: `${baseUrl}/bridgesms`,
       method: 'GET',
@@ -95,7 +95,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starlight users service
-  it('starlight users service should be running', () => {
+  it('starlight users service should be running', function () {
     cy.request({
       url: `${baseUrl}/user`,
       method: 'GET',
@@ -105,7 +105,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge CMS service
-  it('starbridge CMS service should be running', () => {
+  it('starbridge CMS service should be running', function () {
     cy.request({
       url: `${baseUrl}/cms`,
       method: 'GET',
@@ -115,7 +115,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starlight band service
-  it('starlight band service should be running', () => {
+  it('starlight band service should be running', function () {
     cy.request({
       url: `${baseUrl}/starlightband`,
       method: 'GET',
@@ -125,7 +125,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge band service
-  it('starbridge band service should be running', () => {
+  it('starbridge band service should be running', function () {
     cy.request({
       url: `${baseUrl}/band`,
       method: 'GET',
@@ -135,7 +135,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starlight event service
-  it('starlight event service should be running', () => {
+  it('starlight event service should be running', function () {
     cy.request({
       url: `${baseUrl}/events`,
       method: 'GET',
@@ -145,7 +145,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge event service
-  it('starbridge event service should be running', () => {
+  it('starbridge event service should be running', function () {
     cy.request({
       url: `${baseUrl}/bridgeevent`,
       method: 'GET',
@@ -155,10 +155,10 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 })
 
-describe('Testing the API for the Starlight Band Service', () => {
+describe('Testing the API for the Starlight Band Service', function () {
   const baseUrl = 'https://star-api.starlightmusic.com/'
 
-  it('starbridge login service should be running', () => {
+  it('starbridge login service should be running', function () {
     cy.visit(`${baseUrl}/bridgelogin`) // Replace with the actual path to your HTML file
 
     cy.contains('pre', `{"msg":"hello this is the star bridge login service"}`)

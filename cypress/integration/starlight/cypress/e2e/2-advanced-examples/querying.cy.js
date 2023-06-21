@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 
-context('Querying', () => {
-  beforeEach(() => {
+context('Querying', function () {
+  beforeEach(function () {
     cy.visit('https://example.cypress.io/commands/querying')
   })
 
   // The most commonly used query is 'cy.get()', you can
   // think of this like the '$' in jQuery
 
-  it('cy.get() - query DOM elements', () => {
+  it('cy.get() - query DOM elements', function () {
     // https://on.cypress.io/get
 
     cy.get('#query-btn').should('contain', 'Button')
@@ -39,7 +39,7 @@ context('Querying', () => {
       .and('have.css', 'position', 'static')
   })
 
-  it('cy.contains() - query DOM elements with matching content', () => {
+  it('cy.contains() - query DOM elements with matching content', function () {
     // https://on.cypress.io/contains
     cy.get('.query-list')
       .contains('bananas')
@@ -65,7 +65,7 @@ context('Querying', () => {
       .should('have.class', 'btn')
   })
 
-  it('.within() - query DOM elements within a specific element', () => {
+  it('.within() - query DOM elements within a specific element', function () {
     // https://on.cypress.io/within
     cy.get('.query-form').within(() => {
       cy.get('input:first').should('have.attr', 'placeholder', 'Email')
@@ -73,7 +73,7 @@ context('Querying', () => {
     })
   })
 
-  it('cy.root() - query the root DOM element', () => {
+  it('cy.root() - query the root DOM element', function () {
     // https://on.cypress.io/root
 
     // By default, root is the document
@@ -85,7 +85,7 @@ context('Querying', () => {
     })
   })
 
-  it('best practices - selecting elements', () => {
+  it('best practices - selecting elements', function () {
     // https://on.cypress.io/best-practices#Selecting-Elements
     cy.get('[data-cy=best-practices-selecting-elements]').within(() => {
       // Worst - too generic, no context

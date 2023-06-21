@@ -1,4 +1,4 @@
-describe('Checking for broken images on Bandazon pages', () => {
+describe('Checking for broken images on Bandazon pages', function () {
   const mainPagesToCheck = [
     '/meet-the-team',
   ]
@@ -14,7 +14,7 @@ describe('Checking for broken images on Bandazon pages', () => {
   }
 
   // Check for broken images on the main pages.
-  it('should be check all images on main pages', () => {
+  it('should be check all images on main pages', function () {
     mainPagesToCheck.forEach(checkForBrokenImages)
   })
 })

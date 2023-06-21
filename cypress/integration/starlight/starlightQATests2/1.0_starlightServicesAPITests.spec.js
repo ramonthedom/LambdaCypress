@@ -1,4 +1,4 @@
-describe('Testing the API for the Starlight Band Service', () => {
+describe('Testing the API for the Starlight Band Service', function () {
   // Define the base url for the API.
   const baseUrl = 'https://star-api.starlightmusic.com/'
 
@@ -16,7 +16,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   const bridgeevent = 'bridgeevent' //4012
 
   // Check starbridge login service 4000
-  it('starbridge login service 4000 should be running', () => {
+  it('starbridge login service 4000 should be running', function () {
     const url = baseUrl + bridgelogin
 
     cy.request('GET', url)
@@ -26,7 +26,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge user service 4001;
-  it('starbridge user service 4001 should be running', () => {
+  it('starbridge user service 4001 should be running', function () {
     const url = baseUrl + bridgeuser
 
     cy.request('GET', url)
@@ -36,7 +36,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge client service 4002
-  it('starbridge client service 4002 should be running', () => {
+  it('starbridge client service 4002 should be running', function () {
     const url = baseUrl + bridgeclient
 
     cy.request('GET', url)
@@ -55,7 +55,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   // });
 
   // check starbridge maintenance service 4004
-  it('starbridge maintenance service 4004 should be running', () => {
+  it('starbridge maintenance service 4004 should be running', function () {
     const url = baseUrl + maintenance
 
     cy.request('GET', url)
@@ -65,7 +65,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge sms service 4006
-  it('starbridge sms service 4006 should be running', () => {
+  it('starbridge sms service 4006 should be running', function () {
     const url = baseUrl + bridgesms
 
     cy.request('GET', url)
@@ -75,7 +75,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starlight users service 4007
-  it('starlight users service 4007 should be running', () => {
+  it('starlight users service 4007 should be running', function () {
     const url = baseUrl + user
 
     cy.request('GET', url)
@@ -85,7 +85,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge CMS service 4008
-  it('starbridge CMS service 4008 should be running', () => {
+  it('starbridge CMS service 4008 should be running', function () {
     const url = baseUrl + cms
 
     cy.request('GET', url)
@@ -95,7 +95,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starlight band service 4009
-  it('starlight band service 4009 should be running', () => {
+  it('starlight band service 4009 should be running', function () {
     const url = baseUrl + starlightband
 
     cy.request('GET', url)
@@ -105,7 +105,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge band service 4010
-  it('starbridge band service 4010 should be running', () => {
+  it('starbridge band service 4010 should be running', function () {
     const url = baseUrl + band
 
     cy.request('GET', url)
@@ -115,7 +115,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starlight event service 4011
-  it('starlight event service 4011 should be running', () => {
+  it('starlight event service 4011 should be running', function () {
     const url = baseUrl + events
 
     cy.request('GET', url)
@@ -125,7 +125,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check starbridge event service 4012
-  it('starbridge event service 4012 should be running', () => {
+  it('starbridge event service 4012 should be running', function () {
     const url = baseUrl + bridgeevent
 
     cy.request('GET', url)

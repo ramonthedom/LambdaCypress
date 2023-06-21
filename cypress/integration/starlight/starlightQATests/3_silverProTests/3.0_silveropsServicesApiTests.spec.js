@@ -1,4 +1,4 @@
-describe('Testing the API for the Starlight Band Service', () => {
+describe('Testing the API for the Starlight Band Service', function () {
   // Define the base url for the API.
   const baseUrl = 'https://star-api.starlightmusic.com/'
 
@@ -18,7 +18,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   const silopsevent = 'silopsevent'
 
   // Check silopslogin
-  it('silopslogin should be running', () => {
+  it('silopslogin should be running', function () {
     const url = baseUrl + silopslogin
 
     cy.request('GET', url)
@@ -28,7 +28,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silopsuser
-  it('silopsuser should be running', () => {
+  it('silopsuser should be running', function () {
     const url = baseUrl + silopsuser
 
     cy.request('GET', url)
@@ -38,7 +38,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silopsclient
-  it('silopsclient should be running', () => {
+  it('silopsclient should be running', function () {
     const url = baseUrl + silopsclient
 
     cy.request('GET', url)
@@ -57,7 +57,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   //   });
 
   // check silopsmaintenance
-  it('silopsmaintenance should be running', () => {
+  it('silopsmaintenance should be running', function () {
     const url = baseUrl + silopsmaintenance
 
     cy.request('GET', url)
@@ -67,7 +67,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silopssms
-  it('silopssms should be running', () => {
+  it('silopssms should be running', function () {
     const url = baseUrl + silopssms
 
     cy.request('GET', url)
@@ -77,7 +77,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silprouser
-  it('silprouser should be running', () => {
+  it('silprouser should be running', function () {
     const url = baseUrl + silprouser
 
     cy.request('GET', url)
@@ -87,7 +87,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silprocms
-  it('silprocms should be running', () => {
+  it('silprocms should be running', function () {
     const url = baseUrl + silprocms
 
     cy.request('GET', url)
@@ -97,7 +97,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silproband
-  it('silproband should be running', () => {
+  it('silproband should be running', function () {
     const url = baseUrl + silproband
 
     cy.request('GET', url)
@@ -107,7 +107,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silopsband
-  it('silopsband should be running', () => {
+  it('silopsband should be running', function () {
     const url = baseUrl + silopsband
 
     cy.request('GET', url)
@@ -117,7 +117,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silproevent
-  it('silproevent should be running', () => {
+  it('silproevent should be running', function () {
     const url = baseUrl + silproevent
 
     cy.request('GET', url)
@@ -127,7 +127,7 @@ describe('Testing the API for the Starlight Band Service', () => {
   })
 
   // check silopsevent
-  it('silopsevent should be running', () => {
+  it('silopsevent should be running', function () {
     const url = baseUrl + silopsevent
 
     cy.request('GET', url)

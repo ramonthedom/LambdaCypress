@@ -1,14 +1,14 @@
 /// <reference types="cypress" />
 
-context('Waiting', () => {
-  beforeEach(() => {
+context('Waiting', function () {
+  beforeEach(function () {
     cy.visit('http://example.cypress.io/commands/waiting')
   })
   // BE CAREFUL of adding unnecessary wait times.
   // https://on.cypress.io/best-practices#Unnecessary-Waiting
 
   // https://on.cypress.io/wait
-  it('cy.wait() - wait for a specific amount of time', () => {
+  it('cy.wait() - wait for a specific amount of time', function () {
     cy.get('.wait-input1').type('Wait 1000ms after typing')
     cy.wait(1000)
     cy.get('.wait-input2').type('Wait 1000ms after typing')
@@ -17,7 +17,7 @@ context('Waiting', () => {
     cy.wait(1000)
   })
 
-  it('cy.wait() - wait for a specific route', () => {
+  it('cy.wait() - wait for a specific route', function () {
     // Listen to GET to comments/1
     cy.intercept('GET', '**/comments/*').as('getComment')
 
