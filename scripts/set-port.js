@@ -7,6 +7,7 @@ const { readFileSync, writeFileSync } = require('fs')
 // So we need to replace hardcoded port 8080 with process.env.PORT
 // in all our example specs and then run the tests
 
+// with "git checkout cypress/integration/examples" command
 // if doing it locally, you can change back to the original port
 // with "git restore ." command
 
@@ -30,7 +31,7 @@ console.log('replacing "%s" with "%s" in all spec files', input, newUrl)
 const getSpecFilenames = () => {
   const globby = require('globby')
 
-  return globby(['cypress/e2e/**/*.cy.js'])
+  return globby(['cypress/integration/**/*.spec.js'])
 }
 
 const replacePort = (filename) => {
