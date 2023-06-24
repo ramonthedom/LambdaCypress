@@ -1,7 +1,7 @@
 describe('Checking for broken images on Silver Pro pages', () => {
 
   const mainPagesToCheck = [
-    '/contact-us'
+    '/contact'
   ];
 
   // Define a function to check for broken images.
