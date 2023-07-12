@@ -20,10 +20,7 @@
       "specs": "./cypress/integration/starlight/starlightQATests/**/*.spec.js",
       "ignore_files": "",
       "network": false,
-      "headless": false,
-      "npm_dependencies": {
-         "cypress": "9.6"
-      }
+      "headless": false
    },
    "tunnel_settings": {
       "tunnel": false,
