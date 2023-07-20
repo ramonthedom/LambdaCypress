@@ -1,0 +1,29 @@
+{
+   "lambdatest_auth": {
+      "username": "ramonstarlightmusic",
+      "access_key": "f0RQN04IYfCSbhawr6cM2KNeHrtuQUOXoxdMhqHLssXpA3tZiG"
+   },
+   "browsers": [
+      {
+         "browser": "Chrome",
+         "platform": "Windows 10",
+         "versions": [
+            "latest-1"
+         ]
+      }
+   ],
+   "run_settings": {
+      "cypress_config_file": "cypress.json",
+      "reporter_config_file": "base_reporter_config.json",
+      "build_name": "starlight-tests-test-new-function-suite",
+      "parallels": 1,
+      "specs": "./cypress/integration/starlight/starlightQATests/1_starlightTests/*.spec.js",
+      "ignore_files": "",
+      "network": false,
+      "headless": false
+   },
+   "tunnel_settings": {
+      "tunnel": false,
+      "tunnel_name": null
+   }
+}
