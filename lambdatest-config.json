@@ -33,7 +33,7 @@
     "parallels": 1,
     "specs": "./cypress/integration/starlight/starlightQATests/**/*.spec.js",
     "ignore_files": "",
-    "network": false,
+    "network": true,
     "headless": false
   },
   "tunnel_settings": {
