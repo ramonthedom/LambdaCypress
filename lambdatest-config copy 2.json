@@ -5,10 +5,24 @@
   },
   "browsers": [
     {
+      "browser": "Chrome",
+      "platform": "Windows 10",
+      "versions": [
+        "latest-1"
+      ]
+    },
+    {
       "browser": "Webkit",
       "platform": "macOS Mojave",
       "versions": [
         "14604.1.38"
+      ]
+    },
+    {
+      "browser": "Webkit",
+      "platform": "macOS Catalina",
+      "versions": [
+        "14605.1.28"
       ]
     }
   ],
