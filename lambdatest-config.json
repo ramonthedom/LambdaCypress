@@ -12,17 +12,17 @@
       ]
     },
     {
-      "browser": "Safari",
+      "browser": "Webkit",
       "platform": "macOS Mojave",
       "versions": [
-        "latest-1"
+        "lat14604.1.38"
       ]
     },
     {
-      "browser": "Safari",
+      "browser": "Webkit",
       "platform": "macOS Catalina",
       "versions": [
-        "latest-1"
+        "14605.1.28"
       ]
     }
   ],
