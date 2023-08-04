@@ -5,10 +5,10 @@
   },
   "browsers": [
     {
-      "browser": "Webkit",
+      "browser": "Firefox",
       "platform": "macOS Mojave",
       "versions": [
-        "14604.1.38"
+        "latest", "latest-1"
       ]
     }
   ],
