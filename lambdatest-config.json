@@ -10,6 +10,20 @@
       "versions": [
         "latest-1"
       ]
+    },
+    {
+      "browser": "Safari",
+      "platform": "macOS Mojave",
+      "versions": [
+        "latest-1"
+      ]
+    },
+    {
+      "browser": "Safari",
+      "platform": "macOS Catalina",
+      "versions": [
+        "latest-1"
+      ]
     }
   ],
   "run_settings": {
