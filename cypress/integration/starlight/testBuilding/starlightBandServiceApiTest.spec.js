@@ -1,115 +1,45 @@
 /// BACKEND ///
-before(function() {
-
-  const user_email = "sqatesting.dl@gmail.com"
-  const user_password = "SQATesting1553!$"
-  // log in here
-  cy.visit("https://starbridge.starlightmusic.com")
-    cy.viewport(1728, 1000);
-    cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
-
-    // ENTER USER INFO
-    cy.get('#user_email').type(user_email)
-    cy.get('[data-test=user_password]').type(user_password)
-
-    cy.get('.login_btn').click();
-    cy.get('[data-test=login_form]').submit();
-    cy.get('.login_form_heading').should('contain.text', 'Verification Code')
-
-    // FETCH OTP
-    cy.request({
-      method: 'POST',
-      url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/fetch',
-    }).wait(3000)
-    .then((response) => {
-      expect(response.status).to.eq(200); // assert status code
-      // Further checks based on the response
-      var otp = response.body;
-      cy.log('Returned OTP: ', otp);
-
-      // Convert to string if it's not
-      if (typeof otp !== 'string') {
-        otp = otp.toString();
-      }
-
-      expect(otp.length).to.eq(6);
-
-      // Split the returned data into an array of characters
-      const characters = otp.split('');
-
-      // Loop through the array and input each character into the corresponding form field
-      characters.forEach((char, index) => {
-        cy.get(`.otp_input_form:nth-child(${index + 1}) > input`).type(char);
-      });
-
-    });
-
-  // Login
-  cy.wait(3000);
-  cy.get('.login_btn').click().wait(3000);
-
-    cy.get('body').then(($body) => {
-      if ($body.find('[style="color: red;"]:contains("Wrong otp")').length) {
-        // The element with style "color: red;" containing "Wrong otp" exists
-        cy.log('Element with "Wrong otp" found');
-        cy.get('.error-resend').click();
-        makeRequest()
-      } else {
-        // The element does not exist
-        cy.log('Element with "Wrong otp" not found');
-      }
-    });
-
-    // cy.get('[data-test=otpForm]').submit();
-
-    console.log("LOGIN SUCCESS")
-
-    
-
-} )
 
 // login
-describe('Backend Login Success', function () {
+describe('Check User Starbridge Sections', function () {
 
-  it('visit login page', function () {
-
-    const user_email = "sqatesting.dl@gmail.com"
+  const user_email = "sqatesting.dl@gmail.com"
     const user_password = "SQATesting1553!$"
 
-    // function makeRequest() {
-    //   // FETCH OTP
-    //   cy.request({
-    //       method: 'POST',
-    //       url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/fetch',
-    //     }).wait(3000)
-    //     .then((response) => {
-    //       expect(response.status).to.eq(200); // assert status code
-    //       // Further checks based on the response
-    //       var otp = response.body;
-    //       cy.log('Returned OTP: ', otp);
+    function makeRequest() {
+      // FETCH OTP
+      cy.request({
+          method: 'POST',
+          url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/fetch',
+        }).wait(3000)
+        .then((response) => {
+          expect(response.status).to.eq(200); // assert status code
+          // Further checks based on the response
+          var otp = response.body;
+          cy.log('Returned OTP: ', otp);
 
-    //       // Convert to string if it's not
-    //       if (typeof otp !== 'string') {
-    //         otp = otp.toString();
-    //       }
+          // Convert to string if it's not
+          if (typeof otp !== 'string') {
+            otp = otp.toString();
+          }
 
-    //       expect(otp.length).to.eq(6);
+          expect(otp.length).to.eq(6);
 
-    //       // Split the returned data into an array of characters
-    //       const characters = otp.split('');
+          // Split the returned data into an array of characters
+          const characters = otp.split('');
 
-    //       // Loop through the array and input each character into the corresponding form field
-    //       characters.forEach((char, index) => {
-    //         cy.get(`.otp_input_form:nth-child(${index + 1}) > input`).type(char);
-    //       });
+          // Loop through the array and input each character into the corresponding form field
+          characters.forEach((char, index) => {
+            cy.get(`.otp_input_form:nth-child(${index + 1}) > input`).type(char);
+          });
 
-    //     });
+        });
 
-    //   // Login
-    //   cy.wait(3000);
-    //   cy.get('.login_btn').click().wait(3000);
+      // Login
+      cy.wait(3000);
+      cy.get('.login_btn').click().wait(3000);
 
-    // }
+    }
 
     function checkBasicInfoSection() {
       cy.contains('h3', 'Booked By').should('exist'); //h3 containing "Booked By" should exist
@@ -272,84 +202,38 @@ describe('Backend Login Success', function () {
       });
     }
 
+  it('Check Events Section', function () {
 
+    cy.visit("https://starbridge.starlightmusic.com")
+    cy.viewport(1728, 1000);
+    cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
 
-    // cy.visit("https://starbridge.starlightmusic.com")
-    // cy.viewport(1728, 1000);
-    // cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
+    // ENTER USER INFO
+    cy.get('#user_email').type(user_email)
+    cy.get('[data-test=user_password]').type(user_password)
 
-    // // ENTER USER INFO
-    // cy.get('#user_email').type(user_email)
-    // cy.get('[data-test=user_password]').type(user_password)
+    cy.get('.login_btn').click();
+    cy.get('[data-test=login_form]').submit();
+    cy.get('.login_form_heading').should('contain.text', 'Verification Code')
 
-    // cy.get('.login_btn').click();
-    // cy.get('[data-test=login_form]').submit();
-    // cy.get('.login_form_heading').should('contain.text', 'Verification Code')
+    makeRequest()
+    // UNCHECK REMEMBER ME
 
-    // makeRequest()
-    // // UNCHECK REMEMBER ME
+    cy.get('body').then(($body) => {
+      if ($body.find('[style="color: red;"]:contains("Wrong otp")').length) {
+        cy.log('Element with "Wrong otp" found'); // The element with style "color: red;" containing "Wrong otp" exists
+        cy.get('.error-resend').click();
+        makeRequest()
+      } else {
+        cy.log('Element with "Wrong otp" not found'); // The element does not exist
+      }
+    });
 
-    // cy.get('body').then(($body) => {
-    //   if ($body.find('[style="color: red;"]:contains("Wrong otp")').length) {
-    //     // The element with style "color: red;" containing "Wrong otp" exists
-    //     cy.log('Element with "Wrong otp" found');
-    //     cy.get('.error-resend').click();
-    //     makeRequest()
-    //   } else {
-    //     // The element does not exist
-    //     cy.log('Element with "Wrong otp" not found');
-    //   }
-    // });
+    // cy.get('[data-test=otpForm]').submit();
 
-    // // cy.get('[data-test=otpForm]').submit();
+    console.log("LOGIN SUCCESS")
 
-    // console.log("LOGIN SUCCESS")
-
-    // ~~~~~~~~~~~~ //
-    // 1. DASHBOARD //
-    // ~~~~~~~~~~~~ //
-
-    // 1. Dashboard
-    cy.contains('a', 'Dashboard').should('exist').click();
-    cy.contains('.dashboard_heading', 'Dashboard').should('exist');
-
-
-    //  ~~~~~~~~~~~~ //
-    //  2. MY BAND //
-    //   ~~~~~~~~~~~~ //
-
-    // 2. My Band
-    cy.contains('a', 'My Band').should('exist').click();
-
-    /// 2.1. Subsection - Basic Information
-    cy.contains('div', 'Basic Information').should('exist').click();
-    cy.contains('div', 'General Information').should('exist').click();
-    cy.contains('h6', 'Band Name').should('exist');
-
-    /// 2.2. Subsection - Song List
-    cy.contains('div', 'Song List').should('exist').click();
-    cy.get('.myBand_add_new_song_btn').should('exist');
-
-    /// 2.3. Subsection - Band Availability    
-    cy.contains('div', 'Band Availability').should('exist').click().then(() => {
-      cy.contains('.ml-2', "Marked Unavailable").should('exist');
-    })
-
-    /// 2.4. Subsection - Gig Info
-    cy.contains('div', 'Gig Info').should('exist').click();
-    cy.contains('div', 'Sorting').should('exist').click();
-    cy.contains('span', 'Event Details').should('exist');
-    cy.contains('div', 'Styling').should('exist').click();
-    cy.contains('h5', 'Segments').should('exist');
-
-    // ~~~~~~~~~~ //
-    // 3. LEADS   //
-    // ~~~~~~~~~~ //
-
-    // 2. Leads
-    cy.contains('a', 'Leads').should('exist').click();
-    cy.get('a > .leads-table-css-container').should('exist');
-
+    
     // ~~~~~~~~~~ //
     // 4. EVENTS   //
     // ~~~~~~~~~~ //
@@ -657,7 +541,88 @@ describe('Backend Login Success', function () {
     });
 
 
-    //~~~~~~~~~~~~~~//
+   
+  })
+
+  it('Check All other sections', function() {
+
+    cy.visit("https://starbridge.starlightmusic.com")
+    cy.viewport(1728, 1000);
+    cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
+
+    // ENTER USER INFO
+    cy.get('#user_email').type(user_email)
+    cy.get('[data-test=user_password]').type(user_password)
+
+    cy.get('.login_btn').click();
+    cy.get('[data-test=login_form]').submit();
+    cy.get('.login_form_heading').should('contain.text', 'Verification Code')
+
+    makeRequest()
+    // UNCHECK REMEMBER ME
+
+    cy.get('body').then(($body) => {
+      if ($body.find('[style="color: red;"]:contains("Wrong otp")').length) {
+        // The element with style "color: red;" containing "Wrong otp" exists
+        cy.log('Element with "Wrong otp" found');
+        cy.get('.error-resend').click();
+        makeRequest()
+      } else {
+        // The element does not exist
+        cy.log('Element with "Wrong otp" not found');
+      }
+    });
+
+    // cy.get('[data-test=otpForm]').submit();
+
+    console.log("LOGIN SUCCESS")
+
+    // ~~~~~~~~~~~~ //
+    // 1. DASHBOARD //
+    // ~~~~~~~~~~~~ //
+
+    // 1. Dashboard
+    cy.contains('a', 'Dashboard').should('exist').click();
+    cy.contains('.dashboard_heading', 'Dashboard').should('exist');
+
+
+    //  ~~~~~~~~~~~~ //
+    //  2. MY BAND //
+    //   ~~~~~~~~~~~~ //
+
+    // 2. My Band
+    cy.contains('a', 'My Band').should('exist').click();
+
+    /// 2.1. Subsection - Basic Information
+    cy.contains('div', 'Basic Information').should('exist').click();
+    cy.contains('div', 'General Information').should('exist').click();
+    cy.contains('h6', 'Band Name').should('exist');
+
+    /// 2.2. Subsection - Song List
+    cy.contains('div', 'Song List').should('exist').click();
+    cy.get('.myBand_add_new_song_btn').should('exist');
+
+    /// 2.3. Subsection - Band Availability    
+    cy.contains('div', 'Band Availability').should('exist').click().then(() => {
+      cy.contains('.ml-2', "Marked Unavailable").should('exist');
+    })
+
+    /// 2.4. Subsection - Gig Info
+    cy.contains('div', 'Gig Info').should('exist').click();
+    cy.contains('div', 'Sorting').should('exist').click();
+    cy.contains('span', 'Event Details').should('exist');
+    cy.contains('div', 'Styling').should('exist').click();
+    cy.contains('h5', 'Segments').should('exist');
+
+    // ~~~~~~~~~~ //
+    // 3. LEADS   //
+    // ~~~~~~~~~~ //
+
+    // 2. Leads
+    cy.contains('a', 'Leads').should('exist').click();
+    cy.get('a > .leads-table-css-container').should('exist');
+
+     //~~~~~~~~~~~~~~//
     // 5. CONTRACTS //
     //~~~~~~~~~~~~~~//
 
@@ -922,7 +887,10 @@ describe('Backend Login Success', function () {
         })
       });
     })
+
+
   })
+
 
 });
 
