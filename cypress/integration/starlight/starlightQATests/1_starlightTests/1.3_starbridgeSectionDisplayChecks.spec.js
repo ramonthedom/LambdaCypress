@@ -6,11 +6,12 @@
 describe('Check User Starbridge Sections', function () {
 
   beforeEach(() => {
+
+    // const user_email = "sqatesting.dl@gmail.com"
+    // const user_password = "SQATesting1553!$"
+
     cy.login("sqatesting.dl@gmail.com", "SQATesting1553!$");
   })
-
-  // const user_email = "sqatesting.dl@gmail.com"
-  // const user_password = "SQATesting1553!$"
 
   function makeRequest() {
     // FETCH OTP
