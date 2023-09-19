@@ -1,4 +1,5 @@
 {
   "projectId": "n54w4o",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "experimentalSessionSupport": true
 }
