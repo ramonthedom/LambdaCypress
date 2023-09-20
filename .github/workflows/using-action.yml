@@ -19,7 +19,7 @@ jobs:
 
   parallel-runs:
     name: Parallel 4x
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       # when one test fails, DO NOT cancel the other
       # containers, because this will kill Cypress processes
