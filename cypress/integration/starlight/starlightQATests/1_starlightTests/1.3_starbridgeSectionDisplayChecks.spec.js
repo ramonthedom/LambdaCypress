@@ -7,10 +7,17 @@ describe('Check User Starbridge Sections', function () {
 
   beforeEach(() => {
 
-    // const user_email = "sqatesting.dl@gmail.com"
-    // const user_password = "SQATesting1553!$"
+    const user_email = "sqatesting.dl@gmail.com"
+    const user_password = "SQATesting1553!$"
 
-    cy.login("sqatesting.dl@gmail.com", "SQATesting1553!$");
+    let myParams = {
+      my_db: 'starlight',
+      my_collection: 'userOtpManager',
+      my_id: '64c1ecc42d56ce0ab99204f3', // user_id associated with OTP when OTP sent
+      id_type: 'user' // or client
+    };
+
+    cy.login(user_email, user_password, myParams);
   })
 
   function makeRequest() {

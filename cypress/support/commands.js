@@ -24,13 +24,14 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('login', (username, password) => {
+Cypress.Commands.add('login', (username, password, params) => {
     {
         function makeRequest() {
             // FETCH OTP
             cy.request({
                 method: 'POST',
                 url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/fetch',
+                body: params
               }).wait(3000)
               .then((response) => {
                 expect(response.status).to.eq(200); // assert status code
