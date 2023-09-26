@@ -20,41 +20,6 @@ describe('Check User Starbridge Sections', function () {
     cy.login(user_email, user_password, myParams);
   })
 
-  function makeRequest() {
-    // FETCH OTP
-    cy.request({
-        method: 'POST',
-        url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/fetch',
-      }).wait(3000)
-      .then((response) => {
-        expect(response.status).to.eq(200); // assert status code
-        // Further checks based on the response
-        var otp = response.body;
-        cy.log('Returned OTP: ', otp);
-
-        // Convert to string if it's not
-        if (typeof otp !== 'string') {
-          otp = otp.toString();
-        }
-
-        expect(otp.length).to.eq(6);
-
-        // Split the returned data into an array of characters
-        const characters = otp.split('');
-
-        // Loop through the array and input each character into the corresponding form field
-        characters.forEach((char, index) => {
-          cy.get(`.otp_input_form:nth-child(${index + 1}) > input`).type(char);
-        });
-
-      });
-
-    // Login
-    cy.wait(3000);
-    cy.get('.login_btn').click().wait(3000);
-
-  }
-
   function checkBasicInfoSection() {
     cy.contains('h3', 'Booked By').should('exist'); //h3 containing "Booked By" should exist
     cy.contains('h3', 'Lead Origin').should('exist'); //h3 containing "Lead Origin" should exist
