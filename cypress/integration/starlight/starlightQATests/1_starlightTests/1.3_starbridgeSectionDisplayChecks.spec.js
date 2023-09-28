@@ -18,7 +18,7 @@ describe('Check User Starbridge Sections', function () {
       id_type: 'user' // or client
     };
 
-    cy.login(user_email, user_password, myParams);
+    cy.login(user_email, user_password, user_login_url, myParams);
   })
 
   function checkBasicInfoSection() {
