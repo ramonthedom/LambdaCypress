@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('login', (username, password, params) => {
+Cypress.Commands.add('login', (username, password, loginUrl, params) => {
     {
         function makeRequest() {
             // FETCH OTP
@@ -62,9 +62,9 @@ Cypress.Commands.add('login', (username, password, params) => {
         
           }
 
-        cy.session([username, password], () => 
+        cy.session([username, password, loginUrl], () => 
         {
-            cy.visit("https://starbridge.starlightmusic.com")
+            cy.visit(loginUrl)
             cy.viewport(1728, 1000);
             cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
 
