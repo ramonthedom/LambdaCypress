@@ -24,6 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+// const { param } = require("cypress/types/jquery");
+
 Cypress.Commands.add('login', (username, password, loginUrl, params) => {
     {
         function makeRequest() {
@@ -43,27 +45,37 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
                 if (typeof otp !== 'string') {
                   otp = otp.toString();
                 }
-        
-                expect(otp.length).to.eq(6);
+       
+                const expectedOtpLength = params.id_type === 'client' ? 4 : 6;
+                expect(otp.length).to.eq(expectedOtpLength);
+                // expect(otp.length).to.eq(6);
         
                 // Split the returned data into an array of characters
                 const characters = otp.split('');
         
                 // Loop through the array and input each character into the corresponding form field
                 characters.forEach((char, index) => {
-                  cy.get(`.otp_input_form:nth-child(${index + 1}) > input`).type(char);
-                });
-        
+                  if (params.id_type === 'user') {
+                    cy.get(`.otp_input_form:nth-child(${index + 1}) > input`).type(char);
+                  } else if (params.id_type === 'client') {
+                    cy.get(`.Header_otp_input_form__303Uy:nth-child(${index + 1}) > input`).type(char);
+                  } 
+                });        
               });
         
             // Login
             cy.wait(3000);
-            cy.get('.login_btn').click().wait(3000);
-        
+            if (params.id_type === 'user') {
+              cy.get('.login_btn').click().wait(3000);
+            } else if (params.id_type === 'client') {
+              cy.contains('button', 'Verify').click().wait(3000);
+            }  
           }
 
         cy.session([username, password, loginUrl], () => 
         {
+
+          if (params.id_type ==='user') {
             cy.visit(loginUrl)
             cy.viewport(1728, 1000);
             cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
@@ -74,7 +86,7 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
 
             cy.get('.login_btn').click();
             cy.get('[data-test=login_form]').submit();
-            cy.get('.login_form_heading').should('contain.text', 'Verification Code')
+            cy.get('.login_form_heading').should('contain.text', 'Verification Code');
 
             makeRequest()
             // UNCHECK REMEMBER ME
@@ -92,6 +104,41 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
 
             cy.contains('.dashboard_heading', 'Dashboard').should('exist');
 
+          } else if ((params.id_type ==='client')) {
+            cy.visit(loginUrl)
+            cy.viewport(1728, 1000);
+            cy.get('#login-signup-btn').click();
+            cy.wait(100);
+            cy.get('[data-test=test-Login]').should('exist');
+            cy.contains('p', 'New to Starlight Music').should('exist');
+
+            // cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
+
+            // ENTER USER INFO
+            cy.get('#user_email').type(username)
+            cy.get('[data-test=password]').type(password)
+
+            // cy.get('.login_btn').click();
+            cy.contains('button','Login').click();
+            cy.contains('h2', 'Verify OTP').should('exist');
+            // cy.get('[data-test=login_form]').submit();
+            // cy.get('.login_form_heading').should('contain.text', 'Verification Code');
+
+            makeRequest()
+
+            cy.contains('.ant-message-custom-content > :nth-child(2)', 'Logged in successfully').should('exist');
+            console.log("LOGIN SUCCESS")
+
+            cy.get('#welcome-btn').should('exist');
+            cy.scrollTo('bottom');
+            cy.wait(500);
+            cy.get('#dropdown-basic').should('exist').click();
+            cy.get('#my-account-link').should('exist').click();
+
+            cy.log('LOGIN SUCCESS');
+
+            cy.contains('h3', 'Dashboard').should('exist');
+          }
         }, 
         // {
         //     validate: () => {
