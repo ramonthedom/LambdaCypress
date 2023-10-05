@@ -138,10 +138,10 @@ describe('Check StarlightMusic Client Sections', function () {
     checkFinalsTimelineSection();
   }
 
-  /// corporate
-  function checkCorporateFinalsSection() {
+  /// non-wedding
+  function checkNonWeddingFinalsSection(eventInfoMainSectionHeading) {
     // Event Info
-    checkCorporateFinalsEventInfoSection()
+    checkNonWeddingFinalsEventInfoSection(eventInfoMainSectionHeading)
 
     // Blessings/Toast
     checkFinalsBlessingToastSection();
@@ -155,52 +155,9 @@ describe('Check StarlightMusic Client Sections', function () {
     // Timeline
     checkFinalsTimelineSection();
   }
-
-  /// holiday
-  function checkHolidayFinalsSection() {
-    // Event Info
-    checkHolidayFinalsEventInfoSection()
-
-    // Blessings/Toast
-    checkFinalsBlessingToastSection();
-
-    // Song List
-    checkFinalsSonglistSection();
-
-    // Production
-    checkFinalsProductionSection();
-
-    // Timeline
-    checkFinalsTimelineSection();
-  }
-
-  /// birthday
-  function checkBirthdayFinalsSection() {
-    // Event Info
-    checkBirthdayFinalsEventInfoSection()
-
-    // Blessings/Toast
-    checkFinalsBlessingToastSection();
-
-    // Song List
-    checkFinalsSonglistSection();
-
-    // Production
-    checkFinalsProductionSection();
-
-    // Timeline
-    checkFinalsTimelineSection();
-  }
-
-  // function checkReviewsSection() {
-  //   cy.contains('.nav-link', 'Reviews').should('exist').click().wait(500).then(() => {
-  //     cy.contains('button', 'Add Review +').should('exist'); // button, Add Review +, should exist
-  //     cy.contains('p', 'Rating').should('exist');
-  //   });
-  // }
 
   // EVENT INFO SECTIONS
-
+  /// wedding
   function checkWeddingFinalsEventInfoSection() {
     cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
       cy.contains('h3', 'Parents').should('exist'); // h3, 'Parents', should exist
@@ -211,29 +168,10 @@ describe('Check StarlightMusic Client Sections', function () {
     });
   }
 
-  function checkCorporateFinalsEventInfoSection() {
+  // non-wedding
+  function checkNonWeddingFinalsEventInfoSection(eventInfoMainSectionHeading) {
     cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
-      cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
-      cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
-      cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
-      cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
-      cy.contains('button', 'Save').should('exist');
-    });
-  }
-
-  function checkHolidayFinalsEventInfoSection() {
-    cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
-      cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
-      cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
-      cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
-      cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
-      cy.contains('button', 'Save').should('exist');
-    });
-  }
-
-  function checkBirthdayFinalsEventInfoSection() {
-    cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
-      cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
+      cy.contains('h3', eventInfoMainSectionHeading).should('exist'); // h3, 'Parents', should exist
       cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
       cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
       cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
@@ -426,7 +364,7 @@ describe('Check StarlightMusic Client Sections', function () {
 
       // 3.5. Finals
       cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-        checkCorporateFinalsSection()
+        checkNonWeddingFinalsSection("Guest(s) Of Honor")
       })
     })
   })
@@ -462,7 +400,7 @@ describe('Check StarlightMusic Client Sections', function () {
 
       // 3.5. Finals
       cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-        checkHolidayFinalsSection()
+        checkNonWeddingFinalsSection("Guest(s) Of Honor")
       })
     })
   })
@@ -498,7 +436,7 @@ describe('Check StarlightMusic Client Sections', function () {
 
       // 3.5 Finals
       cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-        checkBirthdayFinalsSection()
+        checkNonWeddingFinalsSection("Guest(s) Of Honor")
       })
     })
   })
