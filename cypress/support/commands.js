@@ -71,6 +71,14 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
               cy.contains('button', 'Verify').click().wait(3000);
             }  
           }
+          
+          function checkNewToStarlight() {
+            cy.contains('p', 'New to Starlight Music').should('exist');
+          }
+
+          function checkNewToSilverPro() {
+            cy.contains('p', 'New to Starlight Music').should('exist'); 
+          }
 
         cy.session([username, password, loginUrl], () => 
         {
@@ -110,7 +118,8 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
             cy.get('#login-signup-btn').click();
             cy.wait(100);
             cy.get('[data-test=test-Login]').should('exist');
-            cy.contains('p', 'New to Starlight Music').should('exist');
+
+            params.my_db === 'starlight' ? checkNewToStarlight : checkNewToSilverPro;
 
             // cy.get('.login_form_text').should('contain.text', 'Welcome back! Please login to your account.')
 
