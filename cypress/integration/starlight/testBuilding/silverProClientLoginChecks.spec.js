@@ -1,19 +1,17 @@
-/// BACKEND ///
-
-// video for login session issue: https://www.youtube.com/watch?v=hOJ50rINCkA
+/// FRONTEND ///
 
 // login
-describe('Check SilverPro Client Sections', function () {
+describe('Check StarlightMusic Client Sections', function () {
 
   beforeEach(() => {
     const user_email = "sqatesting.dl@gmail.com"
     const user_password = "SQATesting1553!$"
-    const user_login_url = "https://www.silverproentertainment.com"
+    const user_login_url = "https://www.starlightmusic.com"
 
     let myParams = {
-      my_db: 'silverpro',
+      my_db: 'starlight',
       my_collection: 'clientOtpManager',
-      my_id: '6526ad4763dc1c932330fce5', // silverops user_id associated with OTP when OTP sent
+      my_id: '651239e2ce0c0935229dc3d5', // starlight user_id associated with OTP when OTP sent
       id_type: 'client' // or client
     };
 
@@ -76,6 +74,8 @@ describe('Check SilverPro Client Sections', function () {
     cy.contains('.nav-link', 'Documents').should('exist').click().wait(500).then(() => {
       cy.contains('h1', "Documents").should('exist');
       cy.contains('button', 'Upload File').should('exist');
+
+      cy.wait(3000);
 
       // check for documents
       cy.get('body').then(($body) => {
@@ -227,8 +227,8 @@ describe('Check SilverPro Client Sections', function () {
     });
   }
 
-  function visitSilverProEntertainment() {
-    cy.visit("https://www.silverproentertainment.com/dashboard")
+  function visitStarlightMusic() {
+    cy.visit("https://www.starlightmusic.com/dashboard")
     cy.viewport(1728, 1000);
     console.log("LOGIN SUCCESS")
   }
@@ -239,7 +239,7 @@ describe('Check SilverPro Client Sections', function () {
 
   it('Dashboard should present correctly', function () {
 
-    visitSilverProEntertainment()
+    visitStarlightMusic()
 
     cy.contains('a', 'Dashboard').should('exist').click();
     cy.contains('.account-heading', 'Dashboard').should('exist');
@@ -255,7 +255,7 @@ describe('Check SilverPro Client Sections', function () {
 
   it('Proposal section should present correctly', function () {
 
-    visitSilverProEntertainment()
+    visitStarlightMusic()
 
     cy.contains('a', 'Saved Proposals').should('exist').click();
     cy.contains('.account-heading', 'Saved Proposals').should('exist');
@@ -272,7 +272,7 @@ describe('Check SilverPro Client Sections', function () {
 
   it('Contract section should present correctly', function () {
 
-    visitSilverProEntertainment()
+    visitStarlightMusic()
 
     cy.contains('a', 'Contract').should('exist').click();
     cy.contains('.account-heading', 'Contract').should('exist');
@@ -293,16 +293,22 @@ describe('Check SilverPro Client Sections', function () {
 
   it('WEDDING -- Events section should present correctly', function () {
 
-    visitSilverProEntertainment()
+    visitStarlightMusic()
 
     cy.contains('a', 'Events').should('exist').click();
     cy.contains('.account-heading', 'Events').should('exist');
 
-    // check events    
+    // check events
 
-    const sampleLiveWeddingEventId = "6479d61fa6c515bcc0e84f1b" //TRS 1/20/2024
+    // visit starlightmusic/events/64a6cf538ee20fd5284f176d
+    // cy.visit("https://www.starlightmusic.com/events/651d7ece2de31dac7851c89e")
+    // cy.visit("https://www.starlightmusic.com/events/63f3dc3823c68ed8a8f465a3") //RS 4/20/
 
-    cy.visit("https://www.silverproentertainment.com/events/" + sampleLiveWeddingEventId).then(() => {
+    
+
+    const sampleLiveWeddingEventId = "644e9aa95e392bcc8504eb4d" //RS 1/13/2024
+
+    cy.visit("https://www.starlightmusic.com/events/" + sampleLiveWeddingEventId).then(() => {
 
       cy.contains('.event-detail-heading', 'Event Details').should('exist');
 
@@ -327,20 +333,20 @@ describe('Check SilverPro Client Sections', function () {
     })
   })
 
-  // //~~~~~~~~~~~~~~//
-  // //   CORPORATE  //
-  // //~~~~~~~~~~~~~~//
+  //~~~~~~~~~~~~~~//
+  //   CORPORATE  //
+  //~~~~~~~~~~~~~~//
 
   it('CORPORATE -- Events section should present correctly', function () {
 
-    visitSilverProEntertainment()
+    visitStarlightMusic()
 
     cy.contains('a', 'Events').should('exist').click();
     cy.contains('.account-heading', 'Events').should('exist');
 
-    const testCorporateEventId = "64ca9e69de3e812b80f8891f" // TRS 11/30/2023
+    const testCorporateEventId = "651ec1319adb424aae8ee34b" // OX 11/04/2028 -- TEST EVENT
 
-    cy.visit("https://www.silverproentertainment.com/events/" + testCorporateEventId).wait(200).then(() => {
+    cy.visit("https://www.starlightmusic.com/events/" + testCorporateEventId).wait(200).then(() => {
 
       cy.contains('.event-detail-heading', 'Event Details').should('exist');
 
@@ -363,75 +369,75 @@ describe('Check SilverPro Client Sections', function () {
     })
   })
 
-  // //~~~~~~~~~~~~~~//
-  // //    HOLIDAY   //
-  // //~~~~~~~~~~~~~~//
+  //~~~~~~~~~~~~~~//
+  //    HOLIDAY   //
+  //~~~~~~~~~~~~~~//
 
-  // it('HOLIDAY -- Events section should present correctly', function () {
+  it('HOLIDAY -- Events section should present correctly', function () {
 
-  //   visitSilverProEntertainment()
+    visitStarlightMusic()
 
-  //   cy.contains('a', 'Events').should('exist').click();
-  //   cy.contains('.account-heading', 'Events').should('exist');
+    cy.contains('a', 'Events').should('exist').click();
+    cy.contains('.account-heading', 'Events').should('exist');
 
-  //   const testHolidayEventId = "651ec1609adb424aae8ee7de" // BB 11/05/2028 -- TEST EVENT
+    const testHolidayEventId = "651ec1609adb424aae8ee7de" // BB 11/05/2028 -- TEST EVENT
 
-  //   cy.visit("https://www.starlightmusic.com/events/" + testHolidayEventId).wait(200).then(() => {
+    cy.visit("https://www.starlightmusic.com/events/" + testHolidayEventId).wait(200).then(() => {
 
-  //     cy.contains('.event-detail-heading', 'Event Details').should('exist');
+      cy.contains('.event-detail-heading', 'Event Details').should('exist');
 
-  //     //3.1 Basic Info
-  //     checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
+      //3.1 Basic Info
+      checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
 
-  //     // 3.2. My Band Configuration
-  //     checkMyBandConfigurationSection()
+      // 3.2. My Band Configuration
+      checkMyBandConfigurationSection()
 
-  //     // 3.3. Documents
-  //     checkDocumentsSection()
+      // 3.3. Documents
+      checkDocumentsSection()
 
-  //     // 3.4. Communication
-  //     checkCommunicationSection()
+      // 3.4. Communication
+      checkCommunicationSection()
 
-  //     // 3.5. Finals
-  //     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-  //       checkNonWeddingFinalsSection("Guest(s) Of Honor")
-  //     })
-  //   })
-  // })
+      // 3.5. Finals
+      cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+        checkNonWeddingFinalsSection("Guest(s) Of Honor")
+      })
+    })
+  })
 
-  // //~~~~~~~~~~~~~~//
-  // //    BIRTHDAY  //
-  // //~~~~~~~~~~~~~~//
+  //~~~~~~~~~~~~~~//
+  //    BIRTHDAY  //
+  //~~~~~~~~~~~~~~//
 
-  // it('BIRTHDAY -- Events section should present correctly', function () {
+  it('BIRTHDAY -- Events section should present correctly', function () {
 
-  //   visitSilverProEntertainment()
+    visitStarlightMusic()
 
-  //   cy.contains('a', 'Events').should('exist').click();
-  //   cy.contains('.account-heading', 'Events').should('exist');
+    cy.contains('a', 'Events').should('exist').click();
+    cy.contains('.account-heading', 'Events').should('exist');
 
-  //   const testBirthdayEventId = "651ec1829adb424aae8eec30" // RS 11/06/2028 -- TEST EVENT
+    const testBirthdayEventId = "651ec1829adb424aae8eec30" // RS 11/06/2028 -- TEST EVENT
 
-  //   cy.visit("https://www.starlightmusic.com/events/" + testBirthdayEventId).wait(200).then(() => {
+    cy.visit("https://www.starlightmusic.com/events/" + testBirthdayEventId).wait(200).then(() => {
 
-  //     cy.contains('.event-detail-heading', 'Event Details').should('exist');
+      cy.contains('.event-detail-heading', 'Event Details').should('exist');
 
-  //     //3.1 Basic Info
-  //     checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
+      //3.1 Basic Info
+      checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
 
-  //     // 3.2. My Band Configuration
-  //     checkMyBandConfigurationSection()
+      // 3.2. My Band Configuration
+      checkMyBandConfigurationSection()
 
-  //     // 3.3. Documents
-  //     checkDocumentsSection()
+      // 3.3. Documents
+      checkDocumentsSection()
 
-  //     // 3.4. Communication
-  //     checkCommunicationSection()
+      // 3.4. Communication
+      checkCommunicationSection()
 
-  //     // 3.5 Finals
-  //     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-  //       checkNonWeddingFinalsSection("Guest(s) Of Honor")
-  //     })
-  //   })
-  // })
+      // 3.5 Finals
+      cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+        checkNonWeddingFinalsSection("Guest(s) Of Honor")
+      })
+    })
+  })
 });
