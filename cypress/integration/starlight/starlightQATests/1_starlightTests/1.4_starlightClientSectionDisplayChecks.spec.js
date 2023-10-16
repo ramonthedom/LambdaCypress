@@ -74,6 +74,8 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('.nav-link', 'Documents').should('exist').click().wait(500).then(() => {
         cy.contains('h1', "Documents").should('exist');
         cy.contains('button', 'Upload File').should('exist');
+
+        cy.wait(2000);
   
         // check for documents
         cy.get('body').then(($body) => {

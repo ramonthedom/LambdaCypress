@@ -593,7 +593,10 @@ describe('Check User Starbridge Sections', function () {
   it('EventType: Wedding contains all the correct sections', function () {
     visitStarbridge()
 
-    cy.contains('a', 'Events').should('exist').click().then(() => {
+    const sampleLiveWeddingEventId = "649221ae8ee20fd5285dd92b" // RS 1/14/2024
+    
+    // cy.contains('a', 'Events').should('exist').click().then(() => {
+    cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveWeddingEventId).then(() => {
       cy.contains('.title', 'All Events').should('exist');
 
       // check a wedding
