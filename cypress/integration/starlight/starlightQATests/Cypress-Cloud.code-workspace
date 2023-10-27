@@ -6,6 +6,7 @@
 	],
 	"settings": {
 		"editor.acceptSuggestionOnEnter": "on",
+		"peacock.color": "lightgreen",
 		"workbench.colorCustomizations": {
 			"activityBar.activeBackground": "#bcf5bc",
 			"activityBar.background": "#bcf5bc",
