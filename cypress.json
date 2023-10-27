@@ -1,5 +1,5 @@
 {
   "projectId": "n54w4o",
   "chromeWebSecurity": false,
-  "experimentalSessionSupport": true
+  "experimentalSessionAndOrigin": true
 }
