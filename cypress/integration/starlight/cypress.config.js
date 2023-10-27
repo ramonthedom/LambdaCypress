@@ -9,6 +9,6 @@ module.exports = {
       }
     })
   },
-  experimentalSessionSupport: true,
+  experimentalSessionAndOrigin: true,
   // },
 }
