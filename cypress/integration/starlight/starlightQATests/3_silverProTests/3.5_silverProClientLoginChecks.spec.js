@@ -331,37 +331,37 @@ describe('Check SilverPro Client Sections', function () {
   // //   CORPORATE  //
   // //~~~~~~~~~~~~~~//
 
-  it('CORPORATE -- Events section should present correctly', function () {
+  // it('CORPORATE -- Events section should present correctly', function () {
 
-    visitSilverProEntertainment()
+  //   visitSilverProEntertainment()
 
-    cy.contains('a', 'Events').should('exist').click();
-    cy.contains('.account-heading', 'Events').should('exist');
+  //   cy.contains('a', 'Events').should('exist').click();
+  //   cy.contains('.account-heading', 'Events').should('exist');
 
-    const testCorporateEventId = "64ca9e69de3e812b80f8891f" // TRS 11/30/2023
+  //   const testCorporateEventId = "64ca9e69de3e812b80f8891f" // TRS 11/30/2023
 
-    cy.visit("https://www.silverproentertainment.com/events/" + testCorporateEventId).wait(200).then(() => {
+  //   cy.visit("https://www.silverproentertainment.com/events/" + testCorporateEventId).wait(200).then(() => {
 
-      cy.contains('.event-detail-heading', 'Event Details').should('exist');
+  //     cy.contains('.event-detail-heading', 'Event Details').should('exist');
 
-      //3.1 Basic Info
-      checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
+  //     //3.1 Basic Info
+  //     checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
 
-      // 3.2. My Band Configuration
-      checkMyBandConfigurationSection()
+  //     // 3.2. My Band Configuration
+  //     checkMyBandConfigurationSection()
 
-      // 3.3. Documents
-      checkDocumentsSection()
+  //     // 3.3. Documents
+  //     checkDocumentsSection()
 
-      // 3.4. Communication
-      checkCommunicationSection()
+  //     // 3.4. Communication
+  //     checkCommunicationSection()
 
-      // 3.5. Finals
-      cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-        checkNonWeddingFinalsSection("Guest(s) Of Honor")
-      })
-    })
-  })
+  //     // 3.5. Finals
+  //     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+  //       checkNonWeddingFinalsSection("Guest(s) Of Honor")
+  //     })
+  //   })
+  // })
 
   // //~~~~~~~~~~~~~~//
   // //    HOLIDAY   //

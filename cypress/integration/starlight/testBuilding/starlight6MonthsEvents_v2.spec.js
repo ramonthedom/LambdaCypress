@@ -23,7 +23,7 @@ describe('My Tests', () => {
     };
 
     cy.login(user_email, user_password, user_login_url, myParams);
-    
+
   })
 
   it('Dashboard should present correctly', function () {
@@ -39,133 +39,243 @@ describe('My Tests', () => {
 
   });
 
-  it('should run tests for each event', function () {
-
+  it('should create a new Filter for 6 months from today', function() {
     visitStarbridge()
 
-    cy.log("***TESTS STARTED***")
+    // click on a containing "Events"
+    cy.contains('a', 'Events').should('exist').click().then(() => {
 
-    cy.request({
-      method: 'POST',
-      url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/fetchSixMonthsEvents'
-    }).then((response) => {
-      eventsListToPrint = JSON.parse(response.body);
-      cy.log(eventsListToPrint)
-      cy.wrap(JSON.parse(response.body)).as('eventsList');
+         cy.get(':nth-child(2) > .ant-picker-input > input').click().type("01/01/2023{enter}");
+     cy.get(':nth-child(4) > .ant-picker-input > input').click().type("{selectall}06/01/2023{enter}");
+     cy.contains('.title > .ant-btn > span', 'Save As').click();
+     cy.get('[placeholder="Name"]').click().type("Next6MonthsEvents{enter}");
+     cy.get('.title > .ant-select > .ant-select-selector > .ant-select-selection-item').check();
+    //  cy.get('[type="checkbox"]').check() // Check checkbox element
+     cy.contains('.ant-modal-footer > .ant-btn-primary > span', 'OK').click();
+     cy.wait(1000);
+     cy.contains('.mb-0 > .ant-btn-default > span', 'Set as default').click();
+
+
+
+      // cy.contains('.title', 'All Events').should('exist');
+      // cy.contains('button', 'Add Filter +').should('exist').click().then(() => {
+      //   cy.contains('h3', 'Add Filter').should('exist');
+      //   cy.get('.ant-select-selector').click().then(() => {
+      //     cy.contains('li', 'Event Date').should('exist').click();
+      //   });
+      //   cy.get('.ant-select-selector').click().then(() => {
+      //     cy.contains('li', 'is within').should('exist').click();
+      //   });
+      //   cy.get('.ant-select-selector').click().then(() => {
+      //     cy.contains('li', '6 months').should('exist').click();
+      //   });
+      //   cy.get('.ant-btn').contains('Add').should('exist').click().then(() => {
+      //     cy.contains('button', 'Apply').should('exist').click().then(() => {
+      //       cy.wait(3000);
+      //     });
+      //   });
+      // });
     });
 
-    cy.get('@eventsList').then((eventsList) => {
-      expect(eventsList).to.not.be.empty;
+  })
 
-      if (Array.isArray(eventsList)) {
-        eventsList.forEach((event) => {
-          cy.log(`Event ID: ${event._id}, Event Type: ${event.eventType}, Event Date: ${event.eventDate}`);
+  // it('should run tests for each event', function () {
 
-          // Conditional logic based on eventType
-          if (event.eventType === 'Wedding') {
-            cy.log("Wedding")
-            cy.log(`EventType: Wedding contains all the correct sections. Event Date: ${event.eventDate}`);
-          } else if (event.eventType === 'Corporate') {
-            cy.log("Corporate")
-            cy.log(`EventType: Corporate contains all the correct sections. Event Date: ${event.eventDate}`);
-          } else if (event.eventType === 'Birthday') {
-            cy.log("Birthday")
-            cy.log(`EventType: Birthday contains all the correct sections. Event Date: ${event.eventDate}`);
-            testBirthdayEvent(event._id)
-          } else {
-            cy.log(`EventType: ${event.eventType} is not recognized. Event Date: ${event.eventDate}`);
-          }
-        });
-      } else {
-        cy.log("eventsList is not an array");
-      }
-    })
-  });
+  //   visitStarbridge()
 
-    // it('EventType: Birthday contains all the correct sections', function () {
-      const testBirthdayEvent = (eventId) => {
-        visitStarbridge()
+  //   cy.contains('a', 'Events').should('exist').click().then(() => {
+  //     // Enter date range
+  //     cy.get(':nth-child(2) > .ant-picker-input > input').click().type("01/01/2023{enter}");
+  //     cy.get(':nth-child(4) > .ant-picker-input > input')
+  //       .click()
+  //       .type("{selectall}06/01/2023{enter}")
+  //       .wait(3000) // Replace with a more reliable wait condition if possible
+  //       .then(() => {
+  //         // Other event categories can be handled similarly as needed
+  //         // ...
     
-          // check a birthday
-          // cy.wait(3000);
-          cy.contains('.dashboard_heading', 'Dashboard').should('exist');
+  //         // For "Private Event"
+  //         cy.get('.evt-approved-cname:contains("Private Event")').then($privateEvents => {
+  //           if ($privateEvents.length > 0) {
+  //             cy.log('Private Event count:', $privateEvents.length);
+    
+  //             // Function to handle the click and subsequent actions for a single "Private Event"
+  //             const clickPrivateEvent = (index) => {
+  //               cy.log("STAGE 0 PRIVATE EVENT")
+  //               cy.wait(1000)
+  //               // Re-query for the elements to get fresh ones from the DOM
+  //               cy.get('.evt-approved-cname:contains("Private Event")').eq(index).click();
+  //               cy.log("STAGE 1 INSIDE PRIVATE EVENT")
+  //               // Wait for navigation or any other actions that need to occur after the click
+  //               // Replace this with a more reliable condition
+  //               cy.wait(1000);
+  //               // If there's a need to interact with elements on the new page, do it here
+  //               // ...
+  //   //
+  //               // Then navigate back or reset state as needed to continue with the next item
+  //               // ...
+  //               cy.wait(1000); // Replace with a more reliable condition
+  //               cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+  //               cy.log("STAGE 2 INSIDE PRIVATE EVENT")
+                
 
-          // WORKS!!!          
-          // cy.origin("https://www.google.com", () => {
-          //   cy.visit('/')
-          //   cy.get('.gLFyf').type('Hi').click();
-          // })
+  //             };
+    
+  //             // Click on each "Private Event"
+  //             for (let i = 0; i < $privateEvents.length; i++) {
+  //               cy.wait(1000)
+  //               cy.log("BEFORE PRIVATE EVENT")
+  //               clickPrivateEvent(i);
+  //               cy.log("AFTER PRIVATE EVENT")
+  //               cy.wait(1000)
+  //             }
+  //           } else {
+  //             cy.log('No private events found');
+  //           }
+  //         });
+    
+  //         // Continue with other event categories
+  //         // ...
+  //       });
+  //   })
+    
 
-          // DOES NOT WORK !!!
-          // cy.origin("https://starbridge.starlightmusic.com", () => {
-          //   cy.visit('/leads_and_events')
-          //   // cy.get("#basic-info-btn").should('exist')
-          // })    
-        // your entire test logic, use eventId in the URL
-        // cy.visit(`https://starbridge.starlightmusic.com/event/${eventId}`).wait(3000).then(() => {
-          
-    
-        // cy.visit("https://starbridge.starlightmusic.com/event/6436db2652e688f9dad5b2c9").wait(3000).then(() => {
-    
-        //   // 4.1.1.1 Basic Info
-        //   cy.get("#basic-info-btn").should('exist').click().then(() => {
-        //     checkBasicInfoSection(); //p containing "Total Price:" should exist
-        //   });
-    
-        //   // 4.1.1.2 Configuration
-        //   checkConfigurationSection();
-    
-        //   // 4.1.1.3 Band
-        //   checkBandSection();
-    
-        //   // 4.1.1.4 Documents
-        //   checkDocumentsSection();
-    
-        //   // 4.1.1.5 Communication
-        //   checkCommunicationSection();
-    
-        //   // 4.1.1.5 Expenses      
-        //   checkExpensesSection();
-    
-        //   // 4.1.1.6 Reviews
-        //   checkReviewsSection();
-    
-        //   // 4.1.1.7 Finals
-        //   cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-    
-        //     // 4.1.1.7.1 Event Info
-        //     cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
-        //       cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
-        //       cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
-        //       cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
-        //       cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
-        //     });
-    
-        //     // 4.1.1.7.3 Blessings/Toast
-        //     checkFinalsBlessingToastSection();
-    
-        //     // 4.1.1.7.4 Song List
-        //     checkFinalsSonglistSection();
-    
-        //     // 4.1.1.7.5 Production
-        //     checkFinalsProductionSection();
-    
-        //     // 4.1.1.7.6 Timeline
-        //     checkFinalsTimelineSection();
-    
-        //     // 4.1.1.7.7 Notes
-        //     checkFinalsNotesSection();
-    
-        //     // 4.1.1.7.8 Gig Styling
-        //     checkGigStylingSection();
-    
-        //     // Buttons
-        //     cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
-        //     cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
-    
-        //   });
-        // });
-      }
+  //   // click on "events"
+  //   // cy.contains('a', 'Events').should('exist').click().then(() => {
+  //   //   //enter date range
+  //   //   cy.get(':nth-child(2) > .ant-picker-input > input').click().type("01/01/2023{enter}");
+  //   //   cy.get(':nth-child(4) > .ant-picker-input > input').click().type("{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}06/01/2023{enter}").wait(3000).then(() => {
+  //   //     // For "Wedding"
+  //   //     cy.get('.evt-approved-cname:contains("Wedding")').its('length').then(count => {
+  //   //       if (count > 0) {
+  //   //         cy.wrap(count).as('weddingCount');
+  //   //         cy.get('@weddingCount').then(weddingCount => cy.log('Wedding count:', weddingCount));
+  //   //       }
+  //   //     });
+
+  //   //     // For "Corporate"
+  //   //     cy.get('.evt-approved-cname:contains("Corporate")').its('length').as('corporateCount');
+  //   //     cy.get('@corporateCount').then(count => cy.log('Corporate count:', count));
+
+  //   //     // For "Private Event"
+  //   //     cy.get('.evt-approved-cname').then($elements => {
+  //   //       const privateElements = $elements.filter(':contains("Private Event")');
+  //   //       if (privateElements.length > 0) {
+  //   //         cy.wrap(privateElements.length).as('privateCount');
+  //   //         cy.get('@privateCount').then(privateCount => cy.log('Private Event count:', privateCount));
+
+  //   //         for (let i = 0; i < privateCount; i++) {
+  //   //           // Re-query for the elements and click the one at the current index
+  //   //           cy.get('.evt-approved-cname:contains("Private Event")').eq(i).click();
+  //   //           cy.wait(1000); // It's better to wait for a specific event rather than use a fixed wait time
+  //   //           cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+  //   //         }
+  //   //       } else {
+  //   //         cy.log('No private events found');
+  //   //       }
+  //   //     });
+
+  //   //     // For "Birthday"
+  //   //     cy.get('.evt-approved-cname').then($elements => {
+  //   //       const birthdayElements = $elements.filter(':contains("Birthday")');
+  //   //       if (birthdayElements.length > 0) {
+  //   //         cy.wrap(birthdayElements.length).as('birthdayCount');
+  //   //         cy.get('@birthdayCount').then(birthdayCount => cy.log('Birthday count:', birthdayCount));
+  //   //       } else {
+  //   //         cy.log('No birthdays found');
+  //   //       }
+  //   //     });
+
+  //   //     cy.get('.evt-approved-cname').then($elements => {
+  //   //       const holidayElements = $elements.filter(':contains("Holiday")');
+  //   //       if (holidayElements.length > 0) {
+  //   //         cy.wrap(holidayElements.length).as('holidayCount');
+  //   //         cy.get('@holidayCount').then(holidayCount => cy.log('Holiday count:', holidayCount));
+  //   //       } else {
+  //   //         cy.log('No holidays found');
+  //   //       }
+  //   //     });
+        
+
+  //   //   });
+
+  //   //   // fetch all types
+  //   //   // cy.get('a > .evt-approved-cname').filter(':contains("Wedding")').then(elements => {
+  //   //   //   // Get the total count of elements
+  //   //   //   const totalCount = elements.length;
+  //   //   //   console.log(`Total count of elements: ${totalCount}`);
+
+  //   //   //   // Click on the second element, if there is one
+  //   //   //   if(totalCount > 1) {
+  //   //   //     cy.wrap(elements).eq(1).click();
+  //   //   //   }
+  //   //   // });
+
+
+  //   // })
+
+  // });
+
+  // it('EventType: Birthday contains all the correct sections', function () {
+  const testBirthdayEvent = (eventId) => {
+    // 4.1.1.1 Basic Info
+    cy.get("#basic-info-btn").should('exist').click().then(() => {
+      checkBasicInfoSection(); //p containing "Total Price:" should exist
+    });
+
+    // 4.1.1.2 Configuration
+    checkConfigurationSection();
+
+    // 4.1.1.3 Band
+    checkBandSection();
+
+    // 4.1.1.4 Documents
+    checkDocumentsSection();
+
+    // 4.1.1.5 Communication
+    checkCommunicationSection();
+
+    // 4.1.1.5 Expenses      
+    checkExpensesSection();
+
+    // 4.1.1.6 Reviews
+    checkReviewsSection();
+
+    // 4.1.1.7 Finals
+    cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+
+      // 4.1.1.7.1 Event Info
+      cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
+        cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
+        cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
+        cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
+        cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
+      });
+
+      // 4.1.1.7.3 Blessings/Toast
+      checkFinalsBlessingToastSection();
+
+      // 4.1.1.7.4 Song List
+      checkFinalsSonglistSection();
+
+      // 4.1.1.7.5 Production
+      checkFinalsProductionSection();
+
+      // 4.1.1.7.6 Timeline
+      checkFinalsTimelineSection();
+
+      // 4.1.1.7.7 Notes
+      checkFinalsNotesSection();
+
+      // 4.1.1.7.8 Gig Styling
+      checkGigStylingSection();
+
+      // Buttons
+      cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+      cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
+
+    });
+  }
 
   function checkBasicInfoSection() {
     cy.contains('h3', 'Booked By').should('exist'); //h3 containing "Booked By" should exist
@@ -335,13 +445,7 @@ describe('My Tests', () => {
     // cy.wait(3000);
   }
 
-
-
-
-
 });
-
-
 
 
 
