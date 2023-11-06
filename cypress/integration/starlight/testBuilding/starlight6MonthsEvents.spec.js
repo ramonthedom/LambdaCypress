@@ -303,6 +303,8 @@ describe('My Tests', () => {
       // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
       cy.contains('.myBand_add_new_song_btn', 'Request a song +').should('exist'); // a, Add a song +
       cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
+      // cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
+      // cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
       cy.get('span.ml-1.mr-2').then(($span) => {
           // Check if the title of the span is not 'DJ Kristival'
           if ($span.attr('title') !== 'DJ Kristaval') {

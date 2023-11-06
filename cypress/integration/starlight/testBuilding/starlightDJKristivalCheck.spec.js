@@ -157,11 +157,15 @@ describe('Check User Starbridge Sections', function () {
         // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
         cy.contains('.myBand_add_new_song_btn', 'Request a song +').should('exist'); // a, Add a song +
         cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
+        // cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
+        // cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
         cy.get('span.ml-1.mr-2').then(($span) => {
             // Check if the title of the span is not 'DJ Kristiva'
             if ($span.attr('title') !== 'DJ Kristaval') {
+              cy.wait(3000);
               cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
               cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
+              cy.log("FOUND SONGLIST ITEMS")
             } else {
               cy.log("DJ KRISTIVAL FOUND - NO SONGLIST")
             }
@@ -609,7 +613,8 @@ describe('Check User Starbridge Sections', function () {
         cy.contains('.title', 'All Events').should('exist');
   
         // check a wedding // change to specific event
-        cy.contains('a', '11/18/2023').should('exist').click().then(() => {
+        cy.contains('a', '01/14/2024').should('exist').click().then(() => {
+        // cy.contains('a', '11/18/2023').should('exist').click().then(() => {
           cy.wait(3000);
   
           // 4.1.1.1 Basic Info
