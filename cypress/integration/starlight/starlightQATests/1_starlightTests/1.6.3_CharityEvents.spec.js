@@ -1,10 +1,6 @@
 // 3_CharityEvents.specs
 
-import { visitStarbridge, 
-    checkDashboard, 
-    testCharityEvent, 
-    create6MonthFilter, 
-    remove6Monthfilter } from "../utilities.js"
+import { visitStarbridge, checkDashboard, testCharityEvent, create6MonthFilter, remove6Monthfilter } from "utilities.js"
 
 describe('Test all Wedding Events in the next 6 months', () => {
   
