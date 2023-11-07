@@ -28,10 +28,6 @@ describe('My Tests', () => {
 
 
   it('Dashboard should present correctly', function () {
-    // ~~~~~~~~~~~~ //
-    // 1. DASHBOARD //
-    // ~~~~~~~~~~~~ //
-
     visitStarbridge()
 
     // 1. Dashboard
@@ -43,7 +39,6 @@ describe('My Tests', () => {
   //  ~~~~~~~~~~  //
   // 0. CREATE FILTER   //
   //  ~~~~~~~~~~  //
-
 
   it('should create a new Filter for 6 months from today', function () {
 
@@ -87,238 +82,238 @@ describe('My Tests', () => {
 
   })
 
-  // //  ~~~~~~~~~~  //
-  // // 1. WEDDING   //
-  // //  ~~~~~~~~~~  //
+  //  ~~~~~~~~~~  //
+  // 1. WEDDING   //
+  //  ~~~~~~~~~~  //
 
-  // it('should run tests for WEDDING events', function () {
+  it('should run tests for WEDDING events', function () {
 
-  //   visitStarbridge()
+    visitStarbridge()
 
-  //   cy.contains('a', 'Events').should('exist').click().then(() => {
-  //     cy.get('.evt-approved-cname').then($elements => {
-  //       const weddingEvents = $elements.filter(':contains("Wedding")');
-  //       if (weddingEvents.length > 0) {
-  //         cy.log('Wedding Event count:', weddingEvents.length);
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.get('.evt-approved-cname').then($elements => {
+        const weddingEvents = $elements.filter(':contains("Wedding")');
+        if (weddingEvents.length > 0) {
+          cy.log('Wedding Event count:', weddingEvents.length);
 
-  //         // Function to handle the click and subsequent actions for a single "Charity Event"
-  //         const clickWeddingEvent = (index) => {
-  //           cy.log("STAGE 0 WEDDING EVENT")
-  //           cy.wait(1000)
-  //           // Re-query for the elements to get fresh ones from the DOM
-  //           cy.get('.evt-approved-cname:contains("Wedding")').eq(index).click();
-  //           cy.log("STAGE 1 INSIDE WEDDING EVENT")
-  //           // Wait for navigation or any other actions that need to occur after the click
-  //           cy.wait(1000);
-  //           // If there's a need to interact with elements on the new page, do it here
-  //           testWeddingEvent()
-  //           // Then navigate back or reset state as needed to continue with the next item
-  //           cy.wait(1000); // Replace with a more reliable condition
-  //           cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-  //           cy.log("STAGE 2 INSIDE WEDDING EVENT")
-  //         };
+          // Function to handle the click and subsequent actions for a single "Charity Event"
+          const clickWeddingEvent = (index) => {
+            cy.log("STAGE 0 WEDDING EVENT")
+            cy.wait(1000)
+            // Re-query for the elements to get fresh ones from the DOM
+            cy.get('.evt-approved-cname:contains("Wedding")').eq(index).click();
+            cy.log("STAGE 1 INSIDE WEDDING EVENT")
+            // Wait for navigation or any other actions that need to occur after the click
+            cy.wait(1000);
+            // If there's a need to interact with elements on the new page, do it here
+            testWeddingEvent()
+            // Then navigate back or reset state as needed to continue with the next item
+            cy.wait(1000); // Replace with a more reliable condition
+            cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+            cy.log("STAGE 2 INSIDE WEDDING EVENT")
+          };
 
-  //         // Click on each "Wedding Event"
-  //         for (let i = 0; i < weddingEvents.length; i++) {
-  //           cy.wait(1000)
-  //           cy.log("BEFORE WEDDING EVENT")
-  //           clickWeddingEvent(i);
-  //           cy.log("AFTER WEDDING EVENT")
-  //           cy.wait(1000)
-  //         }
-  //       } else {
-  //         cy.log('No charity events found');
-  //       }
-  //     })
-  //   })
-  // })
+          // Click on each "Wedding Event"
+          for (let i = 0; i < weddingEvents.length; i++) {
+            cy.wait(1000)
+            cy.log("BEFORE WEDDING EVENT")
+            clickWeddingEvent(i);
+            cy.log("AFTER WEDDING EVENT")
+            cy.wait(1000)
+          }
+        } else {
+          cy.log('No charity events found');
+        }
+      })
+    })
+  })
 
-  // //  ~~~~~~~~~~  //
-  // // 2. BIRTHDAY   //
-  // //  ~~~~~~~~~~  //
+  //  ~~~~~~~~~~  //
+  // 2. BIRTHDAY   //
+  //  ~~~~~~~~~~  //
 
-  // it('should run tests for BIRTHDAY events', function () {
+  it('should run tests for BIRTHDAY events', function () {
 
-  //   visitStarbridge()
+    visitStarbridge()
 
-  //   cy.contains('a', 'Events').should('exist').click().then(() => {
-  //     cy.get('.evt-approved-cname').then($elements => {
-  //       const birthdayEvents = $elements.filter(':contains("Wedding")');
-  //       if (birthdayEvents.length > 0) {
-  //         cy.log('Birthday Event count:', birthdayEvents.length);
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.get('.evt-approved-cname').then($elements => {
+        const birthdayEvents = $elements.filter(':contains("Wedding")');
+        if (birthdayEvents.length > 0) {
+          cy.log('Birthday Event count:', birthdayEvents.length);
 
-  //         // Function to handle the click and subsequent actions for a single "Charity Event"
-  //         const clickBirthdayEvent = (index) => {
-  //           cy.log("STAGE 0 BIRTHDAY EVENT")
-  //           cy.wait(1000)
-  //           // Re-query for the elements to get fresh ones from the DOM
-  //           cy.get('.evt-approved-cname:contains("Birthday")').eq(index).click();
-  //           cy.log("STAGE 1 INSIDE BIRTHDAY EVENT")
-  //           // Wait for navigation or any other actions that need to occur after the click
-  //           cy.wait(1000);
-  //           // If there's a need to interact with elements on the new page, do it here
-  //           testBirthdayEvent()
-  //           // Then navigate back or reset state as needed to continue with the next item
-  //           cy.wait(1000); // Replace with a more reliable condition
-  //           cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-  //           cy.log("STAGE 2 INSIDE BIRTHDAY EVENT")
-  //         };
+          // Function to handle the click and subsequent actions for a single "Charity Event"
+          const clickBirthdayEvent = (index) => {
+            cy.log("STAGE 0 BIRTHDAY EVENT")
+            cy.wait(1000)
+            // Re-query for the elements to get fresh ones from the DOM
+            cy.get('.evt-approved-cname:contains("Birthday")').eq(index).click();
+            cy.log("STAGE 1 INSIDE BIRTHDAY EVENT")
+            // Wait for navigation or any other actions that need to occur after the click
+            cy.wait(1000);
+            // If there's a need to interact with elements on the new page, do it here
+            testBirthdayEvent()
+            // Then navigate back or reset state as needed to continue with the next item
+            cy.wait(1000); // Replace with a more reliable condition
+            cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+            cy.log("STAGE 2 INSIDE BIRTHDAY EVENT")
+          };
 
-  //         // Click on each "Birthday Event"
-  //         for (let i = 0; i < birthdayEvents.length; i++) {
-  //           cy.wait(1000)
-  //           cy.log("BEFORE BIRTHDAY EVENT")
-  //           clickBirthdayEvent(i);
-  //           cy.log("AFTER BIRTHDAY EVENT")
-  //           cy.wait(1000)
-  //         }
-  //       } else {
-  //         cy.log('No charity events found');
-  //       }
-  //     })
-  //   })
-  // })
+          // Click on each "Birthday Event"
+          for (let i = 0; i < birthdayEvents.length; i++) {
+            cy.wait(1000)
+            cy.log("BEFORE BIRTHDAY EVENT")
+            clickBirthdayEvent(i);
+            cy.log("AFTER BIRTHDAY EVENT")
+            cy.wait(1000)
+          }
+        } else {
+          cy.log('No charity events found');
+        }
+      })
+    })
+  })
 
-  // //  ~~~~~~~~~~  //
-  // // 3. CHARITY   //
-  // //  ~~~~~~~~~~  //
+  //  ~~~~~~~~~~  //
+  // 3. CHARITY   //
+  //  ~~~~~~~~~~  //
 
-  // it('should run tests for CHARITY events', function () {
+  it('should run tests for CHARITY events', function () {
 
-  //   visitStarbridge()
+    visitStarbridge()
 
-  //   cy.contains('a', 'Events').should('exist').click().then(() => {
-  //     cy.get('.evt-approved-cname').then($elements => {
-  //       const charityEvents = $elements.filter(':contains("Charity")');
-  //       if (charityEvents.length > 0) {
-  //         cy.log('Charity Event count:', charityEvents.length);
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.get('.evt-approved-cname').then($elements => {
+        const charityEvents = $elements.filter(':contains("Charity")');
+        if (charityEvents.length > 0) {
+          cy.log('Charity Event count:', charityEvents.length);
 
-  //         // Function to handle the click and subsequent actions for a single "Charity Event"
-  //         const clickCharityEvent = (index) => {
-  //           cy.log("STAGE 0 CHARITY EVENT")
-  //           cy.wait(1000)
-  //           // Re-query for the elements to get fresh ones from the DOM
-  //           cy.get('.evt-approved-cname:contains("Charity")').eq(index).click();
-  //           cy.log("STAGE 1 INSIDE CHARITY EVENT")
-  //           // Wait for navigation or any other actions that need to occur after the click
-  //           cy.wait(1000);
-  //           // If there's a need to interact with elements on the new page, do it here
-  //           testCharityEvent()
-  //           // Then navigate back or reset state as needed to continue with the next item
-  //           cy.wait(1000); // Replace with a more reliable condition
-  //           cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-  //           cy.log("STAGE 2 INSIDE CHARITY EVENT")
-  //         };
+          // Function to handle the click and subsequent actions for a single "Charity Event"
+          const clickCharityEvent = (index) => {
+            cy.log("STAGE 0 CHARITY EVENT")
+            cy.wait(1000)
+            // Re-query for the elements to get fresh ones from the DOM
+            cy.get('.evt-approved-cname:contains("Charity")').eq(index).click();
+            cy.log("STAGE 1 INSIDE CHARITY EVENT")
+            // Wait for navigation or any other actions that need to occur after the click
+            cy.wait(1000);
+            // If there's a need to interact with elements on the new page, do it here
+            testCharityEvent()
+            // Then navigate back or reset state as needed to continue with the next item
+            cy.wait(1000); // Replace with a more reliable condition
+            cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+            cy.log("STAGE 2 INSIDE CHARITY EVENT")
+          };
 
-  //         // Click on each "Charity Event"
-  //         for (let i = 0; i < charityEvents.length; i++) {
-  //           cy.wait(1000)
-  //           cy.log("BEFORE CHARITY EVENT")
-  //           clickCharityEvent(i);
-  //           cy.log("AFTER CHARITY EVENT")
-  //           cy.wait(1000)
-  //         }
-  //       } else {
-  //         cy.log('No charity events found');
-  //       }
-  //     })
-  //   })
-  // })
+          // Click on each "Charity Event"
+          for (let i = 0; i < charityEvents.length; i++) {
+            cy.wait(1000)
+            cy.log("BEFORE CHARITY EVENT")
+            clickCharityEvent(i);
+            cy.log("AFTER CHARITY EVENT")
+            cy.wait(1000)
+          }
+        } else {
+          cy.log('No charity events found');
+        }
+      })
+    })
+  })
 
-  // //  ~~~~~~~~~~  //
-  // // 4. CORPORATE   //
-  // //  ~~~~~~~~~~  //
+  //  ~~~~~~~~~~  //
+  // 4. CORPORATE   //
+  //  ~~~~~~~~~~  //
 
-  // it('should run tests for CORPORATE events', function () {
+  it('should run tests for CORPORATE events', function () {
 
-  //   visitStarbridge()
+    visitStarbridge()
 
-  //   cy.contains('a', 'Events').should('exist').click().then(() => {
-  //     cy.get('.evt-approved-cname').then($elements => {
-  //       const corporateEvents = $elements.filter(':contains("Corporate")');
-  //       if (corporateEvents.length > 0) {
-  //         cy.log('Corporate Event count:', corporateEvents.length);
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.get('.evt-approved-cname').then($elements => {
+        const corporateEvents = $elements.filter(':contains("Corporate")');
+        if (corporateEvents.length > 0) {
+          cy.log('Corporate Event count:', corporateEvents.length);
 
-  //         // Function to handle the click and subsequent actions for a single "Private Event"
-  //         const clickCorporateEvent = (index) => {
-  //           cy.log("STAGE 0 CORPORATE EVENT")
-  //           cy.wait(1000)
-  //           // Re-query for the elements to get fresh ones from the DOM
-  //           cy.get('.evt-approved-cname:contains("Corporate")').eq(index).click();
-  //           cy.log("STAGE 1 INSIDE CORPORATE EVENT")
-  //           // Wait for navigation or any other actions that need to occur after the click
-  //           cy.wait(1000);
-  //           // If there's a need to interact with elements on the new page, do it here
-  //           testCorporateEvent()
-  //           // Then navigate back or reset state as needed to continue with the next item
-  //           cy.wait(1000); // Replace with a more reliable condition
-  //           cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-  //           cy.log("STAGE 2 INSIDE CORPORATE EVENT")
-  //         };
+          // Function to handle the click and subsequent actions for a single "Private Event"
+          const clickCorporateEvent = (index) => {
+            cy.log("STAGE 0 CORPORATE EVENT")
+            cy.wait(1000)
+            // Re-query for the elements to get fresh ones from the DOM
+            cy.get('.evt-approved-cname:contains("Corporate")').eq(index).click();
+            cy.log("STAGE 1 INSIDE CORPORATE EVENT")
+            // Wait for navigation or any other actions that need to occur after the click
+            cy.wait(1000);
+            // If there's a need to interact with elements on the new page, do it here
+            testCorporateEvent()
+            // Then navigate back or reset state as needed to continue with the next item
+            cy.wait(1000); // Replace with a more reliable condition
+            cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+            cy.log("STAGE 2 INSIDE CORPORATE EVENT")
+          };
 
-  //         // Click on each "Private Event"
-  //         for (let i = 0; i < corporateEvents.length; i++) {
-  //           cy.wait(1000)
-  //           cy.log("BEFORE CORPORATE EVENT")
-  //           clickCorporateEvent(i);
-  //           cy.log("AFTER CORPORATE EVENT")
-  //           cy.wait(1000)
-  //         }
-  //       } else {
-  //         cy.log('No corporate events found');
-  //       }
-  //     })
-  //   })
-  // })
+          // Click on each "Private Event"
+          for (let i = 0; i < corporateEvents.length; i++) {
+            cy.wait(1000)
+            cy.log("BEFORE CORPORATE EVENT")
+            clickCorporateEvent(i);
+            cy.log("AFTER CORPORATE EVENT")
+            cy.wait(1000)
+          }
+        } else {
+          cy.log('No corporate events found');
+        }
+      })
+    })
+  })
 
-  // //  ~~~~~~~~~~  //
-  // // 5. PRIVATE   //
-  // //  ~~~~~~~~~~  //
+  //  ~~~~~~~~~~  //
+  // 5. PRIVATE   //
+  //  ~~~~~~~~~~  //
 
-  // it('should run tests for PRIVATE events', function () {
+  it('should run tests for PRIVATE events', function () {
 
-  //   visitStarbridge()
+    visitStarbridge()
 
-  //   cy.contains('a', 'Events').should('exist').click().then(() => {
-  //     // For "Private Event"
-  //     cy.get('.evt-approved-cname').then($elements => {
-  //       const privateElements = $elements.filter(':contains("Private Event")');
-  //       if (privateElements.length > 0) {
-  //         cy.wrap(privateElements.length).as('privateCount');
-  //         cy.get('@privateCount').then(privateCount => cy.log('Private Event count:', privateCount));
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      // For "Private Event"
+      cy.get('.evt-approved-cname').then($elements => {
+        const privateElements = $elements.filter(':contains("Private Event")');
+        if (privateElements.length > 0) {
+          cy.wrap(privateElements.length).as('privateCount');
+          cy.get('@privateCount').then(privateCount => cy.log('Private Event count:', privateCount));
 
-  //         cy.log('Private Event count:', $privateEvents.length);
-  //         // Function to handle the click and subsequent actions for a single "Private Event"
-  //         const clickPrivateEvent = (index) => {
-  //           cy.log("STAGE 0 PRIVATE EVENT")
-  //           cy.wait(1000)
-  //           // Re-query for the elements to get fresh ones from the DOM
-  //           cy.get('.evt-approved-cname:contains("Private Event")').eq(index).click();
-  //           cy.log("STAGE 1 INSIDE PRIVATE EVENT")
-  //           // Wait for navigation or any other actions that need to occur after the click
-  //           cy.wait(1000);
-  //           // If there's a need to interact with elements on the new page, do it here
-  //           testPrivateEvent()
-  //           // Then navigate back or reset state as needed to continue with the next item
-  //           cy.wait(1000); // Replace with a more reliable condition
-  //           cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-  //           cy.log("STAGE 2 INSIDE PRIVATE EVENT")
-  //         };
+          cy.log('Private Event count:', $privateEvents.length);
+          // Function to handle the click and subsequent actions for a single "Private Event"
+          const clickPrivateEvent = (index) => {
+            cy.log("STAGE 0 PRIVATE EVENT")
+            cy.wait(1000)
+            // Re-query for the elements to get fresh ones from the DOM
+            cy.get('.evt-approved-cname:contains("Private Event")').eq(index).click();
+            cy.log("STAGE 1 INSIDE PRIVATE EVENT")
+            // Wait for navigation or any other actions that need to occur after the click
+            cy.wait(1000);
+            // If there's a need to interact with elements on the new page, do it here
+            testPrivateEvent()
+            // Then navigate back or reset state as needed to continue with the next item
+            cy.wait(1000); // Replace with a more reliable condition
+            cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
+            cy.log("STAGE 2 INSIDE PRIVATE EVENT")
+          };
 
-  //         // Click on each "Private Event"
-  //         for (let i = 0; i < $privateEvents.length; i++) {
-  //           cy.wait(1000)
-  //           cy.log("BEFORE PRIVATE EVENT")
-  //           clickPrivateEvent(i);
-  //           cy.log("AFTER PRIVATE EVENT")
-  //           cy.wait(1000)
-  //         }
-  //       } else {
-  //         cy.log('No private events found');
-  //       }
-  //     });
-  //   });
-  // })
+          // Click on each "Private Event"
+          for (let i = 0; i < $privateEvents.length; i++) {
+            cy.wait(1000)
+            cy.log("BEFORE PRIVATE EVENT")
+            clickPrivateEvent(i);
+            cy.log("AFTER PRIVATE EVENT")
+            cy.wait(1000)
+          }
+        } else {
+          cy.log('No private events found');
+        }
+      });
+    });
+  })
 
   //  ~~~~~~~~~~  //
   // 6. HOLIDAY   //
