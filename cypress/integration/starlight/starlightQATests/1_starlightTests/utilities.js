@@ -580,7 +580,7 @@
     export function checkFinalsSonglistSection() {
         cy.contains('.finals_sidebar_title', 'Song List').should('exist').click().wait(500).then(() => {
             // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
-            cy.contains('.myBand_add_new_song_btn', 'Request a song +').should('exist'); // a, Add a song +
+            cy.contains('.myBand_add_new_song_btn', /Request a song \+|Add a song\+/).should('exist');
             cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
             cy.get('span.ml-1.mr-2').then(($span) => {
                 // Check if the title of the span is not 'DJ Kristivl'
