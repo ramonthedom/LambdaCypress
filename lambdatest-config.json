@@ -17,7 +17,7 @@
     "reporter_config_file": "base_reporter_config.json",
     "build_name": "starlight-test-suite-run-20230720-0239PM",
     "parallels": 1,
-    "specs": "./cypress/integration/starlight/starlightQATests/**/*.spec.js",
+    "specs": "./cypress/integration/starlight/starlightQATests/**/**/*.spec.js",
     "ignore_files": "",
     "network": false,
     "headless": false

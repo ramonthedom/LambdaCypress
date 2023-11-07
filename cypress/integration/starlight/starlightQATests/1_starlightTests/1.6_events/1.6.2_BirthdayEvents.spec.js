@@ -1,6 +1,6 @@
 // 2_BirthdayEvents.spec
 
-import { visitStarbridge, checkDashboard, testBirthdayEvent, create6MonthFilter, remove6Monthfilter } from "utilities.js"
+import { visitStarbridge, checkDashboard, testBirthdayEvent, create6MonthFilter, remove6Monthfilter } from "../utilities.js"
 
 describe('Test all Wedding Events in the next 6 months', () => {
   

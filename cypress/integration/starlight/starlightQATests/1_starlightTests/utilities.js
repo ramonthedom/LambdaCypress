@@ -1,6 +1,6 @@
     // 0. Create 6 months filter
 
-    function create6MonthFilter() {
+    export function create6MonthFilter() {
 
         // Function to format a JavaScript Date object into a string "MM/DD/YYYY"
         const formatDate = (date) => {
@@ -44,7 +44,7 @@
 
     // 0.1 Remove 6 months filter
 
-    function remove6Monthfilter() {
+    export function remove6Monthfilter() {
 
         cy.log("ENTERING COMPLETION BLOCK")
         // Clean up after tests run. For example, delete test data.
@@ -60,7 +60,7 @@
 
     // 0.2. Check Dashboard
 
-    function checkDashboard() {
+    export function checkDashboard() {
         visitStarbridge()
 
         // 1. Dashboard
@@ -69,7 +69,7 @@
     }
 
     // 1. Wedding
-    function testWeddingEvent() {
+    export function testWeddingEvent() {
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
@@ -136,7 +136,7 @@
     }
 
     // 2. Birthday
-    function testBirthdayEvent() {
+    export function testBirthdayEvent() {
         // 4.1.1.1 Basic Info
         cy.get("#basic-info-btn").should('exist').click().then(() => {
             checkBasicInfoSection(); //p containing "Total Price:" should exist
@@ -197,7 +197,7 @@
     }
 
     // 3. Charity
-    function testCharityEvent() {
+    export function testCharityEvent() {
         // 4.1.1.1 Basic Info
         cy.get("#basic-info-btn").should('exist').click().then(() => {
             checkBasicInfoSection(); //p containing "Total Price:" should exist
@@ -258,7 +258,7 @@
     }
 
     // 4. Corporate
-    function testCorporateEvent() {
+    export function testCorporateEvent() {
         // check a corporate
         cy.wait(3000);
 
@@ -322,7 +322,7 @@
     }
 
     // 5. Private
-    function testPrivateEvent() {
+    export function testPrivateEvent() {
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
@@ -382,7 +382,7 @@
     }
 
     // 6. Holiday
-    function testHolidayEvent() {
+    export function testHolidayEvent() {
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
@@ -446,7 +446,7 @@
 
     }
 
-    function checkBasicInfoSection() {
+    export function checkBasicInfoSection() {
         cy.contains('h3', 'Booked By').should('exist'); //h3 containing "Booked By" should exist
         cy.contains('h3', 'Lead Origin').should('exist'); //h3 containing "Lead Origin" should exist
         cy.contains('h3', 'Client Details').should('exist'); //h3 containing "Client Details" should exist
@@ -455,7 +455,7 @@
         cy.contains('p', 'Total Price:').should('exist');
     }
 
-    function checkConfigurationSection() {
+    export function checkConfigurationSection() {
         cy.get("#config-btn").should('exist').click().then(() => {
             cy.contains('h3', 'Band Configurations').should('exist'); // h3 containing "Band Configurations" should exist
             cy.contains('.basic_info_heading', 'Segments').should('exist'); // .basic_info_heading containing "Segments" should exist
@@ -463,7 +463,7 @@
         });
     }
 
-    function checkCommunicationSection() {
+    export function checkCommunicationSection() {
         cy.contains('.nav-link', 'Communication').should('exist').click().wait(500).then(() => {
             cy.contains('div', "Office Side").should('exist').click().then(() => {
                 cy.contains('h1', "Activity").should('exist'); // h1 containing "Documents" should exist
@@ -475,7 +475,7 @@
         });
     }
 
-    function checkBandSection() {
+    export function checkBandSection() {
         cy.contains('.nav-link', 'Band').should('exist').click().then(() => {
             cy.contains('button', 'Notify All').should('exist'); // button containing "Notify All" should exist
 
@@ -497,7 +497,7 @@
         });
     }
 
-    function checkExpensesSection() {
+    export  function checkExpensesSection() {
         cy.contains('.nav-link', 'Expenses').should('exist').click().wait(500).then(() => {
             // 4.1.1.5.1 Cost Analysis
             cy.contains('div', 'Cost Analysis').should('exist').click().then(() => {
@@ -534,7 +534,7 @@
         });
     }
 
-    function checkDocumentsSection() {
+    export function checkDocumentsSection() {
         cy.contains('.nav-link', 'Documents').should('exist').click().wait(500).then(() => {
             // 4.1.1.4.1 Office Side
             cy.contains('div', "Office Side").should('exist').click().wait(500).then(() => {
@@ -548,28 +548,28 @@
         });
     }
 
-    function checkReviewsSection() {
+    export function checkReviewsSection() {
         cy.contains('.nav-link', 'Reviews').should('exist').click().wait(500).then(() => {
             cy.contains('button', 'Add Review +').should('exist'); // button, Add Review +, should exist
             cy.contains('p', 'Rating').should('exist');
         });
     }
 
-    function checkGigStylingSection() {
+    export function checkGigStylingSection() {
         cy.contains('.finals_sidebar_title', 'Gig Styling').should('exist').click().then(() => {
             cy.contains('.heading', 'global').should('exist'); // h1, Global, should exist          
             cy.contains('.heading', 'table data').should('exist');
         });
     }
 
-    function checkFinalsSpecialSongsSection() {
+    export function checkFinalsSpecialSongsSection() {
         cy.contains('.finals_sidebar_title', 'Special Songs').should('exist').click().then(() => {
             cy.get('.finals_main_container').find('.mb-3').should('have.length.greaterThan', 1); // .finals_main_container should contain more than 1 elemtent .mb-3
             cy.contains('.finals_main_add_song_card', 'Click to add a song').should('exist');
         });
     }
 
-    function checkFinalsNotesSection() {
+    export function checkFinalsNotesSection() {
         cy.contains('.finals_sidebar_title', 'Notes').should('exist').click().then(() => {
             cy.contains('.finals__band_info_heading', 'Band Leader Notes').should('exist'); // '.finals__band_info_heading', 'Band Leader Notes', should exist
             cy.contains('.finals__band_info_heading', 'Song Notes').should('exist'); // .finals__band_info_heading, Song Notes, should exist
@@ -577,7 +577,7 @@
         });
     }
 
-    function checkFinalsSonglistSection() {
+    export function checkFinalsSonglistSection() {
         cy.contains('.finals_sidebar_title', 'Song List').should('exist').click().wait(500).then(() => {
             // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
             cy.contains('.myBand_add_new_song_btn', 'Request a song +').should('exist'); // a, Add a song +
@@ -595,27 +595,27 @@
         });
     }
 
-    function checkFinalsBlessingToastSection() {
+    export function checkFinalsBlessingToastSection() {
         cy.contains('.finals_sidebar_title', 'Blessing/Toast').should('exist').click().then(() => {
             cy.get('.finals_main_container').find('.mb-3').should('have.length.greaterThan', 1); // .finals_main_container should contain more than 1 elemtent .mb-3
             cy.contains('.finals_main_add_song_card', 'Click to add a participant').should('exist');
         });
     }
 
-    function checkFinalsProductionSection() {
+    export function checkFinalsProductionSection() {
         cy.contains('.finals_sidebar_title', 'Production').should('exist').click().then(() => {
             cy.contains('.mb-2', 'Venue Info').should('exist');
         });
     }
 
-    function checkFinalsTimelineSection() {
+    export function checkFinalsTimelineSection() {
         cy.contains('.finals_sidebar_title', 'Timeline').should('exist').click().then(() => {
             cy.contains('h3', 'Timeline').should('exist'); // h3, Timeline, should exist
             cy.get('.timeline-events-container').find('.timeline-card').should('have.length.greaterThan', 1);
         });
     }
 
-    function visitStarbridge() {
+    export function visitStarbridge() {
         cy.visit("https://starbridge.starlightmusic.com")
         cy.viewport(1728, 1000);
         // console.log("LOGIN SUCCESS")
