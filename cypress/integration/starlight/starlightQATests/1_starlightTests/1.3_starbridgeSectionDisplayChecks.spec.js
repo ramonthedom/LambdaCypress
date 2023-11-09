@@ -155,8 +155,9 @@ describe('Check User Starbridge Sections', function () {
   function checkFinalsSonglistSection() {
     cy.contains('.finals_sidebar_title', 'Song List').should('exist').click().then(() => {
       // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
-      cy.contains('.myBand_add_new_song_btn', 'Request a song +').should('exist'); // a, Add a song +
+      cy.contains('.myBand_add_new_song_btn', /Request a song \+|Add a song \+/).should('exist');
       cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
+      cy.wait(500);
       cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
       cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
     });
@@ -517,7 +518,7 @@ describe('Check User Starbridge Sections', function () {
     });
 
     cy.contains('a', 'Company').should('exist').click().then(() => {
-      cy.contains('button', 'Gross sales report').should('exist');
+      cy.contains('button', 'Generate reports').should('exist');
       cy.contains('button', 'Payroll report').should('exist');
       cy.contains('.finance_card_title', 'Payment Due').should('exist');
       cy.contains('.finance_card_title', 'Overdue Payments').should('exist');

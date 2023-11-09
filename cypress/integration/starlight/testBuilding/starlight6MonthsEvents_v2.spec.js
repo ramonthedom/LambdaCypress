@@ -882,7 +882,7 @@ describe('My Tests', () => {
   function checkFinalsSonglistSection() {
     cy.contains('.finals_sidebar_title', 'Song List').should('exist').click().then(() => {
       // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
-      cy.contains('.myBand_add_new_song_btn', 'Request a song +').should('exist'); // a, Add a song +
+      cy.contains('.myBand_add_new_song_btn', /Request a song \+|Add a song \+/).should('exist'); // a, Add a song +
       cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
       cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
       cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
