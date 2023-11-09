@@ -1,9 +1,9 @@
-// 6_HolidayEvents.spec.js
+// 1_WeddingEvents.spec.js
 
 import {
   visitStarbridge,
   checkDashboard,
-  testHolidayEvent,
+  testWeddingEvent,
   create6MonthFilter,
   remove6Monthfilter
 } from "../utilities.js"
@@ -32,7 +32,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
   })
 
-  // 1. DUOBLE-CHECK LOGIN SUCCESS
+  // 1. DOUBLE-CHECK LOGIN SUCCESS
   it('Dashboard should present correctly', function () {
     checkDashboard()
   });
@@ -42,45 +42,34 @@ describe('Test all Wedding Events in the next 6 months', () => {
     create6MonthFilter()
   })
 
-  // 3. TEST HOLIDAY EVENTS
-  it('should run tests for HOLIDAY events', function () {
+  // 3. TEST WEDDING EVENTS
+  it('should run tests for WEDDING events', function () {
 
-    visitStarbridge()
+    visitStarbridge();
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.get('.evt-approved-cname').then($elements => {
-        const holidayEvents = $elements.filter(':contains("Holiday")');
-        if (holidayEvents.length > 0) {
-          cy.log('Holiday Event count:', holidayEvents.length);
+        const weddingEvents = $elements.filter(':contains("Wedding")');
 
-          // Function to handle the click and subsequent actions for a single "Private Event"
-          const clickHolidayEvent = (index) => {
-            cy.log("STAGE 0 HOLIDAY EVENT")
-            cy.wait(1000)
-            // Re-query for the elements to get fresh ones from the DOM
-            cy.get('.evt-approved-cname:contains("Holiday")').eq(index).click();
-            cy.log("STAGE 1 INSIDE HOLIDAY EVENT")
+        const START_INDEX = 15; // Set this to 0, 5, 10, etc., depending on the file
+        const END_INDEX = 20; // Set this to 5 more than START_INDEX (5, 10, 15, etc.)
+        const endIndex = Math.min(weddingEvents.length, END_INDEX);
+
+        if (weddingEvents.length > START_INDEX) {
+          for (let i = START_INDEX; i < endIndex; i++) {
             cy.wait(1000);
-            testHolidayEvent()
+            cy.get('.evt-approved-cname:contains("Wedding")').eq(i).click();
+            cy.wait(1000);
+            testWeddingEvent();
             cy.wait(1000);
             cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-            cy.log("STAGE 2 INSIDE HOLIDAY EVENT")
-          };
-
-          // Click on each "Private Event"
-          for (let i = 0; i < holidayEvents.length; i++) {
-            cy.wait(1000)
-            cy.log("BEFORE HOLIDAY EVENT")
-            clickHolidayEvent(i);
-            cy.log("AFTER HOLIDAY EVENT")
-            cy.wait(1000)
           }
         } else {
-          cy.log('No holiday events found');
+          cy.log('No wedding events found in the specified range');
         }
-      })
-    })
-  })
+      });
+    });
+  });
 
   // 4. REMOVE FILTER
   it('should remove 6 month filter', function () {

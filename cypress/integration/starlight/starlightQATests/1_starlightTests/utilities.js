@@ -43,23 +43,16 @@
     }
 
     // 0.1 Remove 6 months filter
-
     export function remove6Monthfilter() {
-
-        cy.log("ENTERING COMPLETION BLOCK")
-        // Clean up after tests run. For example, delete test data.
         cy.request({
             method: 'DELETE',
             url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/removeSixMonthsEventsList'
         }).then((response) => {
             expect(response.status).to.eq(200);
         });
-        cy.log("AFTER BLOCK COMPLETE")
-
     }
 
     // 0.2. Check Dashboard
-
     export function checkDashboard() {
         visitStarbridge()
 
@@ -100,6 +93,8 @@
         cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
             // 4.1.1.7.1 Event Info
+            cy.wait(1000);
+            
             cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
                 cy.contains('h3', 'Parents').should('exist'); // h3, 'Parents', should exist
                 cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist

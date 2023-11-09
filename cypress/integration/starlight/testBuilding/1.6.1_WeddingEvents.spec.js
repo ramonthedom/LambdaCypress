@@ -1,9 +1,9 @@
-// 3_CharityEvents.specs
+// 1_WeddingEvents.spec.js
 
 import {
   visitStarbridge,
   checkDashboard,
-  testCharityEvent,
+  testWeddingEvent,
   create6MonthFilter,
   remove6Monthfilter
 } from "../utilities.js"
@@ -42,40 +42,28 @@ describe('Test all Wedding Events in the next 6 months', () => {
     create6MonthFilter()
   })
 
-  // 3. TEST CHARITY EVENTS
-  it('should run tests for CHARITY events', function () {
+  // 3. TEST WEDDING EVENTS
+  it('should run tests for WEDDING events', function () {
 
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.get('.evt-approved-cname').then($elements => {
-        const charityEvents = $elements.filter(':contains("Charity")');
-        if (charityEvents.length > 0) {
-          cy.log('Charity Event count:', charityEvents.length);
-
-          // Function to handle the click and subsequent actions for a single "Charity Event"
-          const clickCharityEvent = (index) => {
-            cy.log("STAGE 0 CHARITY EVENT")
+        const weddingEvents = $elements.filter(':contains("Wedding")');
+        if (weddingEvents.length > 0) {
+          const clickWeddingEvent = (index) => {
             cy.wait(1000)
-            // Re-query for the elements to get fresh ones from the DOM
-            cy.get('.evt-approved-cname:contains("Charity")').eq(index).click();
-            cy.log("STAGE 1 INSIDE CHARITY EVENT")
-            // Wait for navigation or any other actions that need to occur after the click
+            cy.get('.evt-approved-cname:contains("Wedding")').eq(index).click();
             cy.wait(1000);
-            // If there's a need to interact with elements on the new page, do it here
-            testCharityEvent()
-            // Then navigate back or reset state as needed to continue with the next item
-            cy.wait(1000); // Replace with a more reliable condition
+            testWeddingEvent()
+            cy.wait(1000);
             cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-            cy.log("STAGE 2 INSIDE CHARITY EVENT")
           };
 
-          // Click on each "Charity Event"
-          for (let i = 0; i < charityEvents.length; i++) {
+          // Click on each "Wedding Event"
+          for (let i = 0; i < weddingEvents.length; i++) {
             cy.wait(1000)
-            cy.log("BEFORE CHARITY EVENT")
-            clickCharityEvent(i);
-            cy.log("AFTER CHARITY EVENT")
+            clickWeddingEvent(i);
             cy.wait(1000)
           }
         } else {
