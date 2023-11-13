@@ -579,12 +579,12 @@
             cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
             cy.get('span.ml-1.mr-2').then(($span) => {
                 // Check if the title of the span is not 'DJ Kristivl'
-                if ($span.attr('title') !== 'DJ Kristaval') {
+                if ($span.attr('title') !== 'DJ Kristaval' && $span.attr('title') !== 'Disc Jockey') {
                     cy.wait(3000);
                     cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
                     cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
                 } else {
-                    cy.log("DJ KRISTIVAL FOUND - NO SONGLIST")
+                    cy.log("DJ Kristival or Disc Jockey found - NO SONGLIST")
                 }
             });
         });

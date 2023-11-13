@@ -9,7 +9,7 @@ describe('Check User Starbridge Sections', function () {
 
     const user_email = "sqatesting.dl@gmail.com"
     const user_password = "SQATesting1553!$"
-    const user_login_url = "https://starbridge.starlightmusic.com" 
+    const user_login_url = "https://starbridge.starlightmusic.com"
 
     let myParams = {
       my_db: 'starlight',
@@ -153,13 +153,20 @@ describe('Check User Starbridge Sections', function () {
   }
 
   function checkFinalsSonglistSection() {
-    cy.contains('.finals_sidebar_title', 'Song List').should('exist').click().then(() => {
+    cy.contains('.finals_sidebar_title', 'Song List').should('exist').click().wait(500).then(() => {
       // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
       cy.contains('.myBand_add_new_song_btn', /Request a song \+|Add a song \+/).should('exist');
       cy.contains('.finals-request-song-heading', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
-      cy.wait(500);
-      cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
-      cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
+      cy.get('span.ml-1.mr-2').then(($span) => {
+        // Check if the title of the span is not 'DJ Kristivl'
+        if ($span.attr('title') !== 'DJ Kristaval' && $span.attr('title') !== 'Disc Jockey') {
+          cy.wait(3000);
+          cy.get('.myband-song-list-table').find('td').should('have.length.greaterThan', 1);
+          cy.get('.myband-song-list-table').find('.myband-youtube-table').should('have.length.greaterThan', 1);
+        } else {
+          cy.log("DJ Kristival or Disc Jockey found - NO SONGLIST")
+        }
+      });
     });
   }
 
@@ -258,7 +265,7 @@ describe('Check User Starbridge Sections', function () {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.contains('.title', 'All Events').should('exist');
-  })
+    })
   })
 
   //~~~~~~~~~~~~~~//
@@ -559,37 +566,37 @@ describe('Check User Starbridge Sections', function () {
     })
   })
 
-   // ~~~~~~~~~~ //
-   // 4. EVENTS   //
-   // ~~~~~~~~~~ //
+  // ~~~~~~~~~~ //
+  // 4. EVENTS   //
+  // ~~~~~~~~~~ //
 
-    // 4. Events
-    // Setup:
-    // 1. select all events up to 6 months in the future
-    // 2. save the _id's for FrontEnd Testing
+  // 4. Events
+  // Setup:
+  // 1. select all events up to 6 months in the future
+  // 2. save the _id's for FrontEnd Testing
 
-    // ORDER:
-    // 4.1. Click client name
-    // 4.2. Check that the following load
-    // 4.2.1 Basic Info
-    // 4.2.2 Configuration
-    // 4.2.3 Band
-    // 4.2.4 Documents
-    // 4.2.5 Communication
-    // 4.2.6 Expenses
-    // 4.2.7 Reviews
-    // 4.2.8 Finals
-    // 4.2.8.1 Event Info
-    // 4.2.8.2 Special Songs
-    // 4.2.8.3 Blessing/Toast
-    // 4.2.8.4 Song List
-    // 4.2.8.5 Production
-    // 4.2.8.6 Timeline
-    // 4.2.8.7 Notes
-    // 4.2.8.8 Gig Styling
-    // 4.2.8.9 Check Export Final PDF works 
+  // ORDER:
+  // 4.1. Click client name
+  // 4.2. Check that the following load
+  // 4.2.1 Basic Info
+  // 4.2.2 Configuration
+  // 4.2.3 Band
+  // 4.2.4 Documents
+  // 4.2.5 Communication
+  // 4.2.6 Expenses
+  // 4.2.7 Reviews
+  // 4.2.8 Finals
+  // 4.2.8.1 Event Info
+  // 4.2.8.2 Special Songs
+  // 4.2.8.3 Blessing/Toast
+  // 4.2.8.4 Song List
+  // 4.2.8.5 Production
+  // 4.2.8.6 Timeline
+  // 4.2.8.7 Notes
+  // 4.2.8.8 Gig Styling
+  // 4.2.8.9 Check Export Final PDF works 
 
-    // REPEAT FOR ALL EVENTS
+  // REPEAT FOR ALL EVENTS
 
   it('EventType: Wedding contains all the correct sections', function () {
     visitStarbridge()
@@ -599,7 +606,7 @@ describe('Check User Starbridge Sections', function () {
     // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveWeddingEventId).wait(200).then(() => {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
-          
+
       cy.contains('.title', 'All Events').should('exist');
 
       // check a wedding // change to specific event

@@ -206,7 +206,7 @@ describe('Check StarlightMusic Client Sections', function () {
     function checkFinalsSonglistSection() {
       cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Song List').should('exist').click().wait(500).then(() => {
         // cy.contains('.finals-request-song-heading', 'Requested Songs').should('exist'); // .finals-request-song-heading, Requested Songs, should exist
-        cy.contains('.SongsFinalComponent_myBand_add_new_song_btn__1u8Uj', /Request a song \+|Add a song \+/).should('exist'); // a, Add a song +
+        cy.contains('.SongsFinalComponent_myBand_add_new_song_btn__1u8Uj', /\+ Request a song|\+ Add a song/).should('exist'); // a, Add a song +
         cy.contains('.SongsFinalComponent_songs_heading__1fPng', 'Band Songs').should('exist'); // .finals-request-song-heading, Band Songs
         cy.get('.SongsFinalComponent_myband_song_list_table__Tw8xm').find('tr').should('have.length.greaterThan', 1);
       });
