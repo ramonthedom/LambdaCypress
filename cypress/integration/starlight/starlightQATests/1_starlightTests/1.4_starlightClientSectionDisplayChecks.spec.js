@@ -1,19 +1,13 @@
 /// FRONTEND ///
 
+import { clientData } from "./common";
+
 // login
 describe('Check StarlightMusic Client Sections', function () {
 
     beforeEach(() => {
-      const user_email = "sqatesting.dl@gmail.com"
-      const user_password = "SQATesting1553!$"
-      const user_login_url = "https://www.starlightmusic.com"
-  
-      let myParams = {
-        my_db: 'starlight',
-        my_collection: 'clientOtpManager',
-        my_id: '651239e2ce0c0935229dc3d5', // starlight user_id associated with OTP when OTP sent
-        id_type: 'client' // or client
-      };
+
+      const { user_email, user_password, user_login_url, myParams } = clientData;
   
       cy.login(user_email, user_password, user_login_url, myParams);
     })
@@ -419,6 +413,78 @@ describe('Check StarlightMusic Client Sections', function () {
       const testBirthdayEventId = "651ec1829adb424aae8eec30" // RS 11/06/2028 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testBirthdayEventId).wait(200).then(() => {
+  
+        cy.contains('.event-detail-heading', 'Event Details').should('exist');
+  
+        //3.1 Basic Info
+        checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
+  
+        // 3.2. My Band Configuration
+        checkMyBandConfigurationSection()
+  
+        // 3.3. Documents
+        checkDocumentsSection()
+  
+        // 3.4. Communication
+        checkCommunicationSection()
+  
+        // 3.5 Finals
+        cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+          checkNonWeddingFinalsSection("Guest(s) Of Honor")
+        })
+      })
+    })
+
+    //~~~~~~~~~~~~~~//
+    //    CHARITY  //
+    //~~~~~~~~~~~~~~//
+  
+    it('CHARITY -- Events section should present correctly', function () {
+  
+      visitStarlightMusic()
+  
+      cy.contains('a', 'Events').should('exist').click();
+      cy.contains('.account-heading', 'Events').should('exist');
+  
+      const testCharityEventId = "6352d72ee27cdf19b62ec1d6" // OX 4/04/2029 -- TEST EVENT
+  
+      cy.visit("https://www.starlightmusic.com/events/" + testCharityEventId).wait(200).then(() => {
+  
+        cy.contains('.event-detail-heading', 'Event Details').should('exist');
+  
+        //3.1 Basic Info
+        checkBasicInfoSectionWithNoPaymentsOrContract()
+  
+        // 3.2. My Band Configuration
+        checkMyBandConfigurationSection()
+  
+        // 3.3. Documents
+        checkDocumentsSection()
+  
+        // 3.4. Communication
+        checkCommunicationSection()
+  
+        // 3.5 Finals
+        cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+          checkNonWeddingFinalsSection("Guest(s) Of Honor")
+        })
+      })
+    })
+
+    //~~~~~~~~~~~~~~//
+    //    PRIVATE  //
+    //~~~~~~~~~~~~~~//
+  
+    it('BIRTHDAY -- Events section should present correctly', function () {
+  
+      visitStarlightMusic()
+  
+      cy.contains('a', 'Events').should('exist').click();
+      cy.contains('.account-heading', 'Events').should('exist');
+  
+      const testPrivateEventId = "635608d9e27cdf19b6763454" // OX 3/11/2029 -- TEST EVENT
+  
+      cy.visit("https://www.starlightmusic.com/events/" + testPrivateEventId).wait(200).then(() => {
   
         cy.contains('.event-detail-heading', 'Event Details').should('exist');
   

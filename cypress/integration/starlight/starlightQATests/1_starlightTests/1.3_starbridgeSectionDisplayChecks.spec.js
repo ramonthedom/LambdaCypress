@@ -2,21 +2,14 @@
 
 // video for login session issue: https://www.youtube.com/watch?v=hOJ50rINCkA
 
+import { userData } from "./common";
+
 // login
 describe('Check User Starbridge Sections', function () {
 
   beforeEach(() => {
 
-    const user_email = "sqatesting.dl@gmail.com"
-    const user_password = "SQATesting1553!$"
-    const user_login_url = "https://starbridge.starlightmusic.com"
-
-    let myParams = {
-      my_db: 'starlight',
-      my_collection: 'userOtpManager',
-      my_id: '64c1ecc42d56ce0ab99204f3', // user_id associated with OTP when OTP sent
-      id_type: 'user' // or client
-    };
+    const { user_email, user_password, user_login_url, myParams } = userData;
 
     cy.login(user_email, user_password, user_login_url, myParams);
   })

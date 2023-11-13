@@ -6,7 +6,8 @@ import {
   testWeddingEvent,
   create6MonthFilter,
   remove6Monthfilter
-} from "../utilities.js"
+} from "../utilities.js";
+import { userData } from "../common.js";
 
 describe('Test all Wedding Events in the next 6 months', () => {
 
@@ -16,20 +17,8 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
   // 0. LOGIN
   beforeEach(() => {
-
-    const user_email = "sqatesting.dl@gmail.com"
-    const user_password = "SQATesting1553!$"
-    const user_login_url = "https://starbridge.starlightmusic.com"
-
-    let myParams = {
-      my_db: 'starlight',
-      my_collection: 'userOtpManager',
-      my_id: '64c1ecc42d56ce0ab99204f3', // user_id associated with OTP when OTP sent
-      id_type: 'user' // or client
-    };
-
+    const { user_email, user_password, user_login_url, myParams } = userData;
     cy.login(user_email, user_password, user_login_url, myParams);
-
   })
 
   // 1. DOUBLE-CHECK LOGIN SUCCESS
@@ -51,8 +40,8 @@ describe('Test all Wedding Events in the next 6 months', () => {
       cy.get('.evt-approved-cname').then($elements => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
 
-        const START_INDEX = 55; // Set this to 0, 5, 10, etc., depending on the file
-        const END_INDEX = 60; // Set this to 5 more than START_INDEX (5, 10, 15, etc.)
+        const START_INDEX = 5; // Set this to 0, 5, 10, etc., depending on the file
+        const END_INDEX = 10; // Set this to 5 more than START_INDEX (5, 10, 15, etc.)
         const endIndex = Math.min(weddingEvents.length, END_INDEX);
 
         if (weddingEvents.length > START_INDEX) {
