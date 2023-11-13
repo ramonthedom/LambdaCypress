@@ -49,7 +49,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.get('.evt-approved-cname').then($elements => {
-        const birthdayEvents = $elements.filter(':contains("Wedding")');
+        const birthdayEvents = $elements.filter(':contains("Birthday")');
         if (birthdayEvents.length > 0) {
           cy.log('Birthday Event count:', birthdayEvents.length);
 

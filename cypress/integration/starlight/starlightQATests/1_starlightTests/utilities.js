@@ -36,6 +36,7 @@
             cy.contains('a', 'Events').should('exist').click();
             cy.wait(2000);
             cy.get('.dashboard_heading .ant-select-selection-item').click();
+            cy.wait(1000)
             cy.get('.ant-select-item-option-active .demo-option-label-item').click();
             cy.contains('.title > .ant-select > .ant-select-selector > .ant-select-selection-item', namedVariable).should('exist');
         });
