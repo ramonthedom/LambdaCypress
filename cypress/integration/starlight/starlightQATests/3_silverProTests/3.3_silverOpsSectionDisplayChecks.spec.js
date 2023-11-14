@@ -555,7 +555,7 @@ describe('Check User SilverOps Sections', function () {
     });
 
     cy.contains('a', 'Company').should('exist').click().then(() => {
-      cy.contains('button', 'Gross sales report').should('exist');
+      cy.contains('button', 'Generate reports').should('exist');
       cy.contains('button', 'Payroll report').should('exist');
       cy.contains('.finance_card_title', 'Payment Due').should('exist');
       cy.contains('.finance_card_title', 'Overdue Payments').should('exist');
