@@ -479,6 +479,7 @@ describe('Check User SilverOps Sections', function () {
 
     // 6.6. Venues
     cy.contains('a', 'Venues').should('exist').click().wait(500).then(() => {
+      cy.wait(500);
       cy.contains('.dashboard_heading', 'Venues').should('exist');
       cy.get('.ant-table-content').find('tr').should('have.length.greaterThan', 1);
       cy.contains('th', 'Venue Name').should('exist');

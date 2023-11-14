@@ -475,7 +475,7 @@ describe('Check StarlightMusic Client Sections', function () {
     //    PRIVATE  //
     //~~~~~~~~~~~~~~//
   
-    it('BIRTHDAY -- Events section should present correctly', function () {
+    it('PRIVATE -- Events section should present correctly', function () {
   
       visitStarlightMusic()
   
