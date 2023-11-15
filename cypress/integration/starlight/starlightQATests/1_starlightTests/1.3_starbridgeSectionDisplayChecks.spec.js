@@ -274,10 +274,12 @@ describe('Check User Starbridge Sections', function () {
 
     // 5.1. Bookings
     cy.contains('a', 'Bookings').should('exist').click();
+    cy.wait(500);
     cy.contains('tr', "BOOKING DATE").should('exist');
 
     // 5.2 Upsells
     cy.contains('a', 'Upsells').should('exist').click();
+    cy.wait(500);
     cy.contains('tr', "DATE SENT/RECEIVED").should('exist');
 
   })

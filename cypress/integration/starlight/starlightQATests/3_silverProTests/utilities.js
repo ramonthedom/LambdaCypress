@@ -18,7 +18,7 @@
         const formattedToday = formatDate(today);
         const formattedSixMonthsFromToday = formatDate(sixMonthsFromToday);
 
-        visitStarbridge()
+        visitSilverOps()
 
         const namedVariable = "SixMonthsList"
 
@@ -47,7 +47,7 @@
     export function remove6Monthfilter() {
         cy.request({
             method: 'DELETE',
-            url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/removeSixMonthsEventsList'
+            url: 'https://8ze16mvrz1.execute-api.us-east-1.amazonaws.com/prod/silverproRemoveSixMonthsEventsList'
         }).then((response) => {
             expect(response.status).to.eq(200);
         });
@@ -55,7 +55,7 @@
 
     // 0.2. Check Dashboard
     export function checkDashboard() {
-        visitStarbridge()
+        visitSilverOps()
 
         // 1. Dashboard
         cy.contains('a', 'Dashboard').should('exist').click();
@@ -611,8 +611,8 @@
         });
     }
 
-    export function visitStarbridge() {
-        cy.visit("https://starbridge.starlightmusic.com")
+    export function visitSilverOps() {
+        cy.visit("https://silverops.silverproentertainment.com")
         cy.viewport(1728, 1000);
         // console.log("LOGIN SUCCESS")
         // cy.wait(3000);
