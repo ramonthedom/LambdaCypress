@@ -1,7 +1,7 @@
 // 5_PrivateEvents.spec.js
 
 import {
-  visitSilverOps,
+  visitStarbridge,
   checkDashboard,
   testPrivateEvent,
   create6MonthFilter,
@@ -34,17 +34,15 @@ describe('Test all Wedding Events in the next 6 months', () => {
   // 3. TEST PRIVATE EVENTS
   it('should run tests for PRIVATE events', function () {
 
-    visitSilverOps()
+    visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       // For "Private Event"
       cy.get('.evt-approved-cname').then($elements => {
         const privateElements = $elements.filter(':contains("Private Event")');
         if (privateElements.length > 0) {
-          // cy.wrap(privateElements.length).as('privateCount');
-          // cy.get('@privateCount').then(privateCount => cy.log('Private Event count:', privateCount));
+          cy.log('Private Event count:', privateElements.length);
 
-          cy.log('Private Event count:', $privateEvents.length);
           // Function to handle the click and subsequent actions for a single "Private Event"
           const clickPrivateEvent = (index) => {
             cy.log("STAGE 0 PRIVATE EVENT")

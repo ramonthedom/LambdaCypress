@@ -1,13 +1,13 @@
-// 4_CorporateEvents.spec.js
+// 5_PrivateEvents.spec.js
 
 import {
-  visitStarbridge,
+  visitSilverOps,
   checkDashboard,
-  testCorporateEvent,
+  testPrivateEvent,
   create6MonthFilter,
   remove6Monthfilter
 } from "../utilities.js";
-import { userData } from "../common";
+import { userData } from "../common.js";
 
 describe('Test all Wedding Events in the next 6 months', () => {
 
@@ -31,47 +31,48 @@ describe('Test all Wedding Events in the next 6 months', () => {
     create6MonthFilter()
   })
 
-  // 3. TEST CORPORATE EVENTS
-  it('should run tests for CORPORATE events', function () {
+  // 3. TEST PRIVATE EVENTS
+  it('should run tests for PRIVATE events', function () {
 
-    visitStarbridge()
+    visitSilverOps()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      // For "Private Event"
       cy.get('.evt-approved-cname').then($elements => {
-        const corporateEvents = $elements.filter(':contains("Corporate")');
-        if (corporateEvents.length > 0) {
-          cy.log('Corporate Event count:', corporateEvents.length);
+        const privateElements = $elements.filter(':contains("Private Event")');
+        if (privateElements.length > 0) {
+          cy.log('Private Event count:', privateElements.length);
 
           // Function to handle the click and subsequent actions for a single "Private Event"
-          const clickCorporateEvent = (index) => {
-            cy.log("STAGE 0 CORPORATE EVENT")
+          const clickPrivateEvent = (index) => {
+            cy.log("STAGE 0 PRIVATE EVENT")
             cy.wait(1000)
             // Re-query for the elements to get fresh ones from the DOM
-            cy.get('.evt-approved-cname:contains("Corporate")').eq(index).click();
-            cy.log("STAGE 1 INSIDE CORPORATE EVENT")
+            cy.get('.evt-approved-cname:contains("Private Event")').eq(index).click();
+            cy.log("STAGE 1 INSIDE PRIVATE EVENT")
             // Wait for navigation or any other actions that need to occur after the click
             cy.wait(1000);
             // If there's a need to interact with elements on the new page, do it here
-            testCorporateEvent()
+            testPrivateEvent()
             // Then navigate back or reset state as needed to continue with the next item
             cy.wait(1000); // Replace with a more reliable condition
             cy.get('.event-top-container > :nth-child(1) > .mr-3').click();
-            cy.log("STAGE 2 INSIDE CORPORATE EVENT")
+            cy.log("STAGE 2 INSIDE PRIVATE EVENT")
           };
 
           // Click on each "Private Event"
-          for (let i = 0; i < corporateEvents.length; i++) {
+          for (let i = 0; i < $privateEvents.length; i++) {
             cy.wait(1000)
-            cy.log("BEFORE CORPORATE EVENT")
-            clickCorporateEvent(i);
-            cy.log("AFTER CORPORATE EVENT")
+            cy.log("BEFORE PRIVATE EVENT")
+            clickPrivateEvent(i);
+            cy.log("AFTER PRIVATE EVENT")
             cy.wait(1000)
           }
         } else {
-          cy.log('No corporate events found');
+          cy.log('No private events found');
         }
-      })
-    })
+      });
+    });
   })
 
   // 4. REMOVE FILTER

@@ -7,7 +7,7 @@ import {
   create6MonthFilter,
   remove6Monthfilter
 } from "../utilities.js";
-import { userData } from "../common";
+import { userData } from "../common.js";
 
 describe('Test all Wedding Events in the next 6 months', () => {
 
