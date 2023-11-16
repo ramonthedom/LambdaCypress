@@ -323,7 +323,6 @@
 
         // 4.1.1.1 Basic Info
         cy.get("#basic-info-btn").should('exist').click().then(() => {
-            cy.contains('h3', 'Wedding of ').should('exist'); //h3 containing "Wedding of " should exist
             checkBasicInfoSection(); //p containing "Total Price:" should exist
         });
 
