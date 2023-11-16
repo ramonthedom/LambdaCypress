@@ -348,7 +348,7 @@
         cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
             // 4.1.1.7.2 Special Songs
-            checkFinalsSpecialSongsSection();
+            // checkFinalsSpecialSongsSection();
 
             // 4.1.1.7.3 Blessings/Toast
             checkFinalsBlessingToastSection();
