@@ -1,257 +1,251 @@
+import {
+  expect
+} from "chai";
+
 describe('Starlight Music Website Interactions', () => {
 
-    beforeEach(() => {
-      // Visit the Starlight Music website before each test
-      cy.visit('https://www.starlightmusic.com');
-    });
-  
-    // ~~~~~~~~~~~~~~~~~ //
-    // 1. HEADER BUTTONS //
-    // ~~~~~~~~~~~~~~~~~ //
+  beforeEach(() => {
+    // Visit the Starlight Music website before each test
+    cy.visit('https://www.starlightmusic.com');
+  });
 
-    it('check header buttons', () => {
-      cy.get('a.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ
-      cy.get('a.Header_nav_link__3qapQ').contains('Browse Bands').should('have.attr', 'href', '/our-talent'); // Browse Bands
-      cy.get('a.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); // Meet The Team
-      cy.get('a.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); // Celebrities
-      cy.get('a.Header_nav_link__3qapQ').contains('Contact Us').should('have.attr', 'href', '/contact-us'); // Contact Us
+  // ~~~~~~~~~~~~~~~~~ //
+  // 1. HEADER BUTTONS //
+  // ~~~~~~~~~~~~~~~~~ //
+
+  it('check header buttons', () => {
+    cy.get('a.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ
+    cy.get('a.Header_nav_link__3qapQ').contains('Browse Bands').should('have.attr', 'href', '/our-talent'); // Browse Bands
+    cy.get('a.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); // Meet The Team
+    cy.get('a.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); // Celebrities
+    cy.get('a.Header_nav_link__3qapQ').contains('Contact Us').should('have.attr', 'href', '/contact-us'); // Contact Us
+  })
+
+  // login buttons should result in h6 modal containing the text "New to Starlight Music"
+  it('should ensure button "Login/Sign Up" is functioning correctly', () => {
+    cy.get('#login-signup-btn').should('exist').click().wait(200).then(() => {
+      cy.contains('p', 'New to Starlight Music').should('exist');
     })
-    // Header buttons
-    // it('should find the FAQ link and verify it has the correct href', () => {
-    //   cy.get('a.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ
-    // });
-  
-    // it('should find the Browse Bands link and verify it has the correct href', () => {
-    //   cy.get('a.Header_nav_link__3qapQ').contains('Browse Bands').should('have.attr', 'href', '/our-talent'); // Browse Bands
-    // });
-  
-    // it('should find the Meet the Team link and verify it has the correct href', () => {
-    //   cy.get('a.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); // Meet The Team
-    // });
-  
-    // it('should find the Celebrities link and verify it has the correct href', () => {
-    //   cy.get('a.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); // Celebrities
-    // });
-  
-    // it('should find the Contact Us link and verify it has the correct href', () => {
-    //   cy.get('a.Header_nav_link__3qapQ').contains('Contact Us').should('have.attr', 'href', '/contact-us'); // Contact Us
-    // });
+  })
 
-    // login buttons should result in h6 modal containing the text "New to Starlight Music"
-    it('should ensure button "Login/Sign Up" is functioning correctly', () => {
-      cy.get('#login-signup-btn').should('exist').click().wait(200).then(() => {
-        cy.contains('p', 'New to Starlight Music').should('exist');
-      })
-    })
+  // ~~~~~~~~~~~~~~~~~ //
+  // 2. FOOTER BUTTONS //
+  // ~~~~~~~~~~~~~~~~~ //
+  it('check footer buttons', () => {
 
-    // ~~~~~~~~~~~~~~~~~ //
-    // 2. FOOTER BUTTONS //
-    // ~~~~~~~~~~~~~~~~~ //
-
-    /// Footer buttons
-    // footer Home button should exist
-    it('footer home button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Home').should('have.attr', 'href', '/');
-    })
-
-    // footer FAQ button should exist
-    it('footer FAQ button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('FAQ').should('have.attr', 'href', '/faq');
-    })
-
-    // meet the team
-    it('footer Meet The Team button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team');
-    })
-
-    // celebrities
-    it('footer Celebrities button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Celebrities').should('have.attr', 'href', '/celebrities');
-    })
-
-    // about us
-    it('footer About Us button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('About Us').should('have.attr', 'href', '/about-us');
-    })
-
-    // contact us
-    it('footer Contact Us button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Contact Us').should('have.attr', 'href', '/contact-us');
-    })
-
-    // out talent
-    it('footer Our Talent button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Our Talent').should('have.attr', 'href', '/our-talent');
-    })
-
-    // credits
-    it('footer Credits button should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Credits').should('have.attr', 'href', '/credits');
-    })
+    // Starlight
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Home').should('have.attr', 'href', '/');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('FAQ').should('have.attr', 'href', '/faq');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Meet the team').should('have.attr', 'href', '/meet-the-team');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Celebrities').should('have.attr', 'href', '/celebrities');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('About Us').should('have.attr', 'href', '/about-us');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Contact Us').should('have.attr', 'href', '/contact-us');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Our Talent').should('have.attr', 'href', '/our-talent');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Credits').should('have.attr', 'href', '/credits');
 
     // Browse bands
-    /// acoustic guitar ensemble
-    it('Acoustic Guitar Ensemble link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Acoustic Guitar Ensemble').should('have.attr', 'href', '/band/acoustic-guitar-ensembles');
-    })
-
-    /// blake band
-    it('Blake Band link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Blake Band').should('have.attr', 'href', '/band/the-blake-band-nyc-wedding-band');
-    })
-
-    /// DJ Kristaval
-    it('DJ Kristaval link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('DJ Kristaval').should('have.attr', 'href', '/band/dj-kristaval-nyc-celebrity-disc-jockey');
-    })
-
-    /// Fleur Seule
-    it('Fleur Seule link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Fleur Seule').should('have.attr', 'href', '/band/fleur-seule');
-    })
-
-    /// Latin - Acoustic Guitar
-    it('Latin - Acoustic Guitar link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Latin - Acoustic Guitar').should('have.attr', 'href', '/band/latin---acoustic-guitar');
-    })
-
-    /// MC Mike D.
-    it('MC Mike D. link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('MC Mike D.').should('have.attr', 'href', '/band/mc-mike-d');
-    })
-
-    /// Onyx
-    it('Onyx link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Onyx').should('have.attr', 'href', '/band/onyx-nyc-wedding-band');
-    })
-
-    /// Rock and Soul
-    it('Rock and Soul link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Rock and Soul').should('have.attr', 'href', '/band/rock-and-soul-nyc-premiere-wedding-band');
-    })    
-
-    /// Star Power
-    it('Star Power link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Star Power').should('have.attr', 'href', '/band/star-power-nyc-wedding-band');
-    })
-
-    /// Starlight Orchestra
-    it('Starlight Orchestra link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Starlight Orchestra').should('have.attr', 'href', '/band/starlight-orchestra-corporate-events-and-nyc-weddings');
-    })
-
-    /// String Performers (E.V.E)
-    it('String Performers (E.V.E) link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('String Performers (E.V.E)').should('have.attr', 'href', '/band/string-performers-eve-nyc-wedding-corporate-musicians');
-    })
-
-    /// The Starlight Experience
-    it('The Starlight Experience link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Starlight Experience').should('have.attr', 'href', '/band/the-starlight-experience');
-    })
-
-    /// White Light
-    it('White Light link should work', () => {
-      cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('White Light').should('have.attr', 'href', '/band/white-light-nyc-wedding-band');
-    })
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Acoustic Guitar Ensemble').should('have.attr', 'href', '/band/acoustic-guitar-ensembles');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Blake Band').should('have.attr', 'href', '/band/the-blake-band-nyc-wedding-band');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('DJ Kristaval').should('have.attr', 'href', '/band/dj-kristaval-nyc-celebrity-disc-jockey');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Fleur Seule').should('have.attr', 'href', '/band/fleur-seule');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Latin - Acoustic Guitar').should('have.attr', 'href', '/band/latin---acoustic-guitar');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('MC Mike D.').should('have.attr', 'href', '/band/mc-mike-d');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Onyx').should('have.attr', 'href', '/band/onyx-nyc-wedding-band');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Rock and Soul').should('have.attr', 'href', '/band/rock-and-soul-nyc-premiere-wedding-band');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Star Power').should('have.attr', 'href', '/band/star-power-nyc-wedding-band');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Starlight Orchestra').should('have.attr', 'href', '/band/starlight-orchestra-corporate-events-and-nyc-weddings');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('String Performers (E.V.E)').should('have.attr', 'href', '/band/string-performers-eve-nyc-wedding-corporate-musicians');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Starlight Experience').should('have.attr', 'href', '/band/the-starlight-experience');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('White Light').should('have.attr', 'href', '/band/white-light-nyc-wedding-band');
 
     /// Social Media buttons
-    //// Insta
-    it('should verify Instagram link', () => {
-      // Replace 'specific-alt-text' with the actual alt text and '/expected-href' with the actual href value
-      cy.get('a.img_btn') // Selects the `a` element with the class 'img_btn'
-        .find('img[alt="instagram"]') // Finds the `img` with the specific 'alt' attribute
-        .parent() // Goes up to the `a` element that is the parent of the `img`
-        .should('have.attr', 'href', 'https://www.instagram.com/starlightmusicnyc'); // Checks that the `a` element has the correct 'href' attribute value
-    });
+    cy.get('a.img_btn')
+      .find('img[alt="instagram"]')
+      .parent()
+      .should('have.attr', 'href', 'https://www.instagram.com/starlightmusicnyc');
 
-    //// Facebook
-    it('should verify Facebook link', () => {
-      // Replace 'specific-alt-text' with the actual alt text and '/expected-href' with the actual href value
-      cy.get('a.img_btn') // Selects the `a` element with the class 'img_btn'
-        .find('img[alt="facebook"]') // Finds the `img` with the specific 'alt' attribute
-        .parent() // Goes up to the `a` element that is the parent of the `img`
-        .should('have.attr', 'href', 'https://www.facebook.com/starlightmusicnyc'); // Checks that the `a` element has the correct 'href' attribute value
-    });
+    cy.get('a.img_btn')
+      .find('img[alt="facebook"]')
+      .parent()
+      .should('have.attr', 'href', 'https://www.facebook.com/starlightmusicnyc');
+
+    cy.get('a.img_btn')
+      .find('img[alt="linkedin"]')
+      .parent()
+      .should('have.attr', 'href', 'https://www.linkedin.com/company/starlightmusic');
+
+  })
+
+  // ~~~~~~~~~~~~~~~~~ //
+  // 3. MIDDLE BUTTONS //
+  // ~~~~~~~~~~~~~~~~~ //
+
+  // pricing button
+  it('check BIG pricing button', () => {
+    cy.get('.Header_main_header_big_availability_btn__4sb-h').should('exist').click().wait(200).then(() => {
+      cy.get('section.d-flex align-items-center Header_search_box__1hIlx').should('exist');
+    })
+  })
+
+  // Play now
+  it('Play button works', () => {
+    cy.contains('button.FeaturedVideoComponent_featured_video_content_btn__3sjgU', 'Play Now').should('exist').click().wait(200).then(() => {
+      cy.contains('button.FeaturedVideoComponent_featured_video_content_btn__3sjgU', 'Pause').should('exist');
+    })
+  })
+
+  // prev button
+  it('Previous/Next buttons should work', () => {
+    //start point
+    cy.get('div.slick-slide.slick-active.slick-current').should('have.attr', 'data-index', '0');
+    cy.get("button.slick-arrow.slick-prev")[0].click().wait(200).then(() => {
+      cy.get('div.slick-slide.slick-active.slick-current').should('have.attr', 'data-index', '5');
+      cy.get("button.slick-arrow.slick-next")[0].click().wait(200).then(() => {
+        cy.get('div.slick-slide.slick-active.slick-current').should('have.attr', 'data-index', '0');
+      })
+    })
+  })
 
 
-    //// linkdin
-    it('should verify Linkedin link', () => {
-      // Replace 'specific-alt-text' with the actual alt text and '/expected-href' with the actual href value
-      cy.get('a.img_btn') // Selects the `a` element with the class 'img_btn'
-        .find('img[alt="linkedin"]') // Finds the `img` with the specific 'alt' attribute
-        .parent() // Goes up to the `a` element that is the parent of the `img`
-        .should('have.attr', 'href', 'https://www.linkedin.com/company/starlightmusic'); // Checks that the `a` element has the correct 'href' attribute value
-    });
+  // More Band Videos
+  it('More Bands video button should work', () => {
+    cy.contains("button.ant-btnFeaturedVideoComponent_more_band_btn__3_AJU", "More Band Videos").should("exist").click().wait(500).then(() => {
+      cy.url().should('eq', 'https://www.starlightmusic.com/our-talent')
+    })
+  })
 
-    // ~~~~~~~~~~~~~~~~~ //
-    // 2. FOOTER BUTTONS //
-    // ~~~~~~~~~~~~~~~~~ //
+  // About starlight button
+  it('About Starlight button should work', () => {
+    cy.contains("button.AboutUsComponent_know_more_btn__QEIZD", "About Starlight").should("exist").click().wait(500).then(() => {
+      cy.url().should('eq', 'https://www.starlightmusic.com/about-us')
+    })
+  })
 
-    /// Middle
+  // Go button
+  it('Cities GO button should work', () => {
+    cy.get("d-inline-flex align-items-center justify-content-center img_btn.TopCitiesComponent_top_cities_main_slide_icon__1Ceel").should("exist").click().wait(500).then(() => {
+      cy.url().should('eq', 'https://www.starlightmusic.com/cities/aspen-wedding-bands')
+    })
+  })
 
-    // Play now
+  // Cities - buttons
+  it('Cities previous and next buttons should work', () => {
+    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Aspen').should('exist');
+    cy.get("button.slick-arrow.slick-prev")[1].click().wait(200).then(() => {
+      cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Washington').should('exist');
 
-    // prev button
+      cy.get("button.slick-arrow.slick-next")[1].click().wait(200).then(() => {
+        cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Aspen').should('exist');
+      })
+    })
+  })
 
-    // next button
-  
-    // More Band Videos
+  /// Hightlighs - buttons
+  it('Highlights previous and next buttons should work', () => {
+    cy.contains('.TestimonialComponent_testimonial_slide_content_heading__3ZrRl', 'Kevin Hart and Eniko Parrish').should('exist');
+    cy.get("button.slick-arrow.slick-prev")[2].click().wait(200).then(() => {
+      cy.contains('.TestimonialComponent_testimonial_slide_content_heading__3ZrRl', 'Evan and Flo Rida').should('exist');
 
-    // About starlight button
+      cy.get("button.slick-arrow.slick-next")[2].click().wait(200).then(() => {
+        cy.contains('.TestimonialComponent_testimonial_slide_content_heading__3ZrRl', 'Kevin Hart and Eniko Parrish').should('exist');
+      })
+    })
+  })
 
-    // Go button
+  // IG Feed
+  it('IG Feed should be active', () => {
+    cy.contains('p', 'the access token is not valid').should('not.exist');
+  })
 
-    // Prev button
+  // see more button
+  it('IG See More Button should work', () => {
+    cy.contains('.ant-btn.feeds-btn', 'See More').find('a').should('have.attr', 'href', 'https://www.instagram.com/starlightmusicnyc'); //IG
+  })
 
-    // Next button
+  // Cities buttons
+  it('Aspen Button should work', () => {
+    cy.contains('a.RecentCitiesComponent_recent_cities_list_items__1n16d', 'Aspen').should('have.attr', 'href', '/cities/aspen-wedding-bands'); //Aspen 
+  })
 
-    /// Hightlighs
+  // Get In Touch button
+  it('Get In Touch Button should work', () => {
+    cy.contains('.GetInTouchComponent_getintouch_section_btn__1cgml', 'Get In Touch').should('exist').click().wait(500).then(() => {
+      cy.url().should('eq', 'https://www.starlightmusic.com/contact-us')
+    })
+  })
 
-    // prev buttons
+  // ~~~~~~~~~~~~~~~~~ //
+  // 4. HEADER BUTTONS //
+  // ~~~~~~~~~~~~~~~~~ //
 
-    // next buttons
+  /// home button
+  it('Home buttom should scroll user to top', () => {
+    cy.get('a.Header_main_logo__Z92SE')
+      .find('img[src="/assets/logos/BlueStarlightMusic-Logo-CMYK-Horizontal-highres-transparent.png"]')
+      .parent()
+      .click()
+      .wait(200)
+      .then(() => {
+        cy.window().then((win) => {
+          expect(win.scrollY.to.equal(0));
+        })
+      })
+  })
 
-    // IG Feed
+  /// click here for pricing
+  it('check header pricing button', () => {
+    cy.contains('button.d-flex align-items-center.Header_nav_section_search_mini_btn__2MjOH').should('exist').click().wait(200).then(() => {
+      cy.get('section.d-flex align-items-center Header_search_box__1hIlx').should('exist');
+    })
+  })
 
-    // feed active
+  /// schedule a zoom
+  it('check header schedule a zoom button', () => {
+    cy.scrollTo('bottom');
+    cy.wait(500);
 
-    // see more button
+    cy.get('#book-a-demo-btn').contains('Schedule a Zoom').should('exist').click().wait(200).then(() => {
+      cy.get('div.lmtWIHO_gkbTeeyuvoJC.sbRR6Vj9cBntcZ6P4tOo').should('exist');
+    })
+  })
 
-    // Cities buttons
+  // ~~~~~~~~~~~~~~~~~~~~ //
+  // 5. HAMBURGER BUTTONS //
+  // ~~~~~~~~~~~~~~~~~~~~ //
 
-    // Get In Touch button
-
-    // 
-    // Assuming that the buttons follow a similar pattern
-    it('should ensure button "Login/Sign Up" is functioning correctly', () => {
-      cy.get('button.Header_nav_link__3qapQ').contains('Login/Sign Up').should('be.visible').and('be.enabled');
-    });
-  
-    it('should ensure button "Click Here for Pricing" is functioning correctly', () => {
-      cy.get('button.Header_nav_link__3qapQ').contains('Click Here for Pricing').should('be.visible').and('be.enabled');
-    });
-
-    // scroll down, top menu
-
-    /// home
-
-    /// click here for pricing
-
-    /// schedule a zoom
-
-    /// hamburger menu
+  it('check hamburger menu items', () => {
+    cy.scrollTo('bottom');
+    cy.wait(500);
+    cy.get('#dropdown-basic').should('exist').click();
 
     //// hi
-    //// home
-    //// our talent
-    //// meet the team
-    //// celebrities
-    //// about us
-    //// contact us
-    //// FAQ
-    //// Schedule a zoom
-    //// my account
-  
-  });
-  
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Home').should('have.attr', 'href', '/'); //Home
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Our Talent').should('have.attr', 'href', '/our-talent'); //Our Talent
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); //Meet the Team
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); //Celebrities
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('About Us').should('have.attr', 'href', '/about-us'); //About Us
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Contact Us').should('have.attr', 'href', '/contact-us'); //Contact Us
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ  
+  })
+
+  it('check hamburger schedule a zoom button', () => {
+    cy.scrollTo('bottom');
+    cy.wait(500);
+    cy.get('#dropdown-basic').should('exist').click();
+
+    cy.get('a.text-dark.Header_nav_link__3qapQ.Header_checkLink__2KnJq').contains('Schedule a Zoom').should('exist').click().wait(200).then(() => {
+      cy.get('div.lmtWIHO_gkbTeeyuvoJC.sbRR6Vj9cBntcZ6P4tOo').should('exist');
+    })
+  })
+
+  it('check hamburger login button', () => {
+    cy.scrollTo('bottom');
+    cy.wait(500);
+    cy.get('#dropdown-basic').should('exist').click();
+
+    cy.get('a.Header_menu_dropdown_auth__1pnut dropdown-item').contains('Login / Sign Up').should('exist').click().wait(200).then(() => {
+      cy.contains('p', 'New to Starlight Music').should('exist');
+    });
+  })
+
+});
