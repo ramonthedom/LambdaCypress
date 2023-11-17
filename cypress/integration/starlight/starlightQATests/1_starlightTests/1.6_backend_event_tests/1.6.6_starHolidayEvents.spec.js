@@ -37,6 +37,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(1000);
       cy.get('.evt-approved-cname').then($elements => {
         const holidayEvents = $elements.filter(':contains("Holiday")');
         if (holidayEvents.length > 0) {

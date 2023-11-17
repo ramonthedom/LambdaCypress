@@ -37,6 +37,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
     visitSilverOps()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(1000);
       cy.get('.evt-approved-cname').then($elements => {
         const corporateEvents = $elements.filter(':contains("Corporate")');
         if (corporateEvents.length > 0) {
