@@ -408,6 +408,8 @@ describe('My Tests', () => {
     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
       // 4.1.1.7.1 Event Info
+      cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
+
       cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
         cy.contains('h3', 'Parents').should('exist'); // h3, 'Parents', should exist
         cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
@@ -472,6 +474,8 @@ describe('My Tests', () => {
     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
       // 4.1.1.7.1 Event Info
+      cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
+
       cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
         cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
         cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
@@ -533,6 +537,8 @@ describe('My Tests', () => {
     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
       // 4.1.1.7.1 Event Info
+      cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
+
       cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
         cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
         cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
@@ -597,6 +603,8 @@ describe('My Tests', () => {
     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
       // 4.1.1.7.1 Event Info
+      cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
+
       cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
         cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
         cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
@@ -721,6 +729,8 @@ describe('My Tests', () => {
     cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
       // 4.1.1.7.1 Event Info
+      cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
+
       cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
         cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
         cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
