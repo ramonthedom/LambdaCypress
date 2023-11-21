@@ -1,6 +1,7 @@
     // 0. Create 6 months filter
 
     export const evtApprovedCnameContainsWaitPeriod = 1500;
+    export const evtApprovedCnameThenWaitPeriod = 1500;
     
     export function create6MonthFilter() {
 

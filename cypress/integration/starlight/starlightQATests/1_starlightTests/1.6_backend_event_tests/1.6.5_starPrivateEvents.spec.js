@@ -6,7 +6,8 @@ import {
   testPrivateEvent,
   create6MonthFilter,
   remove6Monthfilter,
-  evtApprovedCnameContainsWaitPeriod
+  evtApprovedCnameContainsWaitPeriod,
+  evtApprovedCnameThenWaitPeriod
 } from "../utilities.js";
 import { userData } from "../common.js";
 
@@ -39,7 +40,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       // For "Private Event"
-      cy.wait(1000);
+      cy.wait(evtApprovedCnameThenWaitPeriod);
       cy.get('.evt-approved-cname').then($elements => {
         const privateElements = $elements.filter(':contains("Private Event")');
         if (privateElements.length > 0) {

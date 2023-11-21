@@ -39,7 +39,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.wait(1000);
-      cy.get('.evt-approved-cname').then($elements => {
+      $elements => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
 
         const START_INDEX = 35; // Set this to 0, 5, 10, etc., depending on the file

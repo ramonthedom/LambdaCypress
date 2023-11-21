@@ -6,7 +6,8 @@ import {
   testWeddingEvent,
   create6MonthFilter,
   remove6Monthfilter,
-  evtApprovedCnameContainsWaitPeriod
+  evtApprovedCnameContainsWaitPeriod,
+  evtApprovedCnameThenWaitPeriod
 } from "../utilities.js";
 import { userData } from "../common.js";
 
@@ -38,7 +39,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
     visitStarbridge();
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
-      cy.wait(1000); //if I need to change this again, let's refactor and extract this whole function to utilities.js
+      cy.wait(evtApprovedCnameThenWaitPeriod); //if I need to change this again, let's refactor and extract this whole function to utilities.js
       cy.get('.evt-approved-cname').then($elements => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
 
