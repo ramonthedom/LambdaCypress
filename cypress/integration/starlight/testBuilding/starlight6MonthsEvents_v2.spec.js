@@ -91,6 +91,7 @@ describe('My Tests', () => {
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(evtApprovedCnameThenWaitPeriod)
       cy.get('.evt-approved-cname').then($elements => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
         if (weddingEvents.length > 0) {
@@ -137,6 +138,7 @@ describe('My Tests', () => {
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(evtApprovedCnameThenWaitPeriod)
       cy.get('.evt-approved-cname').then($elements => {
         const birthdayEvents = $elements.filter(':contains("Wedding")');
         if (birthdayEvents.length > 0) {
@@ -183,6 +185,7 @@ describe('My Tests', () => {
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(evtApprovedCnameThenWaitPeriod)
       cy.get('.evt-approved-cname').then($elements => {
         const charityEvents = $elements.filter(':contains("Charity")');
         if (charityEvents.length > 0) {
@@ -229,6 +232,7 @@ describe('My Tests', () => {
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(evtApprovedCnameThenWaitPeriod)
       cy.get('.evt-approved-cname').then($elements => {
         const corporateEvents = $elements.filter(':contains("Corporate")');
         if (corporateEvents.length > 0) {
@@ -276,6 +280,7 @@ describe('My Tests', () => {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       // For "Private Event"
+      cy.wait(evtApprovedCnameThenWaitPeriod)
       cy.get('.evt-approved-cname').then($elements => {
         const privateElements = $elements.filter(':contains("Private Event")');
         if (privateElements.length > 0) {
@@ -324,6 +329,7 @@ describe('My Tests', () => {
     visitStarbridge()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.wait(evtApprovedCnameThenWaitPeriod)
       cy.get('.evt-approved-cname').then($elements => {
         const holidayEvents = $elements.filter(':contains("Holiday")');
         if (holidayEvents.length > 0) {
