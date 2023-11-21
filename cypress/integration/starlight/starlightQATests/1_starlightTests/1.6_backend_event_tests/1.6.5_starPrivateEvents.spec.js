@@ -38,9 +38,9 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
     visitStarbridge()
 
-    cy.contains('a', 'Events').should('exist').click().then(() => {
+    cy.contains('a', 'Events').should('exist').click().wait(1500).then(() => {
       // For "Private Event"
-      cy.wait(evtApprovedCnameThenWaitPeriod);
+      // cy.wait(evtApprovedCnameThenWaitPeriod);
       cy.get('.evt-approved-cname').then($elements => {
         const privateElements = $elements.filter(':contains("Private Event")');
         if (privateElements.length > 0) {

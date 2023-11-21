@@ -38,8 +38,8 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
     visitStarbridge();
 
-    cy.contains('a', 'Events').should('exist').click().then(() => {
-      cy.wait(evtApprovedCnameThenWaitPeriod); //if I need to change this again, let's refactor and extract this whole function to utilities.js
+    cy.contains('a', 'Events').should('exist').click().wait(1500).then(() => {
+      // cy.wait(evtApprovedCnameThenWaitPeriod); //if I need to change this again, let's refactor and extract this whole function to utilities.js
       cy.get('.evt-approved-cname').then($elements => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
 
