@@ -99,7 +99,7 @@ describe('My Tests', () => {
           // Function to handle the click and subsequent actions for a single "Charity Event"
           const clickWeddingEvent = (index) => {
             cy.log("STAGE 0 WEDDING EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Wedding")').eq(index).click();
             cy.log("STAGE 1 INSIDE WEDDING EVENT")
@@ -145,7 +145,7 @@ describe('My Tests', () => {
           // Function to handle the click and subsequent actions for a single "Charity Event"
           const clickBirthdayEvent = (index) => {
             cy.log("STAGE 0 BIRTHDAY EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Birthday")').eq(index).click();
             cy.log("STAGE 1 INSIDE BIRTHDAY EVENT")
@@ -191,7 +191,7 @@ describe('My Tests', () => {
           // Function to handle the click and subsequent actions for a single "Charity Event"
           const clickCharityEvent = (index) => {
             cy.log("STAGE 0 CHARITY EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Charity")').eq(index).click();
             cy.log("STAGE 1 INSIDE CHARITY EVENT")
@@ -237,7 +237,7 @@ describe('My Tests', () => {
           // Function to handle the click and subsequent actions for a single "Private Event"
           const clickCorporateEvent = (index) => {
             cy.log("STAGE 0 CORPORATE EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Corporate")').eq(index).click();
             cy.log("STAGE 1 INSIDE CORPORATE EVENT")
@@ -286,7 +286,7 @@ describe('My Tests', () => {
           // Function to handle the click and subsequent actions for a single "Private Event"
           const clickPrivateEvent = (index) => {
             cy.log("STAGE 0 PRIVATE EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Private Event")').eq(index).click();
             cy.log("STAGE 1 INSIDE PRIVATE EVENT")
@@ -332,7 +332,7 @@ describe('My Tests', () => {
           // Function to handle the click and subsequent actions for a single "Private Event"
           const clickHolidayEvent = (index) => {
             cy.log("STAGE 0 HOLIDAY EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Holiday")').eq(index).click();
             cy.log("STAGE 1 INSIDE HOLIDAY EVENT")
