@@ -1,24 +1,21 @@
 /// BACKEND ///
 
 // video for login session issue: https://www.youtube.com/watch?v=hOJ50rINCkA
+
+import {
+  userData
+} from "./common";
 import {
   finalsSidebarTitleContainsEventInfoWaitTime,
   finalsMainContainerMb3WaitTime
 } from './utilities';
+
 // login
 describe('Check User SilverOps Sections', function () {
 
   beforeEach(() => {
-    const user_email = "sqatesting.dl@gmail.com"
-    const user_password = "SQATesting1553!$"
-    const user_login_url = "https://silverops.silverproentertainment.com" 
-
-    let myParams = {
-      my_db: 'silverpro',
-      my_collection: 'userOtpManager',
-      my_id: '6511f46f0e9142135ca0027a', // silverops user_id associated with OTP when OTP sent
-      id_type: 'user' // or client
-    };
+    
+    const { user_email, user_password, user_login_url, myParams } = userData;
 
     cy.login(user_email, user_password, user_login_url, myParams);
   })

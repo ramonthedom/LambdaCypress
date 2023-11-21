@@ -1,21 +1,13 @@
 /// BACKEND ///
 
-// video for login session issue: https://www.youtube.com/watch?v=hOJ50rINCkA
+import { clientData } from "./common";
 
 // login
 describe('Check SilverPro Client Sections', function () {
 
   beforeEach(() => {
-    const user_email = "sqatesting.dl@gmail.com"
-    const user_password = "SQATesting1553!$"
-    const user_login_url = "https://www.silverproentertainment.com"
-
-    let myParams = {
-      my_db: 'silverpro',
-      my_collection: 'clientOtpManager',
-      my_id: '6526ad4763dc1c932330fce5', // silverops user_id associated with OTP when OTP sent
-      id_type: 'client' // or client
-    };
+    
+    const { user_email, user_password, user_login_url, myParams } = clientData;
 
     cy.login(user_email, user_password, user_login_url, myParams);
   })
