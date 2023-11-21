@@ -5,7 +5,8 @@ import {
   checkDashboard,
   testWeddingEvent,
   create6MonthFilter,
-  remove6Monthfilter
+  remove6Monthfilter,
+  evtApprovedCnameContainsWaitPeriod
 } from "../utilities.js"
 
 describe('Test all Wedding Events in the next 6 months', () => {
@@ -52,7 +53,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
         if (weddingEvents.length > 0) {
           const clickWeddingEvent = (index) => {
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             cy.get('.evt-approved-cname:contains("Wedding")').eq(index).click();
             cy.wait(1000);
             testWeddingEvent()

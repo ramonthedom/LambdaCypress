@@ -1,5 +1,7 @@
     // 0. Create 6 months filter
 
+    export const evtApprovedCnameContainsWaitPeriod = 1500;
+    
     export function create6MonthFilter() {
 
         // Function to format a JavaScript Date object into a string "MM/DD/YYYY"

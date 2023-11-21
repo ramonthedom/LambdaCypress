@@ -5,7 +5,8 @@ import {
   checkDashboard,
   testBirthdayEvent,
   create6MonthFilter,
-  remove6Monthfilter
+  remove6Monthfilter,
+  evtApprovedCnameContainsWaitPeriod
 } from "../utilities.js";
 import { userData } from "../common.js";
 
@@ -46,7 +47,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
           // Function to handle the click and subsequent actions for a single "Charity Event"
           const clickBirthdayEvent = (index) => {
             cy.log("STAGE 0 BIRTHDAY EVENT")
-            cy.wait(1000)
+            cy.wait(evtApprovedCnameContainsWaitPeriod)
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Birthday")').eq(index).click();
             cy.log("STAGE 1 INSIDE BIRTHDAY EVENT")
