@@ -109,6 +109,27 @@ describe('Starlight Music Website Interactions', () => {
     it('should ensure button "Click Here for Pricing" is functioning correctly', () => {
       cy.get('button.Header_nav_link__3qapQ').contains('Click Here for Pricing').should('be.visible').and('be.enabled');
     });
+
+    // scroll down, top menu
+
+    /// home
+
+    /// click here for pricing
+
+    /// schedule a zoom
+
+    /// hamburger menu
+
+    //// hi
+    //// home
+    //// our talent
+    //// meet the team
+    //// celebrities
+    //// about us
+    //// contact us
+    //// FAQ
+    //// Schedule a zoom
+    //// my account
   
   });
   
