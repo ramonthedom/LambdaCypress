@@ -3,6 +3,7 @@
     export const evtApprovedCnameContainsWaitPeriod = 1500;
     export const evtApprovedCnameThenWaitPeriod = 1500;
     export const finalsSidebarTitleContainsEventInfoWaitTime = 1000;
+    export const finalsMainContainerMb3WaitTime = 500;
     
     export function create6MonthFilter() {
 
@@ -571,7 +572,7 @@
 
     export function checkFinalsSpecialSongsSection() {
         cy.contains('.finals_sidebar_title', 'Special Songs').should('exist').click().then(() => {
-            cy.wait(500);
+            cy.wait(finalsMainContainerMb3WaitTime);
             cy.get('.finals_main_container').find('.mb-3').should('have.length.greaterThan', 1); // .finals_main_container should contain more than 1 elemtent .mb-3
             cy.contains('.finals_main_add_song_card', 'Click to add a song').should('exist');
         });
@@ -605,7 +606,7 @@
 
     export function checkFinalsBlessingToastSection() {
         cy.contains('.finals_sidebar_title', 'Blessing/Toast').should('exist').click().then(() => {
-            cy.wait(500);
+            cy.wait(finalsMainContainerMb3WaitTime);
             cy.get('.finals_main_container').find('.mb-3').should('have.length.greaterThan', 1); // .finals_main_container should contain more than 1 elemtent .mb-3
             cy.contains('.finals_main_add_song_card', 'Click to add a participant').should('exist');
         });
