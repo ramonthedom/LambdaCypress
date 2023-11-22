@@ -48,7 +48,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
           // Function to handle the click and subsequent actions for a single "Private Event"
           const clickCorporateEvent = (index) => {
             cy.log("STAGE 0 CORPORATE EVENT")
-            cy.wait(evtApprovedCnameContainsWaitPeriod)
+            cy.wait(1200); //evtApprovedCnameContainsWaitPeriod
             // Re-query for the elements to get fresh ones from the DOM
             cy.get('.evt-approved-cname:contains("Corporate")').eq(index).click();
             cy.log("STAGE 1 INSIDE CORPORATE EVENT")
