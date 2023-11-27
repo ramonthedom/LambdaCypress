@@ -64,7 +64,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
           // Click on each "Private Event"
           for (let i = 0; i < corporateEvents.length; i++) {
-            cy.wait(1000)
+            cy.wait(2000)
             cy.log("BEFORE CORPORATE EVENT")
             clickCorporateEvent(i);
             cy.log("AFTER CORPORATE EVENT")
