@@ -3,6 +3,7 @@ describe('API Contract Preview Test', () => {
 
     const testEventId = "63560fc8e27cdf19b676de1c" // Steve Rogers OX3/21/2029 Gotham Hall
     const contractUrl = 'https://star-api.starlightmusic.com/events/api/v1/contract/preview/' + testEventId
+    // https://star-api.starlightmusic.com/events/api/v1/contract/preview/63560fc8e27cdf19b676de1c
 
     cy.request({      
       url: contractUrl,
