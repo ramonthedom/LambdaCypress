@@ -3,6 +3,7 @@ describe('API Contract Preview Test', () => {
 
     const testEventId = "64a4f8508ee20fd52821ff34" // Ramon de Bruyn TRS1/03/20291 Liberty Plaza
     const contractUrl = 'https://star-api.starlightmusic.com/silproevent/api/v1/contract/preview/' + testEventId
+    // https://star-api.starlightmusic.com/silproevent/api/v1/contract/preview/64a4f8508ee20fd52821ff34 
 
     cy.request({      
       url: contractUrl,
