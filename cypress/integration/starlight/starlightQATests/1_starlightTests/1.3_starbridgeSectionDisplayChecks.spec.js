@@ -85,7 +85,7 @@ describe('Check User Starbridge Sections', function () {
       });
 
       // 4.1.1.5.2 Paid Expenses
-      cy.contains('div', 'Paid Expenses').should('exist').click().then(() => {
+      cy.contains('div', 'Paid Expenses').should('exist').click().wait(500).then(() => {
         cy.contains('a', 'Add Title +').should('exist'); // a, "Add Title +", should exist
         cy.contains('a', 'Add Expenses +').should('exist'); // a, "Add Expenses +", should exist
         cy.contains('th', 'Reimburse To').should('exist'); // th, 'Reimburse To', should exist
