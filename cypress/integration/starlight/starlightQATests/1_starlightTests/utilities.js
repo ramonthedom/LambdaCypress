@@ -2,7 +2,7 @@
 
     export const evtApprovedCnameContainsWaitPeriod = 1500;
     export const evtApprovedCnameThenWaitPeriod = 1500;
-    export const finalsSidebarTitleContainsEventInfoWaitTime = 1000;
+    export const finalsSidebarTitleContainsEventInfoWaitTime = 1200;
     export const finalsMainContainerMb3WaitTime = 500;
 
     export function create6MonthFilter() {

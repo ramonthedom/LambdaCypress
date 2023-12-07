@@ -50,6 +50,8 @@ describe('Test all Wedding Events in the next 6 months', () => {
             cy.log("STAGE 0 CORPORATE EVENT")
             cy.wait(1200); //evtApprovedCnameContainsWaitPeriod
             // Re-query for the elements to get fresh ones from the DOM
+            ct.log("corporateEvents.length=",corporateEvents.length);
+            cy.log("event=",index);
             cy.get('.evt-approved-cname:contains("Corporate")').eq(index).click();
             cy.log("STAGE 1 INSIDE CORPORATE EVENT")
             // Wait for navigation or any other actions that need to occur after the click
