@@ -566,7 +566,7 @@
     }
 
     export function checkGigStylingSection() {
-        cy.contains('.finals_sidebar_title', 'Gig Styling').should('exist').click({ animationDistanceThreshold: 20 }).then(() => {
+        cy.contains('.finals_sidebar_title', 'Gig Styling').should('exist').click({animationDistanceThreshold: 20}).then(() => {
             cy.contains('.heading', 'global').should('exist'); // h1, Global, should exist          
             cy.contains('.heading', 'table data').should('exist');
         });
