@@ -40,6 +40,9 @@ describe('Test all Wedding Events in the next 6 months', () => {
 
     cy.contains('a', 'Events').should('exist').click().wait(1500).then(() => {
       // cy.wait(evtApprovedCnameThenWaitPeriod);
+
+      cy.wait(1500);
+      // let numOfEvts = parseInt(cy.get('.events__count').invoke('text'))
       cy.get('.evt-approved-cname').then($elements => {
         const corporateEvents = $elements.filter(':contains("Corporate")');
         if (corporateEvents.length > 0) {

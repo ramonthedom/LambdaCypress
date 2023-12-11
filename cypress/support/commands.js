@@ -110,7 +110,7 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
             });
             console.log("LOGIN SUCCESS")
 
-            cy.contains('.dashboard_heading', 'Dashboard').should('exist');
+            cy.contains('.title', 'All Events').should('exist');
 
           } else if ((params.id_type ==='client')) {
             cy.visit(loginUrl)

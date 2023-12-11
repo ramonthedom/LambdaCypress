@@ -41,6 +41,7 @@
             cy.contains('a', 'Events').should('exist').click();
             cy.wait(2000);
             cy.get('.dashboard_heading .ant-select-selection-item').click();
+            cy.log("six months list create SUCCESS")
             // cy.wait(1000)
             // cy.get('.ant-select-item-option-active .demo-option-label-item').click();
             // cy.contains('.title > .ant-select > .ant-select-selector > .ant-select-selection-item', namedVariable).should('exist');
@@ -62,9 +63,9 @@
     export function checkDashboard() {
         visitStarbridge()
 
-        // 1. Dashboard
-        cy.contains('a', 'Dashboard').should('exist').click();
-        cy.contains('.dashboard_heading', 'Dashboard').should('exist');
+        // 1. All Events
+        cy.contains('a', 'Events').should('exist').click();
+        cy.contains('.ant-select-selection-item', 'All Events').should('exist');
     }
 
     // 1. Wedding
@@ -565,7 +566,7 @@
     }
 
     export function checkGigStylingSection() {
-        cy.contains('.finals_sidebar_title', 'Gig Styling').should('exist').click().then(() => {
+        cy.contains('.finals_sidebar_title', 'Gig Styling').should('exist').click({ animationDistanceThreshold: 20 }).then(() => {
             cy.contains('.heading', 'global').should('exist'); // h1, Global, should exist          
             cy.contains('.heading', 'table data').should('exist');
         });

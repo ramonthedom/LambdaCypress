@@ -62,9 +62,9 @@
     export function checkDashboard() {
         visitSilverOps()
 
-        // 1. Dashboard
-        cy.contains('a', 'Dashboard').should('exist').click();
-        cy.contains('.dashboard_heading', 'Dashboard').should('exist');
+        // 1. All Events
+        cy.contains('a', 'Events').should('exist').click();
+        cy.contains('.ant-select-selection-item', 'All Events').should('exist');
     }
 
     // 1. Wedding
