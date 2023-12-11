@@ -65,6 +65,7 @@
     "chai": "4.3.10",
     "colon-names": "1.0.0",
     "cypress": "9.7.0",
+    "cypress-image-diff-js": "1.32.0",
     "eslint": "8.42.0",
     "eslint-plugin-cypress": "2.13.3",
     "eslint-plugin-json-format": "2.0.1",
