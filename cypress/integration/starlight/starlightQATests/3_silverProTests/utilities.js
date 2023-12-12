@@ -333,7 +333,7 @@
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
-        cy.get("#basic-info-btn").should('exist').click().then(() => {
+        cy.get("#basic-info-btn").should('exist').click().wait(1000).then(() => {
             checkBasicInfoSection(); //p containing "Total Price:" should exist
         });
 
@@ -455,6 +455,7 @@
     }
 
     export function checkBasicInfoSection() {
+        cy.wait(1000);
         cy.contains('h3', 'Booked By').should('exist'); //h3 containing "Booked By" should exist
         cy.contains('h3', 'Lead Origin').should('exist'); //h3 containing "Lead Origin" should exist
         cy.contains('h3', 'Client Details').should('exist'); //h3 containing "Client Details" should exist

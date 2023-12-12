@@ -39,7 +39,8 @@ describe('Test all Wedding Events in the next 6 months', () => {
     visitSilverOps();
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
-      cy.wait(evtApprovedCnameThenWaitPeriod);
+      // cy.wait(evtApprovedCnameThenWaitPeriod);
+      cy.wait(3000);
       cy.get('.evt-approved-cname').then($elements => {
         const weddingEvents = $elements.filter(':contains("Wedding")');
 

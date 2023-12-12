@@ -50,7 +50,7 @@ describe('Test all Wedding Events in the next 6 months', () => {
         if (weddingEvents.length > START_INDEX) {
           for (let i = START_INDEX; i < endIndex; i++) {
             cy.wait(evtApprovedCnameContainsWaitPeriod);
-            ct.log("weddingEvents.length=",weddingEvents.length);
+            cy.log("weddingEvents.length=",weddingEvents.length);
             cy.log("event=",i);
             cy.get('.evt-approved-cname:contains("Wedding")').eq(i).click();
             cy.wait(1000);
