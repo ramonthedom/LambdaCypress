@@ -16,7 +16,6 @@ describe('Check User Bandazon Sections', function () {
   beforeEach(() => {
 
     const { user_email, user_password, user_login_url, myParams } = userData;
-
     cy.login(user_email, user_password, user_login_url, myParams);
   })
 
@@ -28,9 +27,6 @@ describe('Check User Bandazon Sections', function () {
 
   it('Bandazon initial load should present correctly', function () {
     visitBandazon()
-    
-    cy.contains('h3', 'Events').should('exist');
-
   })
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 1 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
@@ -921,8 +917,15 @@ describe('Check User Bandazon Sections', function () {
     cy.visit("https://starbridge.starlightmusic.com")
     cy.viewport(1728, 1000);
     console.log("LOGIN SUCCESS")
+    cy.contains('a', 'Switch to Bandazon').should('exist').click().wait(1500).then(() => {
+      cy.contains('.section-heading', 'Events').should('exist');
+      // cy.wait(1500);
+      // cy.get('.bzon-switch').should('exist');
+      cy.get('.pro-item-content > .bzn-switch').should('exist');
+    })
 
-    cy.visit("https://starbridge.starlightmusic.com/bandazon/events")
+
+    // cy.visit("https://starbridge.starlightmusic.com/bandazon/events")
 
   }
 
