@@ -1,6 +1,6 @@
 describe('Bandazon Results Test', function () {
 
-    it('Checks Band Results', function () {
+    it('Checks Large and Small Band Results', function () {
 
         cy.viewport(1728, 1000);
 
@@ -36,10 +36,12 @@ describe('Bandazon Results Test', function () {
 
         // Check results
         cy.contains('h4', 'Congratulations!').should('exist');
+        cy.contains('h5', 'Smaller Acts').should('not.exist');
 
-        // Check for the presence of exactly 2 ul elements with the specified class
-        cy.get('.SearchResult_search_result_cards__23uLY').should('have.length', 2);
+        // Check for the presence of at least 1 element with the specified class
+        cy.get('.SearchResult_search_result_cards__23uLY').first().as('firstResultBox');
+        cy.get('@firstResultBox').find('.SearchResult_search_result_card__2m0Pk').should('have.length.at.least', 1);
 
     })
 
-})   
+})

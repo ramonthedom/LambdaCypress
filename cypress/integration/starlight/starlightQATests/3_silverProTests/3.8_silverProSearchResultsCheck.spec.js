@@ -1,8 +1,8 @@
-describe('Starlight Results Test', function () {
+describe('SilverPro Results Test', function () {
 
     it('Checks Large and Small Band Results', function () {
 
-        cy.viewport(1728, 1000);
+        cy.viewport(2560, 1328)
 
         cy.visit('https://www.silverproentertainment.com/meet-the-team')
 
@@ -12,9 +12,6 @@ describe('Starlight Results Test', function () {
 
         cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/09/2029{enter}`);
 
-        // cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/09/2029{enter}`).wait(50).type(`{tab}{downarrow}{enter}`).wait(50).type(`{tab}{tab}{enter}`);
-
-        // cy.get('#search-venue-input').click();
         cy.get('#search-venue-input').type('{selectall}Gotham Hall, Broadway, New York, NY, USA').wait(500).type(`{downarrow}{enter}`);
 
         cy.wait(3000);
@@ -39,18 +36,11 @@ describe('Starlight Results Test', function () {
 
         // Check results
         cy.contains('h4', 'Congratulations!').should('exist');
+        cy.contains('h5', 'Smaller Acts').should('not.exist');
 
-        // Check for the presence of exactly 2 ul elements with the specified class
-        cy.get('.SearchResult_search_result_cards__23uLY').should('have.length', 2);
-
-
-        // cy.get('.SearchResult_search_result_cards__23uLY')
-        // .should('have.length', 2)
-        // .each((list) => {
-        // // For each ul element, check that it contains at least one li element with the specified class
-        // cy.wrap(list).find('.SearchResult_search_result_card__2m0Pk')
-        //     .should('have.length.at.least', 1);
-        // });
+        // Check for the presence of at least 1 element with the specified class
+        cy.get('.SearchResult_search_result_cards__23uLY').first().as('firstResultBox');
+        cy.get('@firstResultBox').find('.SearchResult_search_result_card__2m0Pk').should('have.length.at.least', 1);
 
     })
 
