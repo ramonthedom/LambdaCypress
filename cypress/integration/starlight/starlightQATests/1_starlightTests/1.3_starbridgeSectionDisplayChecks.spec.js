@@ -236,11 +236,11 @@ describe('Check User Starbridge Sections', function () {
 
     /// 2.4. Subsection - Gig Info
     cy.contains('div', 'Gig Info').should('exist').click();
-    cy.contains('div', 'Sorting').should('exist').click();
-    cy.contains('span', 'Event Details').should('exist');
-    cy.contains('div', 'Styling').should('exist').click();
-    cy.contains('h5', 'Segments').should('exist');
-
+    cy.contains('div', 'Sorting').should('exist').click().wait(500).then(() => {
+      cy.contains('span', 'Event Details').should('exist');
+      cy.contains('div', 'Styling').should('exist').click();
+      cy.contains('h5', 'Segments').should('exist');
+    });
 
   })
 

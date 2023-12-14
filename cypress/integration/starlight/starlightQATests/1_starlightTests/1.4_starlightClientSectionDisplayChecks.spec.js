@@ -190,7 +190,7 @@ describe('Check StarlightMusic Client Sections', function () {
     }
   
     function checkFinalsBlessingToastSection() {
-      cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Blessing/Toast').should('exist').click().then(() => {
+      cy.contains('.Finals_finals_sidebar_title__1DQUZ', 'Blessing/Toast').should('exist').click().wait(500).then(() => {
         cy.get('.Finals_finals_main_container__2E4tK').find('.mb-3').should('have.length.greaterThan', 1); // .finals_main_container should contain more than 1 elemtent .mb-3
         cy.contains('.CeremonyComponent_finals_main_add_song_card__2Ntup', 'Click to add a participant').should('exist');
         cy.contains('button', 'Save').should('exist');
