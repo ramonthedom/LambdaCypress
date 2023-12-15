@@ -15,28 +15,27 @@ describe('Check User Bandazon Sections', function () {
 
   beforeEach(() => {
 
-    const { user_email, user_password, user_login_url, myParams } = userData;
+    const {
+      user_email,
+      user_password,
+      user_login_url,
+      myParams
+    } = userData;
     cy.login(user_email, user_password, user_login_url, myParams);
   })
-
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 0 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
   // ~~~~~~~~~~ //
   // 0. BANDAZON ACCESS //
   // ~~~~~~~~~~ //
 
-  // WORKS - UNCOMMENT WHEN READY
   it('Bandazon initial load should present correctly', function () {
     visitBandazon()
   })
 
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+  // ~~~~~~~~~~ //
+  // 1. LEADS   //
+  // ~~~~~~~~~~ //
 
-    // ~~~~~~~~~~ //
-    // 1. LEADS   //
-    // ~~~~~~~~~~ //
-
-  // WORKS - UNCOMMENT WHEN READY
   it('Leads Section should present correctly', function () {
 
     visitBandazon()
@@ -49,13 +48,10 @@ describe('Check User Bandazon Sections', function () {
 
   })
 
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 4 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
-
   //~~~~~~~~~~~~~~//
   // 2. EVENTS //
   //~~~~~~~~~~~~~~//
 
-  // WORKS - UNCOMMENT WHEN READY
   it('Events Section should present correctly', function () {
     visitBandazon()
 
@@ -66,13 +62,10 @@ describe('Check User Bandazon Sections', function () {
     })
   })
 
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 5 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
-
   //~~~~~~~~~~~~~~//
   // 3. CONTRACTS //
   //~~~~~~~~~~~~~~//
 
-  // WORKS - UNCOMMENT WHEN READY
   it('Contract Section should present correctly', function () {
 
     visitBandazon()
@@ -94,13 +87,10 @@ describe('Check User Bandazon Sections', function () {
 
   })
 
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 6 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
-
   //~~~~~~~~~~~~~~~~//
   // 4. MAINTENANCE //
   //~~~~~~~~~~~~~~~~//
 
-  // WORKS - UNCOMMENT WHEN READY
   it('Maintenance should present correctly', function () {
     visitBandazon()
 
@@ -186,7 +176,7 @@ describe('Check User Bandazon Sections', function () {
       cy.get('.ant-table-content').find('tr').should('have.length.greaterThan', 1);
       cy.contains('.ant-table-thead', 'PROVIDED SOUND').should('exist');
     });
-    
+
 
     /// 6.2.4 Office staff tab
     cy.contains('.custom_nav', 'Office staff').should('exist');
@@ -205,7 +195,7 @@ describe('Check User Bandazon Sections', function () {
     // // Check Onyx
     // // cy.contains('a', 'Onyx').should('exist').click();
     cy.contains('a', 'Jazz Bands').should('exist').click();
-    
+
     // /// 6.3.1 Check Information 
     cy.contains('a', 'Information').should('exist').click().then(() => {
       cy.contains('.cms_card_heading', 'Band Information').should('exist');
@@ -256,7 +246,9 @@ describe('Check User Bandazon Sections', function () {
 
   })
 
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 10 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+  // 5. CHECKING EVENT: WEDDING //
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
   it('EventType: Wedding contains all the correct sections', function () {
     visitBandazon()
@@ -267,6 +259,7 @@ describe('Check User Bandazon Sections', function () {
       cy.contains('.section-heading', 'Events').should('exist');
 
       // check a wedding // change to specific event
+      // 
       cy.contains('a', '08/08/2028').should('exist').click().then(() => {
         cy.wait(3000);
 
@@ -295,41 +288,43 @@ describe('Check User Bandazon Sections', function () {
     });
   })
 
-  // ~~~~~~~~~~~~~~~~~~~~~~~~~ IT 11 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
-
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+  // 6. CHECKING EVENT: DINNER  //
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
   it('EventType: Dinner contains all the correct sections', function () {
     visitBandazon()
 
     cy.wait(3000);
 
+
     cy.contains('a', 'Events').should('exist').wait(1000).click().wait(3000).then(() => {
       cy.contains('.section-heading', 'Events').should('exist');
 
+      // Test Event: 	Jazz Bands, Gotham Hall, Dinner, TestQAEvent TestDinner
       cy.contains('a', '07/08/2029').should('exist').click();
-      // check a Dinner
 
-      // cy.contains('a', 'Birthday').should('exist').click().then(() => {
-        cy.wait(3000);
 
-        // 4.1.1.1 Basic Info
-        cy.get("#basic-info-btn").should('exist').click().then(() => {
-          checkBasicInfoSection(); //p containing "Total Price:" should exist
-        });
+      cy.wait(3000);
 
-        // 4.1.1.2 Configuration
-        checkConfigurationSection();
+      // 4.1.1.1 Basic Info
+      cy.get("#basic-info-btn").should('exist').click().then(() => {
+        checkBasicInfoSection(); //p containing "Total Price:" should exist
+      });
 
-        // 4.1.1.3 Band
-        checkBandSection();
+      // 4.1.1.2 Configuration
+      checkConfigurationSection();
 
-        // // 4.1.1.4 Documents
-        checkDocumentsSection();
+      // 4.1.1.3 Band
+      checkBandSection();
 
-        // // 4.1.1.5 Communication
-        checkCommunicationSection();
+      // // 4.1.1.4 Documents
+      checkDocumentsSection();
 
-        // // 4.1.1.5 Expenses      
-        checkExpensesSection();
+      // // 4.1.1.5 Communication
+      checkCommunicationSection();
+
+      // // 4.1.1.5 Expenses      
+      checkExpensesSection();
 
     });
   })
@@ -443,9 +438,9 @@ describe('Check User Bandazon Sections', function () {
     cy.viewport(1728, 1000);
     console.log("LOGIN SUCCESS")
     cy.contains('a', 'Switch to Bandazon').should('exist').click();
-    
+
     cy.wait(1500);
-    
+
     cy.contains('.section-heading', 'Events').should('exist');
     cy.get('.pro-item-content > .bzn-switch').should('exist');
 

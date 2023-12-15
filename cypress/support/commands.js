@@ -108,9 +108,11 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
                     cy.log('Element with "Wrong otp" not found'); // The element does not exist
                 }
             });
-            console.log("LOGIN SUCCESS")
+            cy.log("LOGIN SUCCESS")
 
             cy.contains('.title', 'All Events').should('exist');
+
+            cy.log("exiting command.js") 
 
           } else if ((params.id_type ==='client')) {
             cy.visit(loginUrl)
@@ -149,12 +151,7 @@ Cypress.Commands.add('login', (username, password, loginUrl, params) => {
             cy.contains('h3', 'Dashboard').should('exist');
           }
         }, 
-        // {
-        //     validate: () => {
-        //         // Example: check if a specific element exists to determine if session is still valid
-        //         return cy.get('.dashboard_heading').should('exist');
-        //     }
-        // }
+
         );
     }
 })

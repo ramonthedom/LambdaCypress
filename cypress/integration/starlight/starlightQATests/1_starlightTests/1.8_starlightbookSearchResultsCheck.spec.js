@@ -12,9 +12,6 @@ describe('Starlight Results Test', function () {
 
         cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/09/2029{enter}`);
 
-        // cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/09/2029{enter}`).wait(50).type(`{tab}{downarrow}{enter}`).wait(50).type(`{tab}{tab}{enter}`);
-
-        // cy.get('#search-venue-input').click();
         cy.get('#search-venue-input').type('{selectall}Gotham Hall, Broadway, New York, NY, USA').wait(500).type(`{downarrow}{enter}`);
 
         cy.wait(3000);
