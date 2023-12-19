@@ -98,7 +98,7 @@ describe('Check User Bandazon Sections', function () {
 
     // // 6. Maintenance
     cy.contains('span', 'Maintenance').click();
-    cy.contains('span', 'Maintenance').click();
+    // cy.contains('span', 'Maintenance').click();
 
     cy.wait(500);
 
