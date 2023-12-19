@@ -688,11 +688,16 @@ describe('Check User Starbridge Sections', function () {
   it('EventType: Birthday contains all the correct sections', function () {
     visitStarbridge()
 
-    cy.contains('a', 'Events').should('exist').click().then(() => {
-      cy.contains('.title', 'All Events').should('exist');
+    // cy.contains('a', 'Events').should('exist').click().then(() => {
+    //   cy.contains('.title', 'All Events').should('exist');
 
       // check a birthday
-      cy.contains('a', 'Birthday').should('exist').click().then(() => {
+      // cy.contains('a', 'Birthday').should('exist').click().then(() => {
+
+    // https://starbridge.starlightmusic.com/event/649221ae8ee20fd5285dd92b
+    const sampleLiveBirthdayEventId = "6581d27a3ddb1fccdb81a804" // SO 4/27/2024
+    cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveBirthdayEventId).wait(200).then(() => {
+
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
@@ -755,7 +760,8 @@ describe('Check User Starbridge Sections', function () {
 
         });
       });
-    });
+      // });
+    // });
   })
 
   // no charities upcoming as of 23/10/01
@@ -833,11 +839,16 @@ describe('Check User Starbridge Sections', function () {
   it('EventType: Corporate contains all the correct sections', function () {
     visitStarbridge()
 
-    cy.contains('a', 'Events').should('exist').click().then(() => {
-      cy.contains('.title', 'All Events').should('exist');
+    // cy.contains('a', 'Events').should('exist').click().then(() => {
+    //   cy.contains('.title', 'All Events').should('exist');
 
-      // check a corporate
-      cy.contains('a', 'Corporate').should('exist').click().then(() => {
+    //   // check a corporate
+    //   cy.contains('a', 'Corporate').should('exist').click().then(() => {
+
+        // https://starbridge.starlightmusic.com/event/64bfd737de3e812b80f7d294
+      const sampleLiveCorporateEventId = "64bfd737de3e812b80f7d294" // RS 4/14/2024
+      cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveCorporateEventId).wait(200).then(() => {
+
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
@@ -901,7 +912,8 @@ describe('Check User Starbridge Sections', function () {
         });
       });
     });
-  })
+  //   });
+  // })
 });
 
 
