@@ -304,19 +304,24 @@ describe('Check StarlightMusic Client Can Book a Contract', function () {
 
       // End current nav code...
 
-      let dynamicValue; // Declare a variable to store the dynamic value
+      // let dynamicValue; // Declare a variable to store the dynamic value
 
-      // Save Onyx Amount
+      //// Save Onyx Amount
       
-      cy.contains('h5', 'Onyx') // Start from the h5 element containing "Onyx"
-        .parents('.SearchResult_search_result_card_body__rQjZ-') // Assuming the span is a sibling or child of a sibling, traverse to the common parent
-        .find('.SearchResult_search_result_card_price_36367') // Now find the span within the parent that has the dynamic value
-        .invoke('text') // Get the text of the span element
-        .then((text) => { // Use .then() to work with the text value
-          dynamicValue = text.trim(); // Save the trimmed value in the variable
-        }); // Now you can use 'dynamicValue' in other parts of the test
+      // cy.contains('h5', 'Onyx') // Start from the h5 element containing "Onyx"
+      //   .parents('.SearchResult_search_result_card_body__rQjZ-') // Assuming the span is a sibling or child of a sibling, traverse to the common parent
+      //   .find('.SearchResult_search_result_card_price_36367') // Now find the span within the parent that has the dynamic value
+      //   .invoke('text') // Get the text of the span element
+      //   .then((text) => { // Use .then() to work with the text value
+      //     dynamicValue = text.trim(); // Save the trimmed value in the variable
+      //   }); // Now you can use 'dynamicValue' in other parts of the test
 
-      cy.log("DynamicValue =", dynamicValue)
+      // cy.log("DynamicValue =", dynamicValue)
+
+      //// ...later in the test
+      //// Use the saved 'dynamicValue' in another command
+      //// For example, to assert that this value is displayed somewhere else on the page
+      //// cy.get('selector-for-element-to-assert').should('have.text', dynamicValue);
 
       // Navigate to Onyx
       cy.contains('h5', 'Onyx') // Finds the h5 element with the text "Onyx"
@@ -326,48 +331,48 @@ describe('Check StarlightMusic Client Can Book a Contract', function () {
 
         // Navigate to home page
 
-// Enter in date, hit enter
+        // Enter in date, hit enter
 
-// should see result page
+        // should see result page
 
-// navigate to onyx
-/// save amount
+        // navigate to onyx
+        /// save amount
 
-// click on onyx
-/// confirm amount
+        // click on onyx
+        /// confirm amount
 
-// click on book now
-/// confirm amount
-/// confirm date
+        // click on book now
+        /// confirm amount
+        /// confirm date
 
-// click on proceed to contract
+        // click on proceed to contract
 
-// enter info
+        // enter info
 
-// click on next
-/// confirm amount
-/// confirm date
-/// confirm initial payment date
+        // click on next
+        /// confirm amount
+        /// confirm date
+        /// confirm initial payment date
 
-// click on preview contract
+        // click on preview contract
 
-/// result should be 200
+        /// result should be 200
 
-// save eventId
+        // save eventId
 
-// change eventStatus to paid
+        // change eventStatus to paid
 
-// refresh page
-// confirm date
+        // refresh page
+        // confirm date
 
-// navigsate to backend
-/// naviogsate to event
-/// confirm date
-/// confirm amount
+        // navigsate to backend
+        /// naviogsate to event
+        /// confirm date
+        /// confirm amount
 
-// delete event
+        // delete event
 
-// confirm event is deleted
+        // confirm event is deleted
 
     })
   });
