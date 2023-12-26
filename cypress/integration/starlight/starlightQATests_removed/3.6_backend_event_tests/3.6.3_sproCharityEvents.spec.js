@@ -8,8 +8,8 @@ import {
   remove6Monthfilter,
   evtApprovedCnameContainsWaitPeriod,
   evtApprovedCnameThenWaitPeriod
-} from "../utilities.js";
-import { userData } from "../common.js";
+} from "../../starlightQATests/3_silverProTests/utilities.js";
+import { userData } from "../../starlightQATests/3_silverProTests/common.js";
 
 describe('Test all Wedding Events in the next 6 months', () => {
 
