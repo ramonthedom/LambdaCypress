@@ -697,6 +697,8 @@ describe('Check User Starbridge Sections', function () {
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.contains('.title', 'All Events').should('exist');
 
+      cy.wait(1000);
+
       // check a birthday
       // cy.contains('a', 'Birthday').should('exist').click().then(() => {
 
@@ -850,6 +852,8 @@ describe('Check User Starbridge Sections', function () {
 
   cy.contains('a', 'Events').should('exist').click().then(() => {
     cy.contains('.title', 'All Events').should('exist');
+
+    cy.wait(1000);
 
     //   // check a corporate
     //   cy.contains('a', 'Corporate').should('exist').click().then(() => {
