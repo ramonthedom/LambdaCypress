@@ -775,255 +775,156 @@ describe('Check User Starbridge Sections', function () {
     // });
   })
 
-  // no charities upcoming as of 23/10/01
-  // it('EventType: Charity contains all the correct sections', function () {
-  //   visitStarbridge()
+  it('EventType: Charity contains all the correct sections', function () {
+    visitStarbridge()
 
-  //   cy.contains('a', 'Events').should('exist').click().then(() => {
-  //     cy.contains('.title', 'All Events').should('exist');
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.contains('.title', 'All Events').should('exist');
 
-  //     // check a charity
-  //     cy.contains('a', 'Charity').should('exist').click().then(() => {
-  //       cy.wait(3000);
+      cy.wait(1000);
 
-  //       // 4.1.1.1 Basic Info
-  //       cy.get("#basic-info-btn").should('exist').click().then(() => {
-  //         checkBasicInfoSection(); //p containing "Total Price:" should exist
-  //       });
+      // check a charity
+      cy.contains('a', 'Charity').should('exist').click().then(() => {
+        cy.wait(3000);
 
-  //       // 4.1.1.2 Configuration
-  //       checkConfigurationSection();
-
-  //       // 4.1.1.3 Band
-  //       checkBandSection();
-
-  //       // 4.1.1.4 Documents
-  //       checkDocumentsSection();
-
-  //       // 4.1.1.5 Communication
-  //       checkCommunicationSection();
-
-  //       // 4.1.1.5 Expenses      
-  //       checkExpensesSection();
-
-  //       // 4.1.1.6 Reviews
-  //       checkReviewsSection();
-
-  //       // 4.1.1.7 Finals
-  //       cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-
-  //         // 4.1.1.7.1 Event Info
-  //         cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
-  //           cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
-  //           cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
-  //           cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
-  //           cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
-  //         });
-
-  //         // 4.1.1.7.3 Blessings/Toast
-  //         checkFinalsBlessingToastSection();
-
-  //         // 4.1.1.7.4 Song List
-  //         checkFinalsSonglistSection();
-
-  //         // 4.1.1.7.5 Production
-  //         checkFinalsProductionSection();
-
-  //         // 4.1.1.7.6 Timeline
-  //         checkFinalsTimelineSection();
-
-  //         // 4.1.1.7.7 Notes
-  //         checkFinalsNotesSection();
-
-  //         // 4.1.1.7.8 Gig Styling
-  //         checkGigStylingSection();
-
-  //         // Buttons
-  //         cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
-  //         cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
-
-  //       });
-  //     });
-  //   });
-  // })
-
-  it('EventType: Corporate contains all the correct sections', function () {
-  visitStarbridge()
-
-  cy.contains('a', 'Events').should('exist').click().then(() => {
-    cy.contains('.title', 'All Events').should('exist');
-
-    cy.wait(1000);
-
-    //   // check a corporate
-    //   cy.contains('a', 'Corporate').should('exist').click().then(() => {
-
-    // https://starbridge.starlightmusic.com/event/64bfd737de3e812b80f7d294
-    const sampleLiveCorporateEventId = "64bfd737de3e812b80f7d294" // RS 4/14/2024
-    // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveCorporateEventId).wait(1500).then(() => {
-    cy.get('a[href="/event/64bfd737de3e812b80f7d294"]').first().click().wait(1500).then(() => {
-
-      cy.wait(3000);
-
-      // 4.1.1.1 Basic Info
-      cy.get("#basic-info-btn").should('exist').click().then(() => {
-        checkBasicInfoSection(); //p containing "Total Price:" should exist
-      });
-
-      // 4.1.1.2 Configuration
-      checkConfigurationSection();
-
-      // 4.1.1.3 Band
-      checkBandSection();
-
-      // 4.1.1.4 Documents
-      checkDocumentsSection();
-
-      // 4.1.1.5 Communication
-      checkCommunicationSection();
-
-      // 4.1.1.5 Expenses      
-      checkExpensesSection();
-
-      // 4.1.1.6 Reviews
-      checkReviewsSection();
-
-      // 4.1.1.7 Finals
-      cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
-
-        // 4.1.1.7.1 Event Info
-        cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
-
-        cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
-          cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
-          cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
-          cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
-          cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
+        // 4.1.1.1 Basic Info
+        cy.get("#basic-info-btn").should('exist').click().then(() => {
+          checkBasicInfoSection(); //p containing "Total Price:" should exist
         });
 
-        // 4.1.1.7.3 Blessings/Toast
-        checkFinalsBlessingToastSection();
+        // 4.1.1.2 Configuration
+        checkConfigurationSection();
 
-        // 4.1.1.7.4 Song List
-        checkFinalsSonglistSection();
+        // 4.1.1.3 Band
+        checkBandSection();
 
-        // 4.1.1.7.5 Production
-        checkFinalsProductionSection();
+        // 4.1.1.4 Documents
+        checkDocumentsSection();
 
-        // 4.1.1.7.6 Timeline
-        checkFinalsTimelineSection();
+        // 4.1.1.5 Communication
+        checkCommunicationSection();
 
-        // 4.1.1.7.7 Notes
-        checkFinalsNotesSection();
+        // 4.1.1.5 Expenses      
+        checkExpensesSection();
 
-        // 4.1.1.7.8 Gig Styling
-        checkGigStylingSection();
+        // 4.1.1.6 Reviews
+        checkReviewsSection();
 
-        // Buttons
-        cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
-        cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
+        // 4.1.1.7 Finals
+        cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
 
+          // 4.1.1.7.1 Event Info
+          cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
+            cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
+            cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
+            cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
+            cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
+          });
+
+          // 4.1.1.7.3 Blessings/Toast
+          checkFinalsBlessingToastSection();
+
+          // 4.1.1.7.4 Song List
+          checkFinalsSonglistSection();
+
+          // 4.1.1.7.5 Production
+          checkFinalsProductionSection();
+
+          // 4.1.1.7.6 Timeline
+          checkFinalsTimelineSection();
+
+          // 4.1.1.7.7 Notes
+          checkFinalsNotesSection();
+
+          // 4.1.1.7.8 Gig Styling
+          checkGigStylingSection();
+
+          // Buttons
+          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
+
+        });
+      });
+    });
+  })
+
+  it('EventType: Corporate contains all the correct sections', function () {
+    visitStarbridge()
+
+    cy.contains('a', 'Events').should('exist').click().then(() => {
+      cy.contains('.title', 'All Events').should('exist');
+
+      cy.wait(1000);
+
+      //   cy.contains('a', 'Corporate').should('exist').click().then(() => {
+      // https://starbridge.starlightmusic.com/event/64bfd737de3e812b80f7d294
+      const sampleLiveCorporateEventId = "64bfd737de3e812b80f7d294" // RS 4/14/2024
+      // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveCorporateEventId).wait(1500).then(() => {
+      cy.get('a[href="/event/64bfd737de3e812b80f7d294"]').first().click().wait(1500).then(() => {
+
+        cy.wait(3000);
+
+        // 4.1.1.1 Basic Info
+        cy.get("#basic-info-btn").should('exist').click().then(() => {
+          checkBasicInfoSection(); //p containing "Total Price:" should exist
+        });
+
+        // 4.1.1.2 Configuration
+        checkConfigurationSection();
+
+        // 4.1.1.3 Band
+        checkBandSection();
+
+        // 4.1.1.4 Documents
+        checkDocumentsSection();
+
+        // 4.1.1.5 Communication
+        checkCommunicationSection();
+
+        // 4.1.1.5 Expenses      
+        checkExpensesSection();
+
+        // 4.1.1.6 Reviews
+        checkReviewsSection();
+
+        // 4.1.1.7 Finals
+        cy.contains('.nav-link', 'Finals').should('exist').click().wait(500).then(() => { // .nav-link containing "Finals" should exist, click it
+
+          // 4.1.1.7.1 Event Info
+          cy.wait(finalsSidebarTitleContainsEventInfoWaitTime);
+
+          cy.contains('.finals_sidebar_title', 'Event Info').should('exist').click().then(() => { // .finals_sidebar_title, 'Event Info', click it
+            cy.contains('h3', 'Guest(s) Of Honor').should('exist'); // h3, 'Parents', should exist
+            cy.contains('h3', 'Event planner').should('exist'); // h3, Event planner, should exist
+            cy.contains('h3', 'Socials').should('exist'); // h3, Socials, should exist
+            cy.contains('h3', 'Vendor Socials').should('exist'); // h3, Vendor Socials, should exist
+          });
+
+          // 4.1.1.7.3 Blessings/Toast
+          checkFinalsBlessingToastSection();
+
+          // 4.1.1.7.4 Song List
+          checkFinalsSonglistSection();
+
+          // 4.1.1.7.5 Production
+          checkFinalsProductionSection();
+
+          // 4.1.1.7.6 Timeline
+          checkFinalsTimelineSection();
+
+          // 4.1.1.7.7 Notes
+          checkFinalsNotesSection();
+
+          // 4.1.1.7.8 Gig Styling
+          checkGigStylingSection();
+
+          // Buttons
+          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
+
+        });
       });
     });
   });
-  });
   // })
-  });
-
-
-// events
-// describe('Backend Events Checked Success', function () {
-
-// requirement: user should have ALL permissions
-
-// check all the sections in the left column:
-// 1. Dashboard (ALL)
-// 2. My Band (BL Only)
-// 3. Leads
-// 4. Events
-
-// Setup:
-// 1. select all events up to 6 months in the future
-// 2. save the _id's for FrontEnd Testing
-
-// ORDER:
-// 4.1. Click client name
-// 4.2. Check that the following load
-// 4.2.1 Basic Info
-// 4.2.2 Configuration
-// 4.2.3 Band
-// 4.2.4 Documents
-// 4.2.5 Communication
-// 4.2.6 Expenses
-// 4.2.7 Reviews
-// 4.2.8 Finals
-// 4.2.8.1 Event Info
-// 4.2.8.2 Special Songs
-// 4.2.8.3 Blessing/Toast
-// 4.2.8.4 Song List
-// 4.2.8.5 Production
-// 4.2.8.6 Timeline
-// 4.2.8.7 Notes
-// 4.2.8.8 Gig Styling
-// 4.2.8.9 Check Export Final PDF works 
-
-// REPEAT FOR ALL EVENTS
-
-// 5. Contracts
-// 5.1. Bookings
-// 5.2 Upsells
-// 6. Maintenance
-// 6.1  Configurations
-// 6.1.1  Segments
-// 6.1.2  Event Types  
-// 6.1.3  Positions  
-// 6.1.4  Extras  
-// 6.1.5  Genres   
-// 6.1.6  Rates
-// 6.1.7  Margins
-// 6.2. Users
-// 6.3  bandss
-// 6.4. Schedules
-// 6.5  Integration
-// 6.6. Venues
-// 6.7 FAQ 
-// 6.8 CMS
-// 7. My Documents
-// 8. Finance
-// 9. Switch to Bandazon
-// 8.1 Switch back to Starbridge
-
-
-//   it('starbridge login service should be running', function () {
-//     cy.visit(`https://star-api.starlightmusic.com/bridgelogin`) // Replace with the actual path to your HTML file
-//     cy.contains('hello this is the star bridge login service')
-//       .should('be.visible')
-//   })
-// })
-
-/// FRONTEND ///
-
-// login
-// describe('Frontend Login Success', function () {
-//   it('starbridge login service should be running', function () {
-//     cy.visit(`https://star-api.starlightmusic.com/bridgelogin`) // Replace with the actual path to your HTML file
-//     cy.contains('hello this is the star bridge login service')
-//       .should('be.visible')
-//   })
-// })
-
-// events
-
-// check sections
-// use saved _ids to check the following for each event:
-
-// describe('Frontend Events Checked Success', function () {
-//   it('starbridge login service should be running', function () {
-//     cy.visit(`https://star-api.starlightmusic.com/bridgelogin`) // Replace with the actual path to your HTML file
-//     cy.contains('hello this is the star bridge login service')
-//       .should('be.visible')
-//   })
-// })
-
-
-//
+});
