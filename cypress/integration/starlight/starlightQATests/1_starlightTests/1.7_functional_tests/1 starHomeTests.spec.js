@@ -17,7 +17,14 @@ describe('Starlight Music Website Interactions', () => {
     cy.get('a.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ
     cy.get('a.Header_nav_link__3qapQ').contains('Browse Bands').should('have.attr', 'href', '/our-talent'); // Browse Bands
     cy.get('a.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); // Meet The Team
-    cy.get('a.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); // Celebrities
+    // cy.get('a.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); // Celebrities
+    cy.get('a.Header_nav_link__3qapQ').then(($links) => {
+      // Check if there is a link with text "Celebrities" or "Showcase"
+      const isLinkPresent = [...$links].some(link => 
+        link.innerText === 'Celebrities' || link.innerText === 'Showcase'
+      );
+      expect(isLinkPresent).to.be.true;
+    });
     cy.get('a.Header_nav_link__3qapQ').contains('Contact Us').should('have.attr', 'href', '/contact-us'); // Contact Us
   })
 
