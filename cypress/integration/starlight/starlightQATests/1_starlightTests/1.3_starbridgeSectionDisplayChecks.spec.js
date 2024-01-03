@@ -259,8 +259,9 @@ describe('Check User Starbridge Sections', function () {
 
     // 3. Leads
     cy.contains('a', 'Leads').should('exist').click();
-    cy.get('a > .leads-table-css-container').should('exist');
-
+    // cy.get('a > .leads-table-css-container').should('exist');
+    cy.containts('a', 'Inquiry').should('exist');
+    cy.containts('a', 'Showcase').should('exist');
   })
 
   //~~~~~~~~~~~~~~//
@@ -621,7 +622,9 @@ describe('Check User Starbridge Sections', function () {
       cy.wait(1000);
 
       // check a wedding // change to specific event
-      cy.contains('a', '01/14/2024').should('exist').click().then(() => {
+      // href="/event/649221ae8ee20fd5285dd92b" // RS 1/14/24
+      cy.get('a[href="/event/649221ae8ee20fd5285dd92b"]').first().click().wait(1500).then(() => { 
+      // cy.contains('a', '01/14/2024').should('exist').click().then(() => {
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
