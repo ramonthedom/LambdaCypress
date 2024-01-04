@@ -300,7 +300,7 @@ describe('Check StarlightMusic Client Sections', function () {
   
       
   
-      const sampleLiveWeddingEventId = "644e9aa95e392bcc8504eb4d" //RS 1/13/2024
+      const sampleLiveWeddingEventId = "6595c1cad4a375396d2aa076"  	//OX 2/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + sampleLiveWeddingEventId).then(() => {
   
@@ -338,7 +338,7 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('a', 'Events').should('exist').click();
       cy.contains('.account-heading', 'Events').should('exist');
   
-      const testCorporateEventId = "651ec1319adb424aae8ee34b" // OX 11/04/2028 -- TEST EVENT
+      const testCorporateEventId = "6595c2ead4a375396d2ac3b0"	//OX 3/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testCorporateEventId).wait(200).then(() => {
   
@@ -374,7 +374,7 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('a', 'Events').should('exist').click();
       cy.contains('.account-heading', 'Events').should('exist');
   
-      const testHolidayEventId = "651ec1609adb424aae8ee7de" // BB 11/05/2028 -- TEST EVENT
+      const testHolidayEventId = "6595c3f4d4a375396d2ae0eb"	//BB 4/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testHolidayEventId).wait(200).then(() => {
   
@@ -410,7 +410,7 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('a', 'Events').should('exist').click();
       cy.contains('.account-heading', 'Events').should('exist');
   
-      const testBirthdayEventId = "651ec1829adb424aae8eec30" // RS 11/06/2028 -- TEST EVENT
+      const testBirthdayEventId = "6595c420d4a375396d2ae629"	//RS 5/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testBirthdayEventId).wait(200).then(() => {
   
@@ -446,7 +446,7 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('a', 'Events').should('exist').click();
       cy.contains('.account-heading', 'Events').should('exist');
   
-      const testCharityEventId = "6352d72ee27cdf19b62ec1d6" // OX 4/04/2029 -- TEST EVENT
+      const testCharityEventId = "6595c451d4a375396d2aec3f"	//SP 6/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testCharityEventId).wait(200).then(() => {
   
@@ -482,7 +482,7 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('a', 'Events').should('exist').click();
       cy.contains('.account-heading', 'Events').should('exist');
   
-      const testPrivateEventId = "635608d9e27cdf19b6763454" // OX 3/11/2029 -- TEST EVENT
+      const testPrivateEventId = "6595c4f5d4a375396d2afee0"		//SO 7/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testPrivateEventId).wait(200).then(() => {
   
