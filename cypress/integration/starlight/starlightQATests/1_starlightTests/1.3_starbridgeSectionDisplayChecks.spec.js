@@ -260,8 +260,8 @@ describe('Check User Starbridge Sections', function () {
     // 3. Leads
     cy.contains('a', 'Leads').should('exist').click();
     // cy.get('a > .leads-table-css-container').should('exist');
-    cy.containts('a', 'Inquiry').should('exist');
-    cy.containts('a', 'Showcase').should('exist');
+    cy.contains('a', 'Inquiry').should('exist');
+    cy.contains('a', 'Showcase').should('exist');
   })
 
   //~~~~~~~~~~~~~~//
