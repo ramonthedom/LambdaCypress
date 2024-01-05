@@ -307,7 +307,7 @@ describe('Check StarlightMusic Client Sections', function () {
         cy.contains('.event-detail-heading', 'Event Details').should('exist');
   
         //3.1 Basic Info
-        checkBasicInfoSection()
+        checkBasicInfoSectionWithNoPaymentsOrContract() // BECAUSE TEST EVENT
   
         // 3.2. My Band Configuration
         checkMyBandConfigurationSection()
