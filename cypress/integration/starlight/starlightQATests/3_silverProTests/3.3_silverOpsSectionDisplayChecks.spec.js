@@ -607,10 +607,15 @@ describe('Check User SilverOps Sections', function () {
     visitSilverOps()
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
+
       cy.contains('.title', 'All Events').should('exist');
 
+      cy.wait(1000);
+
       // check a wedding
-      cy.contains('a', 'Wedding').should('exist').click().then(() => {
+      // cy.contains('a', 'Wedding').should('exist').click().then(() => {
+      // const sampleLiveWeddingEventId = "6479d620a6c515bcc0e8500c" //TRS 4/27/2024 
+      cy.get('a[href"/event/6479d620a6c515bcc0e8500c"]').first().click().wait(1500).then(() => {
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
