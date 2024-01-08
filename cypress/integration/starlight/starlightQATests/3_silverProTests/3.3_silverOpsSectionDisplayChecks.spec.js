@@ -123,14 +123,14 @@ describe('Check User SilverOps Sections', function () {
       });
 
       // 4.1.1.5.2 Paid Expenses
-      cy.contains('div', 'Paid Expenses').should('exist').click().then(() => {
+      cy.contains('div', 'Paid Expenses').should('exist').click().wait(500).then(() => {
         cy.contains('a', 'Add Title +').should('exist'); // a, "Add Title +", should exist
         cy.contains('a', 'Add Expenses +').should('exist'); // a, "Add Expenses +", should exist
         cy.contains('th', 'Reimburse To').should('exist'); // th, 'Reimburse To', should exist
       });
 
       // 4.1.1.5.3 Discount
-      cy.contains('div', 'Discount').should('exist').click().then(() => {
+      cy.contains('div', 'Discount').should('exist').click().wait(1000).then(() => {
         cy.contains('button', 'Update').should('exist'); // button, 'Update', should exist
         cy.contains('th', 'After Discount').should('exist'); // th, 'After Discount', should exist
         cy.contains('a', 'Add Amount +').should('exist'); // a, 'Add Amount +',should exist
@@ -266,7 +266,7 @@ describe('Check User SilverOps Sections', function () {
 
     /// 2.4. Subsection - Gig Info
     cy.contains('div', 'Gig Info').should('exist').click();
-    cy.contains('div', 'Sorting').should('exist').click().wait(1000).then(() => {
+    cy.contains('div', 'Sorting').should('exist').click().wait(1500).then(() => {
       cy.contains('span', 'Event Details').should('exist');
       cy.contains('div', 'Styling').should('exist').click();
       cy.contains('h5', 'Segments').should('exist');

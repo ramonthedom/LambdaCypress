@@ -97,7 +97,7 @@ describe('Check User Starbridge Sections', function () {
       });
 
       // 4.1.1.5.3 Discount
-      cy.contains('div', 'Discount').should('exist').click().then(() => {
+      cy.contains('div', 'Discount').should('exist').click().wait(1000).then(() => {
         cy.contains('button', 'Update').should('exist'); // button, 'Update', should exist
         cy.contains('th', 'After Discount').should('exist'); // th, 'After Discount', should exist
         cy.contains('a', 'Add Amount +').should('exist'); // a, 'Add Amount +',should exist
@@ -267,7 +267,7 @@ describe('Check User Starbridge Sections', function () {
   })
 
   //~~~~~~~~~~~~~~//
-  // 4. EVENTS //
+  // 4. EVENTS    //
   //~~~~~~~~~~~~~~//
 
   it('Events Section should present correctly', function () {
