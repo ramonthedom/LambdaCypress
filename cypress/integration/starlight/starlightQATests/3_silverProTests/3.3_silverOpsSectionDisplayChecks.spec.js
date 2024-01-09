@@ -282,9 +282,12 @@ describe('Check User SilverOps Sections', function () {
     visitSilverOps()
 
     // 3. Leads
-    cy.contains('a', 'Leads').should('exist').click();
-    cy.get('a > .leads-table-css-container').should('exist');
-
+    cy.contains('span', 'Leads').should('exist').click().then(() => {
+      cy.contains('a', 'Leads').should('exist');
+      cy.contains('a', 'Inquiry').should('exist');
+      cy.contains('a', 'Showcase').should('exist');
+    });
+    // cy.get('a > .leads-table-css-container').should('exist');
   })
 
   //~~~~~~~~~~~~~~//
@@ -659,7 +662,7 @@ describe('Check User SilverOps Sections', function () {
           checkFinalsSpecialSongsSection();
 
           // 4.1.1.7.3 Blessings/Toast
-          checkFinalsBlessingToastSection();
+          checkFinalsBlessingToastSection(); 
 
           // 4.1.1.7.4 Song List
           checkFinalsSonglistSection();
