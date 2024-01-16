@@ -625,7 +625,8 @@ describe('Check User Starbridge Sections', function () {
 
       // check a wedding // change to specific event
       // href="/event/649221ae8ee20fd5285dd92b" // RS 1/14/24
-      cy.get('a[href="/event/649221ae8ee20fd5285dd92b"]').first().click().wait(1500).then(() => { 
+      // href="/651c93889adb424aae5df635" //RS 3/16/2024
+      cy.get('a[href="/event/651c93889adb424aae5df635"]').first().click().wait(1500).then(() => { 
       // cy.contains('a', '01/14/2024').should('exist').click().then(() => {
         cy.wait(3000);
 
