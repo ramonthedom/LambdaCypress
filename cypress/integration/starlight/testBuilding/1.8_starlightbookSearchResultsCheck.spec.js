@@ -1,16 +1,24 @@
 describe('Starlight Results Test', function () {
 
-    it('Checks Large and Small Band Results', function () {
+    beforeEach(() => {
+        // Intercept image requests and block them
+        cy.intercept('**/*.(png|jpg|jpeg|gif|svg)', (req) => {
+          req.destroy();
+        });
+      });
+
+    let resultText;
+
+    it('Checks Large and Small Band Results', function () {        
 
         cy.viewport(2560, 1328)
-
         cy.visit('https://www.starlightmusic.com/meet-the-team')
 
         cy.get('.navbar > .w-100 > .Header_nav_section_search__3JI_2 > .Header_nav_section_search_mini__2zAlY > .d-flex').click();
 
         cy.get('.d-flex > #search-date-input > .ant-picker > .ant-picker-input > input').click();
 
-        cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/09/2029{enter}`);
+        cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/20/2026{enter}`);
 
         // cy.get('.d-flex > #search-date-input > .ant-picker-focused > .ant-picker-input > input').type(`{selectall}09/09/2029{enter}`).wait(50).type(`{tab}{downarrow}{enter}`).wait(50).type(`{tab}{tab}{enter}`);
 
@@ -37,19 +45,50 @@ describe('Starlight Results Test', function () {
 
         cy.wait(5000);
 
-        // Check results
-        cy.contains('h4', 'Congratulations!').should('exist');
-        cy.contains('h5', 'Smaller Acts').should('exist');
+        cy.get(':nth-child(2) > :nth-child(1) > .SearchResult_search_result_card_body__rQjZ- > :nth-child(3) > :nth-child(1) > .SearchResult_search_result_card_avg__1HMIO > .SearchResult_search_result_card_price__36J67').then(($elem) => {
+            resultText = $elem.text();
+            cy.log("in Block 1: ", resultText)
+        })
 
-        // Check for the presence of exactly 2 ul elements with the specified class
-        cy.get('.SearchResult_search_result_cards__23uLY')
-        .should('have.length', 2)
-        .each((list) => {
-        // For each ul element, check that it contains at least one li element with the specified class
-        cy.wrap(list).find('.SearchResult_search_result_card__2m0Pk')
-            .should('have.length.at.least', 1);
+        // Step 1: Intercept the request
+        cy.intercept('POST', '/starlightband/api/v1/reviews').as('getReviews');
+        // cy.intercept('POST', '**/reviews').as('getReviews');
+
+        // Step 2: Trigger the request
+        cy.get(':nth-child(2) > :nth-child(1) > .SearchResult_search_result_card_body__rQjZ- > :nth-child(3) > .d-flex > .SearchResult_search_result_card_explore_btn__1VZk6').click({force: true});
+
+        // VERSION 1: Step 3: Wait for the request and log the response
+        cy.get('@getReviews').should(response => {
+            cy.log("Response 1");
+            cy.log(response);
+            cy.log('--------')
+            cy.log("Response 2");
+            // cy.log(response.response.body);n
+        })
+
+        // VERSION 2: Step 3: Wait for the request and log the response
+        cy.wait('@getReviews', {setTimeout: 6000}).then((interception) => {
+            // Log the entire response
+            cy.log("interception.response")
+            cy.log(interception.response);
+  
+            // If you want to log just the body
+            cy.log("interception.response.body")
+            cy.log(interception.response.body);
+
+            //
+            cy.log("interception")
+            cy.log(interception);
         });
 
+        cy.wait(2000);
+        cy.contains('h1', 'Blake Band').should('exist');
+
+
+    })
+
+    it('uses result elsewhere', () => {
+        cy.log("in Block 2: ", resultText)
     })
 
 })
