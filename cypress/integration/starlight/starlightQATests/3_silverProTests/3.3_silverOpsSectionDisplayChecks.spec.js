@@ -613,7 +613,7 @@ describe('Check User SilverOps Sections', function () {
 
       cy.contains('.title', 'All Events').should('exist');
 
-      cy.wait(1000);
+      cy.wait(2000);
 
       // check a wedding
       // cy.contains('a', 'Wedding').should('exist').click().then(() => {

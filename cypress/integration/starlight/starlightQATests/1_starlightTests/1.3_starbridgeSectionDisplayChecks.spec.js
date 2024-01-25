@@ -794,7 +794,7 @@ describe('Check User Starbridge Sections', function () {
     cy.contains('a', 'Events').should('exist').click().then(() => {
 
       cy.wait(1000);
-      
+
       cy.contains('.title', 'All Events').should('exist');
 
       cy.wait(1000);
