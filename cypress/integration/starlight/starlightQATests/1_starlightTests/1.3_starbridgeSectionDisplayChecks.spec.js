@@ -499,9 +499,9 @@ describe('Check User Starbridge Sections', function () {
       });
 
       // 6.8.2  Questions
-      cy.contains('a', 'City').should('exist').click().then(() => {
-        cy.contains('.cms_card_heading', 'All Cities').should('exist');
-        cy.contains('.ant-breadcrumb-link', 'All Cities').should('exist');
+      cy.contains('a', 'Venue').should('exist').click().then(() => {
+        cy.contains('.cms_card_heading', 'All Venues').should('exist');
+        cy.contains('.ant-breadcrumb-link', 'All Venues').should('exist');
         cy.get('.cms_list').find('li').should('have.length.greaterThan', 1);
       });
     });

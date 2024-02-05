@@ -260,7 +260,7 @@ describe('Check User Bandazon Sections', function () {
 
       // check a wedding // change to specific event
       // 
-      cy.contains('a', '08/08/2028').should('exist').click().then(() => {
+      cy.contains('a', '07/07/2027').should('exist').click().then(() => {
         cy.wait(3000);
 
         // 4.1.1.1 Basic Info
