@@ -498,8 +498,9 @@ describe('Check User Starbridge Sections', function () {
         cy.contains('p', 'Last update on').should('exist');
       });
 
-      // 6.8.2  Questions
-      cy.contains('a', 'Venue').should('exist').click().then(() => {
+      // 6.8.2  Venue
+      cy.get('a[href="/maintenance/cms/city"]').should('contain', 'Venue').click().then(() => {
+      // cy.contains('a', 'Venue').should('exist').click().then(() => {
         cy.contains('.cms_card_heading', 'All Venues').should('exist');
         cy.contains('.ant-breadcrumb-link', 'All Venues').should('exist');
         cy.get('.cms_list').find('li').should('have.length.greaterThan', 1);
