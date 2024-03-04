@@ -627,7 +627,8 @@ describe('Check User Starbridge Sections', function () {
       // check a wedding // change to specific event
       // href="/event/649221ae8ee20fd5285dd92b" // RS 1/14/24
       // href="/651c93889adb424aae5df635" //RS 3/16/2024
-      cy.get('a[href="/event/651c93889adb424aae5df635"]').first().click().wait(1500).then(() => { 
+      // href="/656d224338f51dcb816c4074" //BB 3/08/2025
+      cy.get('a[href="/event/656d224338f51dcb816c4074"]').first().click().wait(1500).then(() => { 
       // cy.contains('a', '01/14/2024').should('exist').click().then(() => {
         cy.wait(3000);
 
@@ -875,7 +876,7 @@ describe('Check User Starbridge Sections', function () {
 
       //   cy.contains('a', 'Corporate').should('exist').click().then(() => {
       // https://starbridge.starlightmusic.com/event/64bfd737de3e812b80f7d294
-      const sampleLiveCorporateEventId = "64bfd737de3e812b80f7d294" // RS 4/14/2024
+      const sampleLiveCorporateEventId = "6552665daf80592de28758d9" // RS 11/09/2024
       // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveCorporateEventId).wait(1500).then(() => {
       cy.get('a[href="/event/64bfd737de3e812b80f7d294"]').first().click().wait(1500).then(() => {
 
