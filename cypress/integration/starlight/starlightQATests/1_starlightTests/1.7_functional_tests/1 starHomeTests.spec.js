@@ -128,24 +128,25 @@ describe('Starlight Music Website Interactions', () => {
   // Go button
   it('Cities GO button should work', () => {
     cy.get('.slick-slide:nth-child(1) .d-flex img').click({force: true}).wait(500).then(() => {
-      cy.url().should('eq', 'https://www.starlightmusic.com/cities/aspen-wedding-bands')
+      // cy.url().should('eq', 'https://www.starlightmusic.com/cities/aspen-wedding-bands')
+      cy.url().should('eq', 'https://www.starlightmusic.com/cities/hudson-house-nj-wedding-venue')
     })
   })
 
   // THIS WORK
   // Cities - buttons
   it('Cities previous and next buttons should work', () => {
-    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Aspen').should('exist');
+    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Tappan Hill').should('exist');
     cy.get('#topCitiesSlideWrapper').find('.slick-prev').click({
       force: true
     });
     cy.wait(200);
-    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Washington').should('exist');
+    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Hudson House').should('exist');
     cy.get('#topCitiesSlideWrapper').find('.slick-next').click({
       force: true
     });
     cy.wait(200);
-    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Aspen').should('exist');
+    cy.contains('.TopCitiesComponent_top_cities_main_slide_heading__3-kHS', 'Tappan Hill').should('exist');
   })
 
   // THIS WORKS
@@ -179,7 +180,7 @@ describe('Starlight Music Website Interactions', () => {
   // THIS WORKS //
   // Cities buttons
   it('Aspen Button should work', () => {
-    cy.contains('a.RecentCitiesComponent_recent_cities_list_items__1n16d', 'Aspen').should('have.attr', 'href', '/cities/aspen-wedding-bands'); //Aspen 
+    cy.contains('a.RecentCitiesComponent_recent_cities_list_items__1n16d', 'Oheka Castle').should('have.attr', 'href', '/cities/oheka-castle'); //Aspen 
   })
 
   // THIS WORKS //
