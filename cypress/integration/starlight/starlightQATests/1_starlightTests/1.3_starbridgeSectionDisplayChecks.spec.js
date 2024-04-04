@@ -31,7 +31,7 @@ describe('Check User Starbridge Sections', function () {
     cy.contains('h3', 'Client Details').should('exist'); //h3 containing "Client Details" should exist
     cy.contains('h3', 'Upcoming Payments').should('exist'); //h3 containing "Upcoming Payments" should exist
     cy.contains('h3', 'Payment History').should('exist'); //h3 containing "Payment History" should exist
-    cy.contains('p', 'Total Price:').should('exist');
+    cy.contains('p', /Total Price( After Discount)?:/).should('exist');
   }
 
   function checkConfigurationSection() {
@@ -296,7 +296,7 @@ describe('Check User Starbridge Sections', function () {
 
     // 5.2 Upsells
     cy.contains('a', 'Upsells').should('exist').click();
-    cy.wait(500);
+    cy.wait(1000);
     cy.contains('tr', "DATE SENT/RECEIVED").should('exist');
 
   })
@@ -503,7 +503,7 @@ describe('Check User Starbridge Sections', function () {
       // cy.contains('a', 'Venue').should('exist').click().then(() => {
         cy.contains('.cms_card_heading', 'All Venues').should('exist');
         cy.contains('.ant-breadcrumb-link', 'All Venues').should('exist');
-        cy.get('.cms_list').find('li').should('have.length.greaterThan', 1);
+        cy.get('.cms_list').find('div').should('have.length.greaterThan', 1);
       });
     });
 
@@ -628,7 +628,9 @@ describe('Check User Starbridge Sections', function () {
       // href="/event/649221ae8ee20fd5285dd92b" // RS 1/14/24
       // href="/651c93889adb424aae5df635" //RS 3/16/2024
       // href="/656d224338f51dcb816c4074" //BB 3/08/2025
-      cy.get('a[href="/event/656d224338f51dcb816c4074"]').first().click().wait(1500).then(() => { 
+      // href="/65674c4838f51dcb81c28758" //RS 6/30/2024 Crossed Keys Estate
+      
+      cy.get('a[href="/event/65674c4838f51dcb81c28758"]').first().click().wait(1500).then(() => { 
       // cy.contains('a', '01/14/2024').should('exist').click().then(() => {
         cy.wait(3000);
 
@@ -801,6 +803,10 @@ describe('Check User Starbridge Sections', function () {
 
       cy.wait(1000);
 
+      cy.get('li[title="2"]').click(); // scroll to second page
+
+      cy.wait(1000); 
+
       // check a charity
       cy.contains('a', 'Charity').should('exist').click().then(() => {
         cy.wait(3000);
@@ -871,6 +877,10 @@ describe('Check User Starbridge Sections', function () {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.contains('.title', 'All Events').should('exist');
+
+      cy.wait(1000);
+
+      cy.get('li[title="2"]').click(); // scroll to second page
 
       cy.wait(1000);
 
