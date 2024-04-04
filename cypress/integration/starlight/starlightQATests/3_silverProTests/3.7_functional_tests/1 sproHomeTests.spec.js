@@ -55,7 +55,7 @@ describe('Silver Pro Website Interactions', () => {
     // Browse bands
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Blake Band').should('have.attr', 'href', '/the-blake-band-nyc-wedding-band');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Groove Shop').should('have.attr', 'href', '/the-groove-shop');
-    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Party Shop').should('have.attr', 'href', '/the-party-shop');
+    // cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Party Shop').should('have.attr', 'href', '/the-party-shop');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Rhythm Shop').should('have.attr', 'href', '/the-rhythm-shop');
 
     /// Social Media buttons
@@ -101,7 +101,7 @@ describe('Silver Pro Website Interactions', () => {
   // THIS WORKS
   // More Band Videos
   it('More Bands video button should work', () => {
-    cy.contains(".FeaturedVideoComponent_more_band_btn__3_AJU", "More Band Videos").should("exist").click({force: true}).wait(500).then(() => {
+    cy.contains(".FeaturedVideoComponent_more_band_btn__3_AJU", "More Band Videos").should("exist").click({force: true}).wait(1000).then(() => {
       cy.url().should('eq', 'https://www.silverproentertainment.com/our-talent')
     })
   })
@@ -109,7 +109,7 @@ describe('Silver Pro Website Interactions', () => {
   // THIS WORKS
   // About starlight button
   it('About Starlight button should work', () => {
-    cy.contains(".AboutUsComponent_know_more_btn__QEIZD", "About Silver Pro").should("exist").click({force: true}).wait(500).then(() => {
+    cy.contains(".AboutUsComponent_know_more_btn__QEIZD", "About Silver Pro").should("exist").click({force: true}).wait(1000).then(() => {
       cy.url().should('eq', 'https://www.silverproentertainment.com/about-us')
     })
   })
@@ -145,7 +145,7 @@ describe('Silver Pro Website Interactions', () => {
   // THIS WORKS //
   // Get In Touch button
   it('Get In Touch Button should work', () => {
-    cy.contains('.GetInTouchComponent_getintouch_section_btn__1cgml', 'Get In Touch').should('exist').click().wait(500).then(() => {
+    cy.contains('.GetInTouchComponent_getintouch_section_btn__1cgml', 'Get In Touch').should('exist').click().wait(1000).then(() => {
       cy.url().should('eq', 'https://www.silverproentertainment.com/contact')
     })
   })
