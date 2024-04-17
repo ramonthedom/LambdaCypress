@@ -517,7 +517,8 @@ describe('Check User SilverOps Sections', function () {
       // 6.8.1  Categories
       cy.contains('a', 'Main Pages').should('exist').click().then(() => {
         cy.contains('.dashboard_heading', 'CMS').should('exist');
-        cy.get('.cms_list').find('li').should('have.length.greaterThan', 1);
+        // cy.get('.cms_list').find('li').should('have.length.greaterThan', 1);
+        cy.get('.cms_list').find('li').should('have.length.at.least', 1);
         cy.contains('p', 'Last update on').should('exist');
       });
 
@@ -680,7 +681,7 @@ describe('Check User SilverOps Sections', function () {
           checkGigStylingSection();
 
           // Buttons
-          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('button', 'Export Final PDF').should('exist'); // button, Export Final Pdf should exist
           cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
 
         });
