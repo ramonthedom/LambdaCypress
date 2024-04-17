@@ -129,7 +129,7 @@ describe('Starlight Music Website Interactions', () => {
   it('Cities GO button should work', () => {
     cy.get('.slick-slide:nth-child(1) .d-flex img').click({force: true}).wait(500).then(() => {
       // cy.url().should('eq', 'https://www.starlightmusic.com/cities/aspen-wedding-bands')
-      cy.url().should('eq', 'https://www.starlightmusic.com/cities/hudson-house-nj-wedding-venue')
+      cy.url().should('eq', 'https://www.starlightmusic.com/cities/tappan-hill-mansion-wedding-bands')
     })
   })
 
