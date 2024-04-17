@@ -293,7 +293,8 @@ describe('Check SilverPro Client Sections', function () {
     // check events    
 
     // const sampleLiveWeddingEventId = "6479d61fa6c515bcc0e84f1b" //TRS 1/20/2024
-    const sampleLiveWeddingEventId = "6479d620a6c515bcc0e84fb9" //TGS 3/16/2024
+    // const sampleLiveWeddingEventId = "6479d620a6c515bcc0e84fb9" //TGS 3/16/2024
+    const sampleLiveWeddingEventId = "64a4f8508ee20fd52821ff34" // TRS 01/03/2029
 
     cy.visit("https://www.silverproentertainment.com/events/" + sampleLiveWeddingEventId).then(() => {
 
