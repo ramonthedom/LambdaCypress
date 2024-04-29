@@ -48,7 +48,7 @@ describe('Silver Pro Website Interactions', () => {
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('FAQ').should('have.attr', 'href', '/faq');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Meet the team').should('have.attr', 'href', '/meet-the-team');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Celebrities').should('have.attr', 'href', '/celebrities');
-    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('About us').should('have.attr', 'href', '/our-talent');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('About us').should('have.attr', 'href', '/about-us');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Contact Us').should('have.attr', 'href', '/contact');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Credits').should('have.attr', 'href', '/credits');
 

@@ -569,6 +569,7 @@ describe('Check User SilverOps Sections', function () {
       cy.contains('.finance_card_title', 'Gross Sales').should('exist');
       cy.contains('.finance_card_title', 'Total Profit').should('exist');
       cy.wait(5000);
+      cy.wait(2500);
       cy.get('.ant-table-content').find('tr').should('have.length.greaterThan', 1);
       cy.contains('th', 'EVENT NAME').should('exist');
       cy.contains('th', 'BAND NAME').should('exist');
