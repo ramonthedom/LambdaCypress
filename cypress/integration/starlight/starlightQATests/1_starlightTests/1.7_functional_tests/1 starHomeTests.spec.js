@@ -14,7 +14,7 @@ describe('Starlight Music Website Interactions', () => {
 
   // CHECKED - UNCOMMENT WHEN READY
   it('check header buttons', () => {
-    cy.get('a.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ
+    cy.get('a.Header_nav_link__3qapQ').contains('At Your Venue').should('have.attr', 'href', '/venues'); //Venues
     cy.get('a.Header_nav_link__3qapQ').contains('Browse Bands').should('have.attr', 'href', '/our-talent'); // Browse Bands
     cy.get('a.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); // Meet The Team
     // cy.get('a.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); // Celebrities
@@ -44,12 +44,12 @@ describe('Starlight Music Website Interactions', () => {
   it('check footer buttons', () => {
     // Starlight
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Home').should('have.attr', 'href', '/');
+    // cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('At Your Venue').should('have.attr', 'href', '/venues');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('FAQ').should('have.attr', 'href', '/faq');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Meet the team').should('have.attr', 'href', '/meet-the-team');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Celebrities').should('have.attr', 'href', '/celebrities');
-    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('About us').should('have.attr', 'href', '/about-us');
+    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('About us').should('have.attr', 'href', '/our-talent');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Contact Us').should('have.attr', 'href', '/contact-us');
-    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Our Talent').should('have.attr', 'href', '/our-talent');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Credits').should('have.attr', 'href', '/credits');
 
     // Browse bands
@@ -198,13 +198,13 @@ describe('Starlight Music Website Interactions', () => {
   /// home button
   // CHECKED - UNCOMMENT WHEN READY
   it('Home buttom should scroll user to top', () => {
-    cy.contains('a', 'FAQ').should('be.visible');
+    cy.contains('a', 'At Your Venue').should('be.visible');
     cy.scrollTo('bottom');
     cy.wait(500);
-    cy.contains('a', 'FAQ').should('not.be.visible');
+    cy.contains('a', 'At Your Venue').should('not.be.visible');
     cy.get('.Header_main_logo__Z92SE:nth-child(1) > .Header_header_logo__2cVOB').click();
     cy.wait(500);
-    cy.contains('a', 'FAQ').should('be.visible');
+    cy.contains('a', 'At Your Venue').should('be.visible');
   })
 
   // click here for pricing
@@ -238,10 +238,10 @@ describe('Starlight Music Website Interactions', () => {
     cy.wait(500);
     cy.get('#dropdown-basic').should('exist').click();
     cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Home').should('have.attr', 'href', '/'); //Home
-    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Our Talent').should('have.attr', 'href', '/our-talent'); //Our Talent
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('At Your Venue').should('have.attr', 'href', '/venues'); //Our Talent
     cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Meet the Team').should('have.attr', 'href', '/meet-the-team'); //Meet the Team
     cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Celebrities').should('have.attr', 'href', '/celebrities'); //Celebrities
-    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('About Us').should('have.attr', 'href', '/about-us'); //About Us
+    cy.get('a.text-dark.Header_nav_link__3qapQ').contains('About Us').should('have.attr', 'href', '/our-talent'); //About Us
     cy.get('a.text-dark.Header_nav_link__3qapQ').contains('Contact Us').should('have.attr', 'href', '/contact-us'); //Contact Us
     cy.get('a.text-dark.Header_nav_link__3qapQ').contains('FAQ').should('have.attr', 'href', '/faq'); //FAQ  
   })
