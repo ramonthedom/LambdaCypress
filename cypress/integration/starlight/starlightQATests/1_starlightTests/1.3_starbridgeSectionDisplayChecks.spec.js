@@ -880,11 +880,11 @@ describe('Check User Starbridge Sections', function () {
     cy.contains('a', 'Events').should('exist').click().then(() => {
       cy.contains('.title', 'All Events').should('exist');
 
-      cy.wait(1000);
+      cy.wait(2500);
 
       cy.get('li[title="2"]').click(); // scroll to second page
 
-      cy.wait(1000);
+      cy.wait(2500);
 
       //   cy.contains('a', 'Corporate').should('exist').click().then(() => {
       // https://starbridge.starlightmusic.com/event/64bfd737de3e812b80f7d294
