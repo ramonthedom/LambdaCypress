@@ -526,7 +526,7 @@ describe('Check User SilverOps Sections', function () {
       cy.contains('a', 'City').should('exist').click().then(() => {
         cy.contains('.cms_card_heading', 'All Cities').should('exist');
         cy.contains('.ant-breadcrumb-link', 'All Cities').should('exist');
-        cy.get('.cms_list').find('li').should('have.length.at.least', 1);
+        cy.get('.cms_list').find('div').should('have.length.at.least', 1);
       });
     });
 
