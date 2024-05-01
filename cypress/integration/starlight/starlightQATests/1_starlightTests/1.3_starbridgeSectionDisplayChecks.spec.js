@@ -623,7 +623,7 @@ describe('Check User Starbridge Sections', function () {
 
       cy.contains('.title', 'All Events').should('exist');
 
-      cy.wait(1000);
+      cy.wait(5000);
 
       // check a wedding // change to specific event
       // href="/event/649221ae8ee20fd5285dd92b" // RS 1/14/24
@@ -694,7 +694,7 @@ describe('Check User Starbridge Sections', function () {
           checkGigStylingSection();
 
           // Buttons
-          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('button', 'Export Final PDF').should('exist'); // button, Export Final PDF should exist
           cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
 
         });
@@ -713,17 +713,18 @@ describe('Check User Starbridge Sections', function () {
 
       cy.contains('.title', 'All Events').should('exist');
 
-      cy.wait(1000);
+      cy.wait(5000);
 
       // check a birthday
       // cy.contains('a', 'Birthday').should('exist').click().then(() => {
 
       // https://starbridge.starlightmusic.com/event/649221ae8ee20fd5285dd92b
 
-      const sampleLiveBirthdayEventId = "644a85b6711ad7de0a595792" // SO 4/27/2024
+      // const sampleLiveBirthdayEventId = "644a85b6711ad7de0a595792" // SO 4/27/2024
+      const sampleLiveBirthdayEventId = "65fd9a1c2c46ae21a1328291" // SP 5/11/2024
       // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveBirthdayEventId).wait(1500).then(() => {
       // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveBirthdayEventId).wait(1500).then(() => {
-      cy.get('a[href="/event/644a85b6711ad7de0a595792"]').first().click().wait(1500).then(() => {
+      cy.get('a[href="/event/65fd9a1c2c46ae21a1328291"]').first().click().wait(1500).then(() => {
 
         cy.wait(3000);
 
@@ -782,7 +783,7 @@ describe('Check User Starbridge Sections', function () {
           checkGigStylingSection();
 
           // Buttons
-          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('button', 'Export Final PDF').should('exist'); // button, Export Final PDF should exist
           cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
 
         });
@@ -798,11 +799,11 @@ describe('Check User Starbridge Sections', function () {
 
     cy.contains('a', 'Events').should('exist').click().then(() => {
 
-      cy.wait(1000);
+      cy.wait(2500);
 
       cy.contains('.title', 'All Events').should('exist');
 
-      cy.wait(1000);
+      cy.wait(2500);
 
       cy.get('li[title="2"]').click(); // scroll to second page
 
@@ -865,7 +866,7 @@ describe('Check User Starbridge Sections', function () {
           checkGigStylingSection();
 
           // Buttons
-          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('button', 'Export Final PDF').should('exist'); // button, Export Final PDF should exist
           cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
 
         });
@@ -948,7 +949,7 @@ describe('Check User Starbridge Sections', function () {
           checkGigStylingSection();
 
           // Buttons
-          cy.contains('button', 'Export Final Pdf').should('exist'); // button, Export Final Pdf should exist
+          cy.contains('button', 'Export Final PDF').should('exist'); // button, Export Final PDF should exist
           cy.contains('label', 'Finals Status:').should('exist'); // label, Finals Status:
 
         });
