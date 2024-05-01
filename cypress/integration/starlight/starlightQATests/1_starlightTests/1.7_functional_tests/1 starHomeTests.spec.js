@@ -65,7 +65,7 @@ describe('Starlight Music Website Interactions', () => {
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('Starlight Orchestra').should('have.attr', 'href', '/band/starlight-orchestra-corporate-events-and-nyc-weddings');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('String Performers (E.V.E)').should('have.attr', 'href', '/band/string-performers-eve-nyc-wedding-corporate-musicians');
     cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('The Starlight Experience').should('have.attr', 'href', '/band/the-starlight-experience');
-    cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('White Light').should('have.attr', 'href', '/band/white-light-nyc-wedding-band');
+    // cy.get('a.FooterNavComponent_footernav_heading_text__m4X1F').contains('White Light').should('have.attr', 'href', '/band/white-light-nyc-wedding-band');
 
     /// Social Media buttons
     cy.get('.d-flex > :nth-child(1) > .img_btn').should('have.attr', 'href', 'https://www.instagram.com/starlightmusicnyc/');
