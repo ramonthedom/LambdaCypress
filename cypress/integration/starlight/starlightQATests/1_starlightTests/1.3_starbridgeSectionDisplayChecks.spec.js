@@ -546,7 +546,7 @@ describe('Check User Starbridge Sections', function () {
       cy.contains('.finance_card_title', 'Gross Sales').should('exist');
       cy.contains('.finance_card_title', 'Total Profit').should('exist');
       cy.wait(5000);
-      cy.wait(2500);
+      cy.wait(5000);
       cy.get('.ant-table-content').find('tr').should('have.length.greaterThan', 1);
       cy.contains('th', 'EVENT NAME').should('exist');
       cy.contains('th', 'BAND NAME').should('exist');
@@ -890,7 +890,7 @@ describe('Check User Starbridge Sections', function () {
       // https://starbridge.starlightmusic.com/event/64bfd737de3e812b80f7d294
       const sampleLiveCorporateEventId = "6552665daf80592de28758d9" // RS 11/09/2024
       // cy.visit("https://starbridge.starlightmusic.com/event/" + sampleLiveCorporateEventId).wait(1500).then(() => {
-      cy.get('a[href="/event/64bfd737de3e812b80f7d294"]').first().click().wait(1500).then(() => {
+      cy.get('a[href="/event/6552665daf80592de28758d9"]').first().click().wait(1500).then(() => {
 
         cy.wait(3000);
 
