@@ -483,7 +483,7 @@ describe('Check StarlightMusic Client Sections', function () {
       cy.contains('a', 'Events').should('exist').click();
       cy.contains('.account-heading', 'Events').should('exist');
   
-      const testPrivateEventId = "6595c4f5d4a375396d2afee0"		//SO 7/1/2030 -- TEST EVENT
+      const testPrivateEventId = "669fded6d257468e7a780b62"		//SO 7/1/2030 -- TEST EVENT
   
       cy.visit("https://www.starlightmusic.com/events/" + testPrivateEventId).wait(200).then(() => {
   
