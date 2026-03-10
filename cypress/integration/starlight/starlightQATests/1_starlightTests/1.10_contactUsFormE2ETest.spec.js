@@ -10,6 +10,13 @@ describe('Starlight Contact Us Form E2E Test', function () {
 
   it('Contact Us page loads correctly with all form fields', function () {
     cy.visit(prodUrl + '/contact-us', { timeout: 30000 })
+    // Dismiss "Did you check availability and pricing?" modal if present
+    cy.get('body').then(($body) => {
+      if ($body.find('.modal.show').length > 0) {
+        cy.contains('button', 'X').click({ force: true })
+        cy.wait(500)
+      }
+    })
     cy.get('.contact-form-container', { timeout: 15000 }).should('exist')
     cy.get('.contact-form-heading').should('contain', 'Get in Touch')
     cy.get('#fname-input').should('exist')
@@ -33,6 +40,13 @@ describe('Starlight Contact Us Form E2E Test', function () {
     const dateStr = `${month}/${day}/${year}`
 
     cy.visit(prodUrl + '/contact-us', { timeout: 30000 })
+    // Dismiss "Did you check availability and pricing?" modal if present
+    cy.get('body').then(($body) => {
+      if ($body.find('.modal.show').length > 0) {
+        cy.contains('button', 'X').click({ force: true })
+        cy.wait(500)
+      }
+    })
     cy.get('.contact-form-container', { timeout: 15000 }).should('exist')
 
     // First Name
