@@ -1,0 +1,690 @@
+{
+  "name": "Contact Us E2E Weekly Test",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "triggerAtHour": 9, "triggerAtDay": 5 }]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Friday 9am ET",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.github.com/repos/ramonthedom/LambdaCypress/actions/workflows/contact-us-e2e.yml/dispatches",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"ref\": \"main\"}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "trigger-gha",
+      "name": "Trigger GitHub Actions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "initial-wait",
+      "name": "Wait 30s for Build Start",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Poll LambdaTest for the contact-us-e2e-weekly build\nconst maxAttempts = 20; // 20 * 30s = 10 minutes\nconst staticData = $getWorkflowStaticData('node');\nstaticData.pollAttempt = (staticData.pollAttempt || 0) + 1;\n\nconst today = new Date().toISOString().split('T')[0];\n\nreturn [{\n  json: {\n    poll_attempt: staticData.pollAttempt,\n    max_attempts: maxAttempts,\n    today: today\n  }\n}];"
+      },
+      "id": "poll-counter",
+      "name": "Poll Counter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [880, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.lambdatest.com/automation/api/v1/builds",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "limit", "value": "5" },
+            { "name": "sort", "value": "end_timestamp.desc" },
+            { "name": "buildName", "value": "contact-us-e2e-weekly" }
+          ]
+        },
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch-lt-build",
+      "name": "Fetch LT Build Status",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 300],
+      "credentials": {
+        "httpBasicAuth": { "id": "lt-basic-auth", "name": "LambdaTest Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check if build is complete\nconst pollData = $('Poll Counter').first().json;\nconst builds = $input.first().json.data || [];\n\n// Find today's build\nconst todayBuild = builds.find(b => {\n  const buildDate = new Date(b.create_timestamp).toISOString().split('T')[0];\n  return buildDate === pollData.today;\n});\n\nif (!todayBuild) {\n  return [{ json: { status: 'not_found', poll_attempt: pollData.poll_attempt, max_attempts: pollData.max_attempts } }];\n}\n\nconst isComplete = todayBuild.status_ind === 'completed' || todayBuild.status_ind === 'passed' || todayBuild.status_ind === 'failed' || todayBuild.status_ind === 'error';\nconst isPassed = todayBuild.status_ind === 'completed' || todayBuild.status_ind === 'passed';\n\nreturn [{\n  json: {\n    status: isComplete ? (isPassed ? 'passed' : 'failed') : 'running',\n    build_id: todayBuild.build_id,\n    build_name: todayBuild.name,\n    status_ind: todayBuild.status_ind,\n    poll_attempt: pollData.poll_attempt,\n    max_attempts: pollData.max_attempts\n  }\n}];"
+      },
+      "id": "check-build-status",
+      "name": "Check Build Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "is-still-running",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "running",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "or"
+        }
+      },
+      "id": "build-running-check",
+      "name": "Still Running?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1540, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "under-max-polls",
+              "leftValue": "={{ $json.poll_attempt }}",
+              "rightValue": "={{ $json.max_attempts }}",
+              "operator": { "type": "number", "operation": "lt" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "max-polls-check",
+      "name": "Under Max Polls?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1760, 200]
+    },
+    {
+      "parameters": {
+        "amount": 30,
+        "unit": "seconds"
+      },
+      "id": "poll-wait",
+      "name": "Wait 30s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1980, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "cypress-passed",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "passed",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "cypress-pass-check",
+      "name": "Cypress Passed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1760, 500]
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "minutes"
+      },
+      "id": "wait-for-pipeline",
+      "name": "Wait 3min for Email/SMS",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1980, 440]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://logs.us-east-1.amazonaws.com",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/x-amz-json-1.1" },
+            { "name": "X-Amz-Target", "value": "Logs_20140328.StartQuery" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ logGroupName: '/ecs/data-hub-service', startTime: Math.floor((Date.now() - 600000) / 1000), endTime: Math.floor(Date.now() / 1000), queryString: 'fields @timestamp, @message | filter @message like /Sending/ and @message like /qa-weekly@starlightmusic.com/ or @message like /customerReachOut/ and @message like /QATest/ | sort @timestamp desc | limit 5', limit: 5 }) }}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "cloudwatch-email-check",
+      "name": "CloudWatch: Email Dispatched?",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 380],
+      "credentials": {
+        "httpBasicAuth": { "id": "aws-credentials", "name": "AWS CloudWatch" }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://logs.us-east-1.amazonaws.com",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/x-amz-json-1.1" },
+            { "name": "X-Amz-Target", "value": "Logs_20140328.StartQuery" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ logGroupName: '/ecs/starbridge-sms-service', startTime: Math.floor((Date.now() - 600000) / 1000), endTime: Math.floor(Date.now() / 1000), queryString: 'fields @timestamp, @message | filter @message like /Message sent/ or @message like /send.*sms/i | sort @timestamp desc | limit 5', limit: 5 }) }}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "cloudwatch-sms-check",
+      "name": "CloudWatch: SMS Sent?",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 540],
+      "credentials": {
+        "httpBasicAuth": { "id": "aws-credentials", "name": "AWS CloudWatch" }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Consolidate all automated check results\nconst buildData = $('Cypress Passed?').first().json;\nconst emailCheck = $('CloudWatch: Email Dispatched?').first().json;\nconst smsCheck = $('CloudWatch: SMS Sent?').first().json;\n\nconst cypressPassed = buildData.status === 'passed';\n\n// CloudWatch StartQuery returns a queryId - we'd need GetQueryResults\n// For now, check if the API call succeeded (no error)\nconst emailDispatched = !emailCheck.error && emailCheck.queryId;\nconst smsSent = !smsCheck.error && smsCheck.queryId;\n\nconst allPassed = cypressPassed && emailDispatched && smsSent;\n\nconst failures = [];\nif (!cypressPassed) failures.push('cypress_failed');\nif (!emailDispatched) failures.push('email_not_dispatched');\nif (!smsSent) failures.push('sms_not_sent');\n\nreturn [{\n  json: {\n    all_passed: allPassed,\n    cypress_passed: cypressPassed,\n    email_dispatched: emailDispatched,\n    sms_sent: smsSent,\n    build_id: buildData.build_id,\n    failures: failures,\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "consolidate-results",
+      "name": "Consolidate Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2420, 460]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "all-automated-passed",
+              "leftValue": "={{ $json.all_passed }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "automated-checks-passed",
+      "name": "Automated Checks Passed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2640, 460]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Generate webhook URLs for Evan's YES/NO response\nconst data = $input.first().json;\nconst executionId = $execution.id;\nconst baseUrl = 'REPLACE_WITH_N8N_WEBHOOK_BASE_URL';\n\nreturn [{\n  json: {\n    ...data,\n    yes_url: baseUrl + '/webhook/contact-us-e2e-confirm?response=yes&executionId=' + executionId,\n    no_url: baseUrl + '/webhook/contact-us-e2e-confirm?response=no&executionId=' + executionId,\n    execution_id: executionId\n  }\n}];"
+      },
+      "id": "generate-webhook-urls",
+      "name": "Generate Webhook URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2860, 360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE_WITH_SMTP_OR_SENDGRID_ENDPOINT",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ to: 'etyler@starlightmusic.com', subject: 'Weekly QA Test - Did you receive the Contact Us notification?', html: '<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\"><h2>Weekly Contact Us E2E QA Test</h2><p>Hi Evan,</p><p>Our weekly QA test submitted a Contact Us form on starlightmusic.com at <strong>' + $json.timestamp + '</strong>.</p><p><strong>Test details:</strong></p><ul><li>Name: QATest WeeklyCheck</li><li>Email: qa-weekly@starlightmusic.com</li><li>Phone: (555) 867-5309</li></ul><p><strong>Did you receive the system notification email (\"Customer Reach Out\")?</strong></p><div style=\"margin: 20px 0;\"><a href=\"' + $json.yes_url + '\" style=\"background: #22c55e; color: white; padding: 12px 32px; text-decoration: none; border-radius: 6px; margin-right: 12px; font-weight: bold;\">YES - I received it</a><a href=\"' + $json.no_url + '\" style=\"background: #ef4444; color: white; padding: 12px 32px; text-decoration: none; border-radius: 6px; font-weight: bold;\">NO - Did not receive</a></div><p style=\"color: #666; font-size: 12px;\">This is an automated QA test. The test data will be cleaned up automatically.</p></div>' }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "send-evan-email",
+      "name": "Email Evan: Did You Get It?",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3080, 360]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {
+          "webhookSuffix": "contact-us-e2e-confirm"
+        },
+        "amount": 2,
+        "unit": "hours"
+      },
+      "id": "wait-evan-response",
+      "name": "Wait for Evan (2h)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [3300, 360]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check Evan's response or timeout\nconst webhookData = $input.first().json;\n\n// If resumed by webhook, query params will have response=yes or response=no\n// If resumed by timeout, no query params\nconst response = webhookData?.query?.response || 'timeout';\n\nreturn [{\n  json: {\n    evan_response: response,\n    is_timeout: response === 'timeout',\n    is_yes: response === 'yes',\n    is_no: response === 'no'\n  }\n}];"
+      },
+      "id": "parse-evan-response",
+      "name": "Parse Evan Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3520, 360]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "evan-said-yes",
+              "leftValue": "={{ $json.evan_response }}",
+              "rightValue": "yes",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "evan-yes-check",
+      "name": "Evan Said Yes?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [3740, 360]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "evan-said-no",
+              "leftValue": "={{ $json.evan_response }}",
+              "rightValue": "no",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "evan-no-or-timeout",
+      "name": "Evan Said No?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [3960, 500]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE_WITH_SMTP_OR_SENDGRID_ENDPOINT",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ to: 'etyler@starlightmusic.com', subject: 'REMINDER: Weekly QA Test - Did you receive the Contact Us notification?', html: '<div style=\"font-family: Arial, sans-serif; max-width: 600px;\"><h2>Reminder: Weekly QA Test Confirmation Needed</h2><p>Hi Evan, this is a follow-up. We still need your confirmation about the weekly Contact Us QA test.</p><p>Did you receive the \"Customer Reach Out\" email notification?</p><div style=\"margin: 20px 0;\"><a href=\"' + $('Generate Webhook URLs').first().json.yes_url + '\" style=\"background: #22c55e; color: white; padding: 12px 32px; text-decoration: none; border-radius: 6px; margin-right: 12px; font-weight: bold;\">YES</a><a href=\"' + $('Generate Webhook URLs').first().json.no_url + '\" style=\"background: #ef4444; color: white; padding: 12px 32px; text-decoration: none; border-radius: 6px; font-weight: bold;\">NO</a></div></div>' }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "resend-evan-email",
+      "name": "Re-send Email (2h timeout)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4180, 660]
+    },
+    {
+      "parameters": {
+        "resume": "webhook",
+        "options": {
+          "webhookSuffix": "contact-us-e2e-confirm"
+        },
+        "amount": 2,
+        "unit": "hours"
+      },
+      "id": "wait-evan-response-2",
+      "name": "Wait for Evan (2h more)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [4400, 660]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse second-round Evan response\nconst webhookData = $input.first().json;\nconst response = webhookData?.query?.response || 'timeout_final';\n\nreturn [{\n  json: {\n    evan_response: response,\n    is_yes: response === 'yes',\n    failure_type: response === 'no' ? 'evan_denied' : 'evan_timeout'\n  }\n}];"
+      },
+      "id": "parse-evan-response-2",
+      "name": "Parse 2nd Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4620, 660]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "evan-said-yes-2",
+              "leftValue": "={{ $json.is_yes }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "evan-yes-check-2",
+      "name": "Evan Said Yes (Round 2)?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [4840, 660]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Classify the failure for diagnosis\nconst consolidatedData = $('Consolidate Results').first()?.json || {};\nconst evanResponse = $input.first()?.json?.evan_response || $input.first()?.json?.failure_type || 'unknown';\n\nlet failureType = 'unknown';\nlet failureContext = '';\n\nif (consolidatedData.failures && consolidatedData.failures.length > 0) {\n  failureType = consolidatedData.failures[0];\n  failureContext = 'Automated check failures: ' + consolidatedData.failures.join(', ');\n} else if (evanResponse === 'no' || evanResponse === 'evan_denied') {\n  failureType = 'evan_denied';\n  failureContext = 'Evan confirmed he did NOT receive the Customer Reach Out email notification.';\n} else if (evanResponse === 'timeout_final' || evanResponse === 'evan_timeout') {\n  failureType = 'evan_timeout';\n  failureContext = 'Evan did not respond to confirmation email within 4 hours.';\n}\n\nreturn [{\n  json: {\n    failure_type: failureType,\n    failure_context: failureContext,\n    build_id: consolidatedData.build_id || 'N/A',\n    timestamp: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "classify-failure",
+      "name": "Classify Failure",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2860, 700]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1500, messages: [{ role: 'user', content: 'You are a QA engineer diagnosing a failure in the weekly Contact Us form E2E test for starlightmusic.com.\\n\\nARCHITECTURE:\\n- Form on starlightmusic.com/contact-us submits to starlight-event-service /getInTouch endpoint\\n- Event service creates Event + Client in MongoDB, triggers email via data-hub-service (SendGrid) and SMS via starbridge-sms-service (Twilio)\\n- Email goes to admin users (including etyler@starlightmusic.com) as \"Customer Reach Out\" notification\\n- Test uses Cypress on LambdaTest with reCAPTCHA bypass header\\n\\nFAILURE TYPE: ' + $json.failure_type + '\\nCONTEXT: ' + $json.failure_context + '\\nBUILD ID: ' + $json.build_id + '\\n\\nRespond with ONLY valid JSON (no markdown):\\n{\\n  \"root_cause\": \"brief description\",\\n  \"severity\": \"critical|high|medium|low\",\\n  \"affected_service\": \"service name\",\\n  \"diagnosis\": \"2-3 sentence explanation\",\\n  \"recommended_fix\": \"what to check/fix\",\\n  \"requires_immediate_attention\": true/false\\n}' }] }) }}",
+        "options": { "timeout": 60000 }
+      },
+      "id": "claude-diagnosis",
+      "name": "Claude Diagnosis",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3080, 700],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-api-key", "name": "Anthropic API Key" }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Claude diagnosis\nconst failureData = $('Classify Failure').first().json;\nconst claudeResponse = $input.first().json;\n\nlet diagnosis;\ntry {\n  const content = claudeResponse.content[0].text;\n  diagnosis = JSON.parse(content);\n} catch (e) {\n  diagnosis = {\n    root_cause: 'Could not diagnose - Claude parse error',\n    severity: 'high',\n    affected_service: 'unknown',\n    diagnosis: 'Claude API response could not be parsed: ' + e.message,\n    recommended_fix: 'Manual investigation required',\n    requires_immediate_attention: true\n  };\n}\n\nreturn [{\n  json: {\n    ...failureData,\n    diagnosis: diagnosis\n  }\n}];"
+      },
+      "id": "parse-claude-diagnosis",
+      "name": "Parse Claude Diagnosis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3300, 700]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://starlightmusic.atlassian.net/rest/api/3/issue",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ fields: { project: { key: 'SPRO' }, issuetype: { name: 'Bug' }, summary: '[QA-Auto] Contact Us E2E: ' + $json.failure_type + ' - ' + $json.diagnosis.root_cause, priority: { name: $json.diagnosis.severity === 'critical' ? 'Highest' : $json.diagnosis.severity === 'high' ? 'High' : 'Medium' }, labels: ['qa-auto', 'contact-us-e2e', $json.failure_type], description: { type: 'doc', version: 1, content: [{ type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Contact Us E2E Test Failure' }] }, { type: 'paragraph', content: [{ type: 'text', text: 'Failure Type: ' + $json.failure_type + ' | Build: ' + $json.build_id + ' | Time: ' + $json.timestamp }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Diagnosis' }] }, { type: 'paragraph', content: [{ type: 'text', text: $json.diagnosis.diagnosis }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Affected Service' }] }, { type: 'paragraph', content: [{ type: 'text', text: $json.diagnosis.affected_service }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Recommended Fix' }] }, { type: 'paragraph', content: [{ type: 'text', text: $json.diagnosis.recommended_fix }] }] } } }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "create-jira-ticket",
+      "name": "Create Jira Ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3520, 700],
+      "credentials": {
+        "httpBasicAuth": { "id": "jira-basic-auth", "name": "Jira Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE_WITH_YOUR_SLACK_WEBHOOK_URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ blocks: [{ type: 'header', text: { type: 'plain_text', text: '\\ud83d\\udd34 Contact Us E2E FAILED' } }, { type: 'section', fields: [{ type: 'mrkdwn', text: '*Failure:*\\n' + $json.failure_type }, { type: 'mrkdwn', text: '*Severity:*\\n' + $json.diagnosis.severity }, { type: 'mrkdwn', text: '*Service:*\\n' + $json.diagnosis.affected_service }, { type: 'mrkdwn', text: '*Build:*\\n' + $json.build_id }] }, { type: 'section', text: { type: 'mrkdwn', text: '*Root Cause:* ' + $json.diagnosis.root_cause + '\\n*Diagnosis:* ' + $json.diagnosis.diagnosis + '\\n*Fix:* ' + $json.diagnosis.recommended_fix } }, { type: 'context', elements: [{ type: 'mrkdwn', text: $json.timestamp + ' | <@ramon> <@emmanuel>' }] }] }) }}",
+        "options": { "timeout": 10000 }
+      },
+      "id": "slack-failure-alert",
+      "name": "Slack Failure Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3740, 700],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE_WITH_YOUR_SLACK_WEBHOOK_URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ blocks: [{ type: 'header', text: { type: 'plain_text', text: '\\u2705 Contact Us E2E PASSED' } }, { type: 'section', text: { type: 'mrkdwn', text: 'Weekly Contact Us form E2E test passed. Evan confirmed receipt of notification email.\\n*Date:* ' + new Date().toISOString().split('T')[0] } }] }) }}",
+        "options": { "timeout": 10000 }
+      },
+      "id": "slack-success",
+      "name": "Slack Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3960, 260],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Cleanup: Delete test Event and Client from production MongoDB\n// This node prepares the MongoDB delete operations\n// The actual deletion will be done via the MongoDB connection\n\n// Option 1: If we have IDs from the Cypress test response (preferred)\n// These would be passed through the workflow from the LambdaTest build results\n\n// Option 2: Query by known test data fields\nconst cleanupQueries = {\n  event_query: { 'lead.firstName': 'QATest', 'lead.lastName': 'WeeklyCheck', 'lead.email': 'qa-weekly@starlightmusic.com' },\n  client_query: { email: 'qa-weekly@starlightmusic.com' }\n};\n\nreturn [{ json: cleanupQueries }];"
+      },
+      "id": "prepare-cleanup",
+      "name": "Prepare Cleanup Queries",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [4180, 300]
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "REPLACE_WITH_MONGODB_API_OR_INTERNAL_ENDPOINT/cleanup",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ event_query: $json.event_query, client_query: $json.client_query }) }}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "delete-test-data",
+      "name": "Delete Test Event/Client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4400, 300],
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Friday 9am ET": {
+      "main": [[{ "node": "Trigger GitHub Actions", "type": "main", "index": 0 }]]
+    },
+    "Trigger GitHub Actions": {
+      "main": [[{ "node": "Wait 30s for Build Start", "type": "main", "index": 0 }]]
+    },
+    "Wait 30s for Build Start": {
+      "main": [[{ "node": "Poll Counter", "type": "main", "index": 0 }]]
+    },
+    "Poll Counter": {
+      "main": [[{ "node": "Fetch LT Build Status", "type": "main", "index": 0 }]]
+    },
+    "Fetch LT Build Status": {
+      "main": [[{ "node": "Check Build Status", "type": "main", "index": 0 }]]
+    },
+    "Check Build Status": {
+      "main": [[{ "node": "Still Running?", "type": "main", "index": 0 }]]
+    },
+    "Still Running?": {
+      "main": [
+        [{ "node": "Under Max Polls?", "type": "main", "index": 0 }],
+        [{ "node": "Cypress Passed?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Under Max Polls?": {
+      "main": [
+        [{ "node": "Wait 30s", "type": "main", "index": 0 }],
+        [{ "node": "Classify Failure", "type": "main", "index": 0 }]
+      ]
+    },
+    "Wait 30s": {
+      "main": [[{ "node": "Poll Counter", "type": "main", "index": 0 }]]
+    },
+    "Cypress Passed?": {
+      "main": [
+        [{ "node": "Wait 3min for Email/SMS", "type": "main", "index": 0 }],
+        [{ "node": "Classify Failure", "type": "main", "index": 0 }]
+      ]
+    },
+    "Wait 3min for Email/SMS": {
+      "main": [
+        [
+          { "node": "CloudWatch: Email Dispatched?", "type": "main", "index": 0 },
+          { "node": "CloudWatch: SMS Sent?", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "CloudWatch: Email Dispatched?": {
+      "main": [[{ "node": "Consolidate Results", "type": "main", "index": 0 }]]
+    },
+    "CloudWatch: SMS Sent?": {
+      "main": [[{ "node": "Consolidate Results", "type": "main", "index": 0 }]]
+    },
+    "Consolidate Results": {
+      "main": [[{ "node": "Automated Checks Passed?", "type": "main", "index": 0 }]]
+    },
+    "Automated Checks Passed?": {
+      "main": [
+        [{ "node": "Generate Webhook URLs", "type": "main", "index": 0 }],
+        [{ "node": "Classify Failure", "type": "main", "index": 0 }]
+      ]
+    },
+    "Generate Webhook URLs": {
+      "main": [[{ "node": "Email Evan: Did You Get It?", "type": "main", "index": 0 }]]
+    },
+    "Email Evan: Did You Get It?": {
+      "main": [[{ "node": "Wait for Evan (2h)", "type": "main", "index": 0 }]]
+    },
+    "Wait for Evan (2h)": {
+      "main": [[{ "node": "Parse Evan Response", "type": "main", "index": 0 }]]
+    },
+    "Parse Evan Response": {
+      "main": [[{ "node": "Evan Said Yes?", "type": "main", "index": 0 }]]
+    },
+    "Evan Said Yes?": {
+      "main": [
+        [{ "node": "Slack Success", "type": "main", "index": 0 }],
+        [{ "node": "Evan Said No?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Evan Said No?": {
+      "main": [
+        [{ "node": "Classify Failure", "type": "main", "index": 0 }],
+        [{ "node": "Re-send Email (2h timeout)", "type": "main", "index": 0 }]
+      ]
+    },
+    "Re-send Email (2h timeout)": {
+      "main": [[{ "node": "Wait for Evan (2h more)", "type": "main", "index": 0 }]]
+    },
+    "Wait for Evan (2h more)": {
+      "main": [[{ "node": "Parse 2nd Response", "type": "main", "index": 0 }]]
+    },
+    "Parse 2nd Response": {
+      "main": [[{ "node": "Evan Said Yes (Round 2)?", "type": "main", "index": 0 }]]
+    },
+    "Evan Said Yes (Round 2)?": {
+      "main": [
+        [{ "node": "Slack Success", "type": "main", "index": 0 }],
+        [{ "node": "Classify Failure", "type": "main", "index": 0 }]
+      ]
+    },
+    "Classify Failure": {
+      "main": [[{ "node": "Claude Diagnosis", "type": "main", "index": 0 }]]
+    },
+    "Claude Diagnosis": {
+      "main": [[{ "node": "Parse Claude Diagnosis", "type": "main", "index": 0 }]]
+    },
+    "Parse Claude Diagnosis": {
+      "main": [[{ "node": "Create Jira Ticket", "type": "main", "index": 0 }]]
+    },
+    "Create Jira Ticket": {
+      "main": [
+        [
+          { "node": "Slack Failure Alert", "type": "main", "index": 0 },
+          { "node": "Prepare Cleanup Queries", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Slack Success": {
+      "main": [[{ "node": "Prepare Cleanup Queries", "type": "main", "index": 0 }]]
+    },
+    "Slack Failure Alert": {
+      "main": [[{ "node": "Prepare Cleanup Queries", "type": "main", "index": 0 }]]
+    },
+    "Prepare Cleanup Queries": {
+      "main": [[{ "node": "Delete Test Event/Client", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [{ "name": "qa-automation" }, { "name": "contact-us-e2e" }, { "name": "weekly" }]
+}

@@ -18,7 +18,7 @@
     "build_name": "starlight-test-suite-run-20230720-0239PM",
     "parallels": 1,
     "specs": "./cypress/integration/starlight/starlightQATests/**/**/*.spec.js",
-    "ignore_files": "",
+    "ignore_files": "./cypress/integration/starlight/starlightQATests/1_starlightTests/1.10_contactUsFormE2ETest.spec.js",
     "network": false,
     "headless": false
   },

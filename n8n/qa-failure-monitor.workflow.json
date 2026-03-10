@@ -1,0 +1,635 @@
+{
+  "name": "QA Test Failure Monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 30 }]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 30 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.lambdatest.com/automation/api/v1/builds",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "limit", "value": "5" },
+            { "name": "sort", "value": "end_timestamp.desc" },
+            { "name": "status", "value": "failed,error" }
+          ]
+        },
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch-failed-builds",
+      "name": "Fetch Failed Builds",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 300],
+      "credentials": {
+        "httpBasicAuth": { "id": "lt-basic-auth", "name": "LambdaTest Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Dedup: track last processed build ID using static data\nconst staticData = $getWorkflowStaticData('global');\nconst lastProcessedId = staticData.lastProcessedBuildId || 0;\n\nconst builds = $input.first().json.data || [];\n\n// Filter to only new builds\nconst newBuilds = builds.filter(b => b.build_id > lastProcessedId);\n\nif (newBuilds.length === 0) {\n  // No new builds — exit early\n  return [];\n}\n\n// Update static data with the highest build_id we've seen\nstaticData.lastProcessedBuildId = Math.max(...newBuilds.map(b => b.build_id));\n\nreturn newBuilds.map(b => ({ json: b }));"
+      },
+      "id": "dedup-builds",
+      "name": "Dedup Builds",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.lambdatest.com/automation/api/v1/sessions?build_id={{ $json.build_id }}&limit=50&status=failed,error",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch-failed-sessions",
+      "name": "Fetch Failed Sessions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [880, 300],
+      "credentials": {
+        "httpBasicAuth": { "id": "lt-basic-auth", "name": "LambdaTest Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Flatten sessions and attach build metadata\nconst items = [];\nfor (const item of $input.all()) {\n  const sessions = item.json.data || [];\n  for (const session of sessions) {\n    items.push({\n      json: {\n        session_id: session.session_id,\n        test_id: session.test_id,\n        name: session.name,\n        status: session.status,\n        status_ind: session.status_ind,\n        build_id: session.build_id,\n        build_name: session.build_name,\n        browser: session.browser,\n        platform: session.platform,\n        duration: session.duration,\n        start_timestamp: session.start_timestamp,\n        end_timestamp: session.end_timestamp\n      }\n    });\n  }\n}\nreturn items;"
+      },
+      "id": "flatten-sessions",
+      "name": "Flatten Sessions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.lambdatest.com/automation/api/v1/sessions/{{ $json.session_id }}/log/command",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch-command-logs",
+      "name": "Fetch Command Logs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 160],
+      "credentials": {
+        "httpBasicAuth": { "id": "lt-basic-auth", "name": "LambdaTest Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.lambdatest.com/automation/api/v1/sessions/{{ $json.session_id }}/log/console",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch-console-logs",
+      "name": "Fetch Console Logs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 300],
+      "credentials": {
+        "httpBasicAuth": { "id": "lt-basic-auth", "name": "LambdaTest Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.lambdatest.com/automation/api/v1/sessions/{{ $json.session_id }}/log/network",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 30000
+        }
+      },
+      "id": "fetch-network-logs",
+      "name": "Fetch Network Logs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 440],
+      "credentials": {
+        "httpBasicAuth": { "id": "lt-basic-auth", "name": "LambdaTest Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Merge all 3 log sources with the session metadata\nconst sessionData = $('Flatten Sessions').first().json;\nconst commandLogs = $('Fetch Command Logs').first().json;\nconst consoleLogs = $('Fetch Console Logs').first().json;\nconst networkLogs = $('Fetch Network Logs').first().json;\n\n// Extract spec file name from session name\nconst sessionName = sessionData.name || '';\nconst specMatch = sessionName.match(/([\\d._]+\\w+\\.spec\\.js)/);\nconst specFile = specMatch ? specMatch[1] : sessionName;\n\n// Truncate logs to avoid token limits\nfunction truncate(data, maxLen = 8000) {\n  const str = typeof data === 'string' ? data : JSON.stringify(data);\n  return str.length > maxLen ? str.substring(0, maxLen) + '\\n... [truncated]' : str;\n}\n\nreturn [{\n  json: {\n    ...sessionData,\n    spec_file: specFile,\n    command_logs: truncate(commandLogs),\n    console_logs: truncate(consoleLogs),\n    network_logs: truncate(networkLogs, 4000)\n  }\n}];"
+      },
+      "id": "merge-logs",
+      "name": "Merge Logs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.github.com/repos/ramonthedom/LambdaCypress/contents/cypress/integration/starlight/starlightQATests?ref=main",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 15000
+        }
+      },
+      "id": "fetch-test-source",
+      "name": "Fetch Test Source",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 160],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://starlightmusic.atlassian.net/rest/api/3/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jql: 'project=SPRO AND labels=qa-auto AND summary~\"' + $json.spec_file + '\" AND status NOT IN (Done,Closed) AND created >= -7d', maxResults: 1 }) }}",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 15000
+        }
+      },
+      "id": "jira-dedup-search",
+      "name": "Jira Dedup Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 440],
+      "credentials": {
+        "httpBasicAuth": { "id": "jira-basic-auth", "name": "Jira Basic Auth" }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Prepare context for Claude API diagnosis\nconst session = $('Merge Logs').first().json;\nconst dirListing = $('Fetch Test Source').first().json;\nconst jiraSearch = $('Jira Dedup Search').first().json;\n\n// Check if existing Jira ticket found\nconst existingTicket = (jiraSearch.issues && jiraSearch.issues.length > 0)\n  ? jiraSearch.issues[0]\n  : null;\n\n// Resolve spec file path from directory listing\n// The Contents API returns an array of subdirectories (1_starlightTests, 2_bandazonTests, 3_silverProTests)\n// We need to determine which subdirectory the spec belongs to based on its prefix\nlet specSubdir = '';\nconst specFile = session.spec_file || '';\nif (specFile.startsWith('1')) specSubdir = '1_starlightTests';\nelse if (specFile.startsWith('2')) specSubdir = '2_bandazonTests';\nelse if (specFile.startsWith('3')) specSubdir = '3_silverProTests';\n\n// Build the full GitHub path for later use\nconst fullSpecPath = specSubdir\n  ? 'cypress/integration/starlight/starlightQATests/' + specSubdir + '/' + specFile\n  : 'cypress/integration/starlight/starlightQATests/' + specFile;\n\nreturn [{\n  json: {\n    ...session,\n    test_source_code: 'Will be fetched via GitHub Contents API at: ' + fullSpecPath,\n    full_spec_path: fullSpecPath,\n    spec_subdir: specSubdir,\n    existing_jira_ticket: existingTicket ? existingTicket.key : null,\n    existing_jira_id: existingTicket ? existingTicket.id : null\n  }\n}];"
+      },
+      "id": "prepare-claude-context",
+      "name": "Prepare Claude Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1980, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "content-type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2000, messages: [{ role: 'user', content: 'You are a QA test failure diagnosis expert for Cypress 9.7.0 tests running on LambdaTest.\\n\\nTEST SUITE ARCHITECTURE:\\n- Three properties: starlightmusic.com (CRM=starbridge), bandazon.com, silverproentertainment.com (CRM=silverops)\\n- Tests: API health checks, website image checks, section display checks, search results, venue commission, contract preview, white screen checks\\n- Login uses OTP via AWS Lambda endpoint, with cy.session() caching\\n- Runs on Chrome/Windows 10 via LambdaTest cloud\\n\\nFAILED TEST:\\n- Session: ' + $json.session_id + '\\n- Name: ' + $json.name + '\\n- Spec: ' + $json.spec_file + '\\n- Duration: ' + $json.duration + 's\\n- Browser: ' + $json.browser + ' on ' + $json.platform + '\\n\\nCOMMAND LOGS:\\n' + $json.command_logs + '\\n\\nCONSOLE LOGS:\\n' + $json.console_logs + '\\n\\nNETWORK LOGS:\\n' + $json.network_logs + '\\n\\nTEST SOURCE CODE:\\n' + $json.test_source_code + '\\n\\nRespond with ONLY valid JSON (no markdown, no backticks):\\n{\\n  \"root_cause\": \"brief description\",\\n  \"category\": \"one of: api_down|selector_changed|timeout|network_error|auth_failure|data_mismatch|flaky_test|environment|unknown\",\\n  \"severity\": \"one of: critical|high|medium|low\",\\n  \"diagnosis\": \"detailed explanation in 2-3 sentences\",\\n  \"is_test_bug\": true/false,\\n  \"is_app_bug\": true/false,\\n  \"suggested_fix\": \"what to change\",\\n  \"fix_code\": \"the corrected code snippet if is_test_bug, else empty string\",\\n  \"confidence\": 0.0-1.0\\n}' }] }) }}",
+        "options": {
+          "response": { "response": { "fullResponse": false } },
+          "timeout": 60000
+        }
+      },
+      "id": "claude-diagnosis",
+      "name": "Claude API Diagnosis",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 300],
+      "credentials": {
+        "httpHeaderAuth": { "id": "anthropic-api-key", "name": "Anthropic API Key" }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Claude's response and merge with session data\nconst session = $('Prepare Claude Context').first().json;\nconst claudeResponse = $input.first().json;\n\nlet diagnosis;\ntry {\n  const content = claudeResponse.content[0].text;\n  diagnosis = JSON.parse(content);\n} catch (e) {\n  diagnosis = {\n    root_cause: 'Claude response parse error',\n    category: 'unknown',\n    severity: 'medium',\n    diagnosis: 'Could not parse Claude API response: ' + e.message,\n    is_test_bug: false,\n    is_app_bug: false,\n    suggested_fix: '',\n    fix_code: '',\n    confidence: 0\n  };\n}\n\nreturn [{\n  json: {\n    ...session,\n    diagnosis: diagnosis,\n    should_create_pr: diagnosis.confidence >= 0.8 && diagnosis.is_test_bug === true,\n    has_existing_ticket: !!session.existing_jira_ticket\n  }\n}];"
+      },
+      "id": "parse-diagnosis",
+      "name": "Parse Diagnosis",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2420, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "has-existing-ticket",
+              "leftValue": "={{ $json.has_existing_ticket }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "jira-branch",
+      "name": "Has Existing Ticket?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2640, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://starlightmusic.atlassian.net/rest/api/3/issue/{{ $json.existing_jira_ticket }}/comment",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ body: { type: 'doc', version: 1, content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Failure recurred — Build: ' + $json.build_name + ' | Session: ' + $json.session_id + ' | Root Cause: ' + $json.diagnosis.root_cause + ' | Diagnosis: ' + $json.diagnosis.diagnosis }] }] } }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "jira-add-comment",
+      "name": "Add Jira Comment",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2860, 100],
+      "credentials": {
+        "httpBasicAuth": { "id": "jira-basic-auth", "name": "Jira Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://starlightmusic.atlassian.net/rest/api/3/issue",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ fields: { project: { key: 'SPRO' }, issuetype: { name: 'Bug' }, summary: '[QA-Auto] ' + $json.diagnosis.category + ': ' + $json.diagnosis.root_cause, priority: { name: $json.diagnosis.severity === 'critical' ? 'Highest' : $json.diagnosis.severity === 'high' ? 'High' : $json.diagnosis.severity === 'medium' ? 'Medium' : 'Low' }, labels: ['qa-auto', 'cypress', 'lambdatest', $json.diagnosis.category], description: { type: 'doc', version: 1, content: [{ type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Build Info' }] }, { type: 'paragraph', content: [{ type: 'text', text: 'Build: ' + $json.build_name + ' | Session: ' + $json.session_id + ' | Spec: ' + $json.spec_file + ' | Duration: ' + $json.duration + 's | Browser: ' + $json.browser + ' / ' + $json.platform }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Root Cause' }] }, { type: 'paragraph', content: [{ type: 'text', text: $json.diagnosis.root_cause }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Diagnosis' }] }, { type: 'paragraph', content: [{ type: 'text', text: $json.diagnosis.diagnosis }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Suggested Fix' }] }, { type: 'paragraph', content: [{ type: 'text', text: $json.diagnosis.suggested_fix }] }, { type: 'heading', attrs: { level: 3 }, content: [{ type: 'text', text: 'Fix Code' }] }, { type: 'codeBlock', attrs: { language: 'javascript' }, content: [{ type: 'text', text: $json.diagnosis.fix_code || 'N/A' }] }, { type: 'paragraph', content: [{ type: 'text', text: 'Confidence: ' + ($json.diagnosis.confidence * 100).toFixed(0) + '% | Category: ' + $json.diagnosis.category + ' | Test Bug: ' + $json.diagnosis.is_test_bug + ' | App Bug: ' + $json.diagnosis.is_app_bug }] }] } } }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "jira-create-ticket",
+      "name": "Create Jira Ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2860, 300],
+      "credentials": {
+        "httpBasicAuth": { "id": "jira-basic-auth", "name": "Jira Basic Auth" }
+      },
+      "retryOnFail": true,
+      "maxTries": 2
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "should-create-pr",
+              "leftValue": "={{ $json.should_create_pr }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "pr-gate",
+      "name": "Confidence >= 0.8 & Test Bug?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2640, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// GitHub Draft PR creation flow\n// Step 1: Get main branch SHA\nconst session = $input.first().json;\nconst diagnosis = session.diagnosis;\nconst specFile = session.spec_file;\nconst timestamp = Date.now();\nconst branchName = 'qa-fix/' + specFile.replace('.spec.js', '').replace(/[^a-zA-Z0-9-_]/g, '-') + '-' + timestamp;\n\n// We'll output the data needed for the subsequent HTTP requests\nreturn [{\n  json: {\n    ...session,\n    branch_name: branchName,\n    timestamp: timestamp,\n    repo_owner: 'ramonthedom',\n    repo_name: 'LambdaCypress'\n  }\n}];"
+      },
+      "id": "prepare-pr-data",
+      "name": "Prepare PR Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2860, 500]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.github.com/repos/{{ $json.repo_owner }}/{{ $json.repo_name }}/git/ref/heads/main",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": { "timeout": 15000 }
+      },
+      "id": "get-main-sha",
+      "name": "Get Main Branch SHA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3080, 500],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/{{ $('Prepare PR Data').first().json.repo_owner }}/{{ $('Prepare PR Data').first().json.repo_name }}/git/refs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ ref: 'refs/heads/' + $('Prepare PR Data').first().json.branch_name, sha: $json.object.sha }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "create-branch",
+      "name": "Create Branch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3300, 500],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.github.com/repos/{{ $('Prepare PR Data').first().json.repo_owner }}/{{ $('Prepare PR Data').first().json.repo_name }}/contents/{{ $('Prepare PR Data').first().json.full_spec_path }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "ref", "value": "={{ $('Prepare PR Data').first().json.branch_name }}" }
+          ]
+        },
+        "options": { "timeout": 15000 }
+      },
+      "id": "get-file-content",
+      "name": "Get Current File",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3520, 500],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Only proceed if we got the file AND have fix code\nconst prData = $('Prepare PR Data').first().json;\nconst fileData = $input.first().json;\nconst diagnosis = prData.diagnosis;\n\nif (!fileData.sha || !diagnosis.fix_code) {\n  // Can't create PR without file SHA or fix code\n  return [{ json: { skip_pr: true, reason: 'Missing file SHA or fix code' } }];\n}\n\n// The fix_code from Claude should be the complete updated file content\n// Base64 encode it for the GitHub API\nconst fixCode = diagnosis.fix_code;\nconst encoded = Buffer.from(fixCode).toString('base64');\n\nreturn [{\n  json: {\n    ...prData,\n    file_sha: fileData.sha,\n    file_path: fileData.path,\n    encoded_content: encoded,\n    skip_pr: false\n  }\n}];"
+      },
+      "id": "prepare-file-update",
+      "name": "Prepare File Update",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [3740, 500]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [
+            {
+              "id": "skip-pr-check",
+              "leftValue": "={{ $json.skip_pr }}",
+              "rightValue": false,
+              "operator": { "type": "boolean", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "skip-pr-check",
+      "name": "Can Create PR?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [3960, 500]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://api.github.com/repos/{{ $json.repo_owner }}/{{ $json.repo_name }}/contents/{{ $json.file_path }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ message: '[QA-Auto] Fix: ' + $json.diagnosis.root_cause, content: $json.encoded_content, sha: $json.file_sha, branch: $json.branch_name }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "update-file",
+      "name": "Push Fix",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4180, 440],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/{{ $('Prepare PR Data').first().json.repo_owner }}/{{ $('Prepare PR Data').first().json.repo_name }}/pulls",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ title: '[QA-Auto] Fix: ' + $('Prepare PR Data').first().json.diagnosis.root_cause, body: '## AI-Diagnosed Test Fix\\n\\n**Spec:** ' + $('Prepare PR Data').first().json.spec_file + '\\n**Category:** ' + $('Prepare PR Data').first().json.diagnosis.category + '\\n**Confidence:** ' + ($('Prepare PR Data').first().json.diagnosis.confidence * 100).toFixed(0) + '%\\n\\n### Root Cause\\n' + $('Prepare PR Data').first().json.diagnosis.root_cause + '\\n\\n### Diagnosis\\n' + $('Prepare PR Data').first().json.diagnosis.diagnosis + '\\n\\n### Suggested Fix\\n' + $('Prepare PR Data').first().json.diagnosis.suggested_fix + '\\n\\n---\\n_Auto-generated by QA Failure Monitor workflow_', head: $('Prepare PR Data').first().json.branch_name, base: 'main', draft: true }) }}",
+        "options": { "timeout": 15000 }
+      },
+      "id": "create-draft-pr",
+      "name": "Create Draft PR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4400, 440],
+      "credentials": {
+        "httpHeaderAuth": { "id": "github-pat", "name": "GitHub PAT" }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE_WITH_YOUR_SLACK_WEBHOOK_URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ blocks: [{ type: 'header', text: { type: 'plain_text', text: ($json.diagnosis.severity === 'critical' ? '🔴' : $json.diagnosis.severity === 'high' ? '🟠' : $json.diagnosis.severity === 'medium' ? '🟡' : '🟢') + ' QA Test Failure: ' + $json.diagnosis.category } }, { type: 'section', fields: [{ type: 'mrkdwn', text: '*Build:*\\n' + ($json.build_name || 'N/A') }, { type: 'mrkdwn', text: '*Spec:*\\n' + $json.spec_file }, { type: 'mrkdwn', text: '*Severity:*\\n' + $json.diagnosis.severity }, { type: 'mrkdwn', text: '*Confidence:*\\n' + ($json.diagnosis.confidence * 100).toFixed(0) + '%' }] }, { type: 'section', text: { type: 'mrkdwn', text: '*Root Cause:* ' + $json.diagnosis.root_cause + '\\n\\n*Diagnosis:* ' + $json.diagnosis.diagnosis } }, { type: 'actions', elements: [{ type: 'button', text: { type: 'plain_text', text: 'View in LambdaTest' }, url: 'https://app.lambdatest.com/automation/logs/build/' + $json.build_id + '/session/' + $json.session_id }, { type: 'button', text: { type: 'plain_text', text: 'Jira Ticket' }, url: 'https://starlightmusic.atlassian.net/browse/' + ($json.existing_jira_ticket || 'SPRO') }, { type: 'button', text: { type: 'plain_text', text: 'Review PR' }, url: 'https://github.com/ramonthedom/LambdaCypress/pulls' }] }, { type: 'context', elements: [{ type: 'mrkdwn', text: 'Session: ' + $json.session_id + ' | ' + new Date().toISOString() }] }] }) }}",
+        "options": { "timeout": 10000 }
+      },
+      "id": "slack-alert",
+      "name": "Slack Alert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2860, 700],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "REPLACE_WITH_YOUR_SLACK_WEBHOOK_URL",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: '⚠️ QA Failure Monitor Error: ' + $json.error.message }) }}",
+        "options": { "timeout": 10000 }
+      },
+      "id": "error-slack-dm",
+      "name": "Error Alert to Ramon",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 700]
+    }
+  ],
+  "connections": {
+    "Every 30 Minutes": {
+      "main": [[{ "node": "Fetch Failed Builds", "type": "main", "index": 0 }]]
+    },
+    "Fetch Failed Builds": {
+      "main": [[{ "node": "Dedup Builds", "type": "main", "index": 0 }]]
+    },
+    "Dedup Builds": {
+      "main": [[{ "node": "Fetch Failed Sessions", "type": "main", "index": 0 }]]
+    },
+    "Fetch Failed Sessions": {
+      "main": [[{ "node": "Flatten Sessions", "type": "main", "index": 0 }]]
+    },
+    "Flatten Sessions": {
+      "main": [
+        [
+          { "node": "Fetch Command Logs", "type": "main", "index": 0 },
+          { "node": "Fetch Console Logs", "type": "main", "index": 0 },
+          { "node": "Fetch Network Logs", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch Command Logs": {
+      "main": [[{ "node": "Merge Logs", "type": "main", "index": 0 }]]
+    },
+    "Fetch Console Logs": {
+      "main": [[{ "node": "Merge Logs", "type": "main", "index": 0 }]]
+    },
+    "Fetch Network Logs": {
+      "main": [[{ "node": "Merge Logs", "type": "main", "index": 0 }]]
+    },
+    "Merge Logs": {
+      "main": [
+        [
+          { "node": "Fetch Test Source", "type": "main", "index": 0 },
+          { "node": "Jira Dedup Search", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch Test Source": {
+      "main": [[{ "node": "Prepare Claude Context", "type": "main", "index": 0 }]]
+    },
+    "Jira Dedup Search": {
+      "main": [[{ "node": "Prepare Claude Context", "type": "main", "index": 0 }]]
+    },
+    "Prepare Claude Context": {
+      "main": [[{ "node": "Claude API Diagnosis", "type": "main", "index": 0 }]]
+    },
+    "Claude API Diagnosis": {
+      "main": [[{ "node": "Parse Diagnosis", "type": "main", "index": 0 }]]
+    },
+    "Parse Diagnosis": {
+      "main": [
+        [
+          { "node": "Has Existing Ticket?", "type": "main", "index": 0 },
+          { "node": "Confidence >= 0.8 & Test Bug?", "type": "main", "index": 0 },
+          { "node": "Slack Alert", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Has Existing Ticket?": {
+      "main": [
+        [{ "node": "Add Jira Comment", "type": "main", "index": 0 }],
+        [{ "node": "Create Jira Ticket", "type": "main", "index": 0 }]
+      ]
+    },
+    "Confidence >= 0.8 & Test Bug?": {
+      "main": [
+        [{ "node": "Prepare PR Data", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Prepare PR Data": {
+      "main": [[{ "node": "Get Main Branch SHA", "type": "main", "index": 0 }]]
+    },
+    "Get Main Branch SHA": {
+      "main": [[{ "node": "Create Branch", "type": "main", "index": 0 }]]
+    },
+    "Create Branch": {
+      "main": [[{ "node": "Get Current File", "type": "main", "index": 0 }]]
+    },
+    "Get Current File": {
+      "main": [[{ "node": "Prepare File Update", "type": "main", "index": 0 }]]
+    },
+    "Prepare File Update": {
+      "main": [[{ "node": "Can Create PR?", "type": "main", "index": 0 }]]
+    },
+    "Can Create PR?": {
+      "main": [
+        [{ "node": "Push Fix", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Push Fix": {
+      "main": [[{ "node": "Create Draft PR", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "error-slack-dm"
+  },
+  "staticData": null,
+  "tags": [{ "name": "qa-automation" }, { "name": "lambdatest" }, { "name": "cypress" }]
+}
