@@ -20,7 +20,8 @@
     "specs": "./cypress/integration/starlight/starlightQATests/**/**/*.spec.js",
     "ignore_files": "./cypress/integration/starlight/starlightQATests/1_starlightTests/1.10_contactUsFormE2ETest.spec.js",
     "network": false,
-    "headless": false
+    "headless": false,
+    "cypress_version": "9.7.0"
   },
   "tunnel_settings": {
     "tunnel": false,
