@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - run: npx lambdatest-cypress run --cf lambdatest-config-contact-us.json
         env:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
