@@ -10,7 +10,7 @@ jobs:
         with:
           node-version: '18'
       - run: npm ci --ignore-scripts
-      - run: npx lambdatest-cypress-cli run --lcf lambdatest-config-contact-us.json --envs "CYPRESS_QA_BYPASS_TOKEN=$CYPRESS_QA_BYPASS_TOKEN"
+      - run: npx lambdatest-cypress-cli run --lcf lambdatest-config-contact-us.json --user "$LT_USERNAME" --ak "$LT_ACCESS_KEY" --envs "CYPRESS_QA_BYPASS_TOKEN=$CYPRESS_QA_BYPASS_TOKEN"
         env:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
           LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
